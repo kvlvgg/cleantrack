@@ -1,0 +1,16 @@
+﻿@namespace Views
+
+@using Model = CleanTimer.Models.HouseholdChore
+
+<div>
+    <button>Reload</button>
+    <h2>@Model.Name</h2>
+
+    <Controls.ProgressBar />
+</div>
+
+@code {
+
+    [Parameter]
+    public required Model Model { get; set; }
+}

@@ -1,0 +1,29 @@
+﻿@using Models;
+
+@page "/"
+
+<h1>@title</h1>
+
+@foreach (HouseholdChore deal in deals)
+{
+    <Views.HouseholdChore Model="@deal" />
+}
+
+@code {
+
+    private string title = "Clean Timer";
+
+    private IList<HouseholdChore> deals = new List<HouseholdChore>
+    {
+        new() {Name = "Floor"},
+        new() {Name = "Working place"},
+        new() {Name = "Bathroom"},
+        new() {Name = "Bed sheets"},
+        new() {Name = "Kitchen"},
+    };
+
+    // private void changeTheme()
+    // {
+    //     HeadContent
+    // }
+}

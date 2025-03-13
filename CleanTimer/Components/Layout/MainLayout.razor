@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<HeadContent>
+    <link id="theme" rel="stylesheet" href="@themePath" />
+</HeadContent>
+
+@Body
+
+@code {
+    private string themePath = "css/light-theme.css";
+
+    public void changeTheme()
+    {
+        themePath = "css/dark-theme.css";
+    }
+}
