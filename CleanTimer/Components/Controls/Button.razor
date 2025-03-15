@@ -1,0 +1,46 @@
+﻿@namespace Controls
+
+<button class="@buttonClasses" onclick="@OnClick">
+    <Controls.Icon Text="@Icon" />
+</button>
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Variant { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Size { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Icon { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Link { get; set; }
+
+    [Parameter]
+    public string Target { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Outline { get; set; }
+
+    [Parameter]
+    public bool W100 { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private bool isIconOnly => Text == string.Empty && Icon != string.Empty;
+
+    private string buttonClasses => string.Join(" ", new Dictionary<string, bool>()
+    {
+        {"button", true },
+        {$"{Variant}", Variant != string.Empty},
+        {$"size-{Size}", Size != string.Empty},
+        {"square", isIconOnly},
+        {"outline", Outline},
+        {"w100", W100},
+    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+}

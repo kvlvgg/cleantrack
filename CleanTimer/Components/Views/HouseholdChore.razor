@@ -3,7 +3,7 @@
 @using Model = CleanTimer.Models.HouseholdChore
 
 <div class="householdDeals">
-    <button>Reload</button>
+    <Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH" Variant="@UI.Controls.Button.Variant.PRIMARY" Size="@UI.Controls.Button.Size.XS"/>
 
     <Controls.Text Value="@Model.Name" Size="@UI.Controls.Text.Size.SM"/>
     <div></div>
@@ -11,7 +11,6 @@
 </div>
 
 @code {
-
     [Parameter]
     public required Model Model { get; set; }
 }

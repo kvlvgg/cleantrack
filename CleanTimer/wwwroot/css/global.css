@@ -11,6 +11,8 @@
 }
 
 :root {
+    --header-height: 80px;
+    --footer-height: 0px;
     --btn-height-lg: 56px;
     --btn-height-md: 40px;
     --btn-height-sm: 32px;
@@ -45,6 +47,23 @@
     --gap-xxl: 40px;
     --gap-xxxl: 48px;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
 
 body {
     background-color: var(--surface-ground);

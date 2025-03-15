@@ -1,10 +1,20 @@
 ﻿@namespace Controls
 
-<div class="font-icon icon">
+<div class="@iconClasses">
     @Text
 </div>
 
 @code {
     [Parameter]
     public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Size { get; set; } = UI.Controls.Icon.Size.MD;
+
+    private string iconClasses => string.Join(" ", new Dictionary<string, bool>()
+    {
+        {"font-icon", true },
+        {"icon", true},
+        {$"size-{Size}", true}
+    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 }

@@ -23,3 +23,15 @@
 .icon {
     color: var(--text-primary-color);
 }
+
+    .icon.size-lg {
+        font-size: var(--icon-size-lg);
+    }
+
+    .icon.size-md {
+        font-size: var(--icon-size-md);
+    }
+
+    .icon.size-sm {
+        font-size: var(--icon-size-sm);
+    }

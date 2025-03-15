@@ -1,14 +1,6 @@
 ﻿@using Models;
 
-@inject IJSRuntime JSRuntime
-
 @page "/"
-
-<Controls.H Level="1" Text="@title" />
-
-<Controls.Icon Text="@themeIcon" />
-
-<button @onclick=switchTheme>switch theme</button>
 
 <div class="householdDeals">
     @foreach (HouseholdChore deal in deals)
@@ -24,17 +16,6 @@
 <Controls.ProgressBar Value="0.73" />
 
 @code {
-
-    private string title = "Clean Timer";
-    private string theme = "light";
-
-    private string themeIcon => theme switch
-    {
-        "light" => "light_mode",
-        "dark" => "dark_mode",
-        _ => string.Empty
-    };
-
     private IList<HouseholdChore> deals = new List<HouseholdChore>
     {
         new() {Name = "Floor"},
@@ -43,11 +24,4 @@
         new() {Name = "Bed sheets"},
         new() {Name = "Kitchen"},
     };
-
-    private async Task switchTheme()
-    {
-        string newTheme = theme == "light" ? "dark" : "light";
-
-        theme = await JSRuntime.InvokeAsync<string>("window.CT.utils.switchTheme", theme, newTheme, "ct-theme");
-    }
 }

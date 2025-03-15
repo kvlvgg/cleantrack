@@ -1,0 +1,35 @@
+﻿@namespace Views
+
+@inject IJSRuntime JSRuntime
+
+<header class="header">
+    <div>
+        <Controls.H Level="2" Text="Clean Timer" />
+    </div>
+
+    <div class="right">
+        <Controls.Button Icon="@themeIcon" Variant="@UI.Controls.Button.Variant.TERTIARY" Size="@UI.Controls.Button.Size.MD" OnClick="switchTheme"/>
+    </div>
+</header>
+
+
+<Controls.Icon Text="@themeIcon" />
+<button @onclick=switchTheme>switch theme</button>
+
+@code {
+    private string theme = "light";
+
+    private string themeIcon => theme switch
+    {
+        "light" => UI.Controls.Icon.Text.LIGHT_MODE,
+        "dark" => UI.Controls.Icon.Text.DARK_MODE,
+        _ => string.Empty
+    };
+
+    private async Task switchTheme()
+    {
+        string newTheme = theme == "light" ? "dark" : "light";
+
+        theme = await JSRuntime.InvokeAsync<string>("window.CT.utils.switchTheme", theme, newTheme, "ct-theme");
+    }
+}

@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CleanTimer.Constants.UI.Controls
+{
+    class Icon
+    {
+        public static class Size
+        {
+            public const string SM = "sm";
+            public const string MD = "md";
+            public const string LG = "lg";
+        }
+
+        public static class Text
+        {
+            public const string LIGHT_MODE = "light_mode";
+            public const string DARK_MODE = "dark_mode";
+            public const string CHEVRON_RIGHT = "chevron_right";
+            public const string REFRESH = "refresh";
+        }
+    }
+}
