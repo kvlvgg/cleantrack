@@ -2,18 +2,17 @@
 
 @page "/"
 
-<div class="householdDeals">
-    @foreach (HouseholdChore deal in deals)
-    {
-        <Views.HouseholdChore Model="@deal" />
-    }
-</div>
+<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+    <div class="householdDeals">
+        @foreach (HouseholdChore deal in deals)
+        {
+            <Views.HouseholdChore Model="@deal" />
+        }
+    </div>
 
-<div style="height: 100px"></div>
+</Controls.Card>
 
-<Controls.ProgressBar Value="0.5" />
-<Controls.ProgressBar Value="0.3" />
-<Controls.ProgressBar Value="0.73" />
+<div style="height: 800px"></div>
 
 @code {
     private IList<HouseholdChore> deals = new List<HouseholdChore>
