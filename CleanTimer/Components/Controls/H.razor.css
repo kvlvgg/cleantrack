@@ -1,0 +1,50 @@
+/*
+    CSS isolation doesn't apply for dynamically rendered content. :( cannot find the solution right now.
+    Defined styled globally.
+*/
+
+.color {
+    color: var(--text-primary-color);
+}
+
+h1 {
+    font-family: var(--font-family-h1);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 120%;
+}
+
+h2 {
+    font-family: var(--font-family-h2);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 120%;
+}
+
+h3 {
+    font-family: var(--font-family-h3);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 120%;
+}
+
+h4 {
+    font-family: var(--font-family-h4);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 130%;
+}
+
+h5 {
+    font-family: var(--font-family-h5);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+}
+
+h6 {
+    font-family: var(--font-family-h6);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 130%;
+}

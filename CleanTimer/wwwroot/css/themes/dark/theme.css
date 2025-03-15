@@ -1,0 +1,19 @@
+﻿:root {
+    --surface-ground: #0c1920;
+    --surface-card: #183240;
+    /* --surface-section: #19212e; */
+    --surface-control: #415b61;
+    --text-primary-color: #ffffff;
+    --text-secondary-color: #adb9c2;
+    --primary-color: #22d3ee;
+    --secondary-color: rgb(41, 68, 78);
+    --tertiary-color: rgb(56, 189, 248);
+    --danger-color: rgb(248, 113, 113);
+    --button-text-primary-color: #183240;
+    --button-text-secondary-color: rgb(218, 222, 221);
+    --button-text-tertiary-color: rgb(8, 47, 73);
+    --button-text-danger-color: rgb(69, 10, 10);
+    --input-border-color: #5f7274;
+    --disabled-opacity: 0.4;
+    --box-shadow-card: 6px 5px 13px 10px rgba(0, 0, 0, 0.2);
+}

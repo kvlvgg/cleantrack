@@ -1,0 +1,25 @@
+.householdDeals {
+    display: grid;
+    grid-template-areas:
+        'btn title'
+        '. progressbar';
+    grid-template-columns: auto 5fr;
+    gap: var(--gap-xxxs) var(--gap-xs);
+    align-items: center;
+}
+
+.btn {
+    grid-area: btn;
+}
+
+.title {
+    grid-area: title;
+}
+
+.horizontalPlaceholder {
+    display: none;
+}
+
+.progressbar {
+    grid-area: progressbar;
+}

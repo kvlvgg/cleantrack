@@ -1,11 +1,16 @@
 ﻿@namespace Controls
 
-
 <div class="bar">
-    <div class="progress" />
-    <div class="text">30</div>
+    <div class="progress" style="@progressWidth" />
+    <div class="text">
+        <Controls.Text Value="@text" Size="@UI.Controls.Text.Size.SM" />
+    </div>
 </div>
 
 @code {
+    [Parameter]
+    public double Value { get; set; }
 
+    private string text => Math.Round(Value * 100).ToString();
+    public string progressWidth => $"width: {Value * 100}%";
 }

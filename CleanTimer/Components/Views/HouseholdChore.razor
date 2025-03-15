@@ -2,10 +2,11 @@
 
 @using Model = CleanTimer.Models.HouseholdChore
 
-<div>
+<div class="householdDeals">
     <button>Reload</button>
-    <h2>@Model.Name</h2>
 
+    <Controls.Text Value="@Model.Name" Size="@UI.Controls.Text.Size.SM"/>
+    <div></div>
     <Controls.ProgressBar />
 </div>
 

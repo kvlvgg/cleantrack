@@ -1,0 +1,28 @@
+﻿@namespace Controls
+
+@if (Value != string.Empty) {
+    <span class="@classes">
+        @Value
+    </span>
+}
+else {
+    <div class="@classes">
+        @ChildContent
+    </div>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Size { get; set; } = UI.Controls.Text.Size.MD;
+
+    [Parameter]
+    public string Color { get; set; } = UI.Controls.Text.Color.PRIMARY;
+
+    private string classes => $"size-{Size} color-{Color}";
+}

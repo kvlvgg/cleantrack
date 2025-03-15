@@ -1,0 +1,19 @@
+﻿@namespace Controls
+
+@root()
+
+@code {
+    [Parameter]
+    public string Level { get; set; } = "1";
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    private RenderFragment root() => (builder) =>
+    {
+        builder.OpenElement(0, $"h{Level}");
+        // builder.AddAttribute(0, "class", $"h{Level} color");
+        builder.AddContent(0, Text);
+        builder.CloseElement();
+    };
+}
