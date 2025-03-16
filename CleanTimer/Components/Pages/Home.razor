@@ -4,9 +4,9 @@
 
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
     <div class="householdDeals">
-        @foreach (HouseholdChore deal in deals)
+        @foreach (HouseholdChoreNode node in ViewModel.tree)
         {
-            <Views.HouseholdChore Model="@deal" />
+            <Views.HouseholdChore Node="@node" />
         }
     </div>
 
@@ -15,12 +15,11 @@
 <div style="height: 800px"></div>
 
 @code {
-    private IList<HouseholdChore> deals = new List<HouseholdChore>
+    [Inject]
+    IHouseholdChoresViewModel ViewModel { get; set; }
+
+    protected override void OnInitialized()
     {
-        new() {Name = "Floor"},
-        new() {Name = "Working place"},
-        new() {Name = "Bathroom"},
-        new() {Name = "Bed sheets"},
-        new() {Name = "Kitchen"},
-    };
+        ViewModel.Load();
+    }
 }

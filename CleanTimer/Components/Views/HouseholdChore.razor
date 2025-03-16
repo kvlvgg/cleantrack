@@ -1,16 +1,16 @@
 ﻿@namespace Views
 
-@using Model = CleanTimer.Models.HouseholdChore
+@using Node = CleanTimer.ViewModel.HouseholdChoreNode
 
 <div class="householdDeals">
     <Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH" Variant="@UI.Controls.Button.Variant.PRIMARY" Size="@UI.Controls.Button.Size.XS"/>
 
-    <Controls.Text Value="@Model.Name" Size="@UI.Controls.Text.Size.SM"/>
+    <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
     <div />
-    <Controls.ProgressBar Value="0.3" />
+    <Controls.ProgressBar Value="@Node.PercentProgress" />
 </div>
 
 @code {
     [Parameter]
-    public required Model Model { get; set; }
+    public required Node Node { get; set; }
 }
