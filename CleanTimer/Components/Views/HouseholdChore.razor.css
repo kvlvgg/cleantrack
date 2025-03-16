@@ -23,3 +23,7 @@
 .progressbar {
     grid-area: progressbar;
 }
+
+.children {
+    padding-left: calc(var(--gap-xl) + var(--gap-xs) / 2);
+}

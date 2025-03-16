@@ -17,6 +17,8 @@ namespace CleanTimer.ViewModel
         public double PercentProgress { get; set; }
 
         public Guid? ParentId { get; set; }
+
+        public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
     }
 
     public interface IHouseholdChoresViewModel
@@ -41,15 +43,41 @@ namespace CleanTimer.ViewModel
             this.repo = repo;
         }
 
-        public IList<HouseholdChoreNode> tree => entities.Select<HouseholdChore, HouseholdChoreNode>(x =>
-            new()
+        public IList<HouseholdChoreNode> tree
+        {
+            get
             {
-                Id = x.Id,
-                Name = x.Name,
-                PercentProgress = 0,
-                ParentId = x.ParentId
+                HouseholdChoreNode toNode(HouseholdChore model) => new()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    PercentProgress = 0,
+                    ParentId = model.ParentId,
+                    Children = new List<HouseholdChoreNode>()
+                };
+
+                IList<HouseholdChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
+                    entities.Where(x => x.ParentId == null).Select(x => toNode(x)).ToList();
+
+                IList<HouseholdChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, HouseholdChoreNode node) =>
+                    entities.Where(x => x.ParentId == node.Id).Select(x => toNode(x)).ToList();
+
+                IList<HouseholdChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, HouseholdChoreNode? treeNode = null)
+                {
+                    IList<HouseholdChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
+
+                    foreach (HouseholdChoreNode node in childNodes)
+                    {
+                        node.Children = buildTreeNodes(householdChore, node).ToList();
+                    }
+
+                    return childNodes;
+                }
+
+                return buildTreeNodes(entities);
             }
-        ).ToList();
+        }
+
 
         public void Load()
         {

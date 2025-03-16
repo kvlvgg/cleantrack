@@ -1,37 +1,132 @@
 [
   {
     "Id": "03D3FBD2-09AC-4214-9DA2-E64BAE8725DC",
-    "Name": "Bathroom",
+    "Name": "Пол",
     "DayInterval": 6,
     "LastDateDone": "2025-03-16 12:46:40.269256",
     "ParentId": null
   },
+
+
+
   {
     "Id": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2",
-    "Name": "Kitchen",
+    "Name": "Пыль",
     "DayInterval": 5,
     "LastDateDone": "2025-03-16 12:46:40.269256",
     "ParentId": null
   },
   {
-    "Id": "D7438A0B-2C8B-486F-98A7-3C60522C2028",
-    "Name": "Floor",
+    "Id": "9CAE11F8-2859-407B-B24E-3629E00EA9B4",
+    "Name": "Диван, пуфик",
+    "DayInterval": 5,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2"
+  },
+  {
+    "Id": "DC51A5C8-1CA2-4A5E-8B82-023560841ECD",
+    "Name": "Подоконники",
+    "DayInterval": 5,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2"
+  },
+
+
+
+  {
+    "Id": "DDD2C64F-DBE2-4B2D-9C26-631EB5FA0BC4",
+    "Name": "Кухня",
+    "DayInterval": 5,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": null
+  },
+
+
+
+  {
+    "Id": "0FBD9EA8-7A27-444B-B987-C60C56470EB0",
+    "Name": "Рабочий стол",
     "DayInterval": 4,
     "LastDateDone": "2025-03-16 12:46:40.269256",
     "ParentId": null
   },
   {
-    "Id": "E0ADBDC3-F76B-4300-A76B-B70D3DA0E778",
-    "Name": "Working place",
-    "DayInterval": 7,
+    "Id": "C43B3614-44A1-49CB-B1A3-21C0ED70B1BE",
+    "Name": "Поверхность",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
+  },
+  {
+    "Id": "5B07DC24-A392-4280-9429-FFED7056918A",
+    "Name": "Книги",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
+  },
+  {
+    "Id": "AE4E5965-15DB-4FFA-A73D-588A80904C27",
+    "Name": "Техника",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
+  },
+  {
+    "Id": "9FA9EE71-F0F4-4BD3-B766-1EBB19D30EC8",
+    "Name": "Клавиатура",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
+  },
+
+
+
+  {
+    "Id": "A59F6FAB-D73E-4465-B6B9-C7D56684FA12",
+    "Name": "Стирка",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": null
+  },
+
+
+
+  {
+    "Id": "1FF5A502-EB1E-4302-A118-BF1F5B9AB039",
+    "Name": "Постельное белье",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": null
+  },
+
+
+
+  {
+    "Id": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1",
+    "Name": "Ванная комната",
+    "DayInterval": 4,
     "LastDateDone": "2025-03-16 12:46:40.269256",
     "ParentId": null
   },
   {
-    "Id": "EC3F911F-1596-4D64-9E33-D8A171C33AB0",
-    "Name": "Bed sheets",
-    "DayInterval": 14,
+    "Id": "3C011EA1-B85B-425C-B550-14F5DCA15D78",
+    "Name": "Пол",
+    "DayInterval": 4,
     "LastDateDone": "2025-03-16 12:46:40.269256",
-    "ParentId": null
+    "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
+  },
+  {
+    "Id": "6E4D40BF-BC29-4612-8AE8-BD44E405658A",
+    "Name": "Сантехника",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
+  },
+  {
+    "Id": "7955E716-A2D2-401D-A62C-EFF268236A73",
+    "Name": "Стирка ковриков",
+    "DayInterval": 4,
+    "LastDateDone": "2025-03-16 12:46:40.269256",
+    "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
   }
 ]
