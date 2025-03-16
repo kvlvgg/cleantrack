@@ -43,16 +43,47 @@ namespace CleanTimer.ViewModel
             this.repo = repo;
         }
 
+        private Dictionary<Guid, double> percentsProgress
+        {
+            get
+            {
+                return entities.Aggregate(new Dictionary<Guid, double>(), (acc, curr) =>
+                {
+                    if (curr.DayInterval == null || curr.LastDateDone == null) return acc;
+
+                    int hourInterval = (curr.DayInterval ?? 0) * 24;
+                    TimeSpan diff = (curr.LastDateDone ?? DateTime.UtcNow) - DateTime.Now;
+                    double percentProgress = (hourInterval + diff.TotalHours) / hourInterval;
+
+                    if (percentProgress < -1) percentProgress = -1;
+
+                    acc[curr.Id] = percentProgress;
+
+                    return acc;
+                });
+            }
+        }
+
         public IList<HouseholdChoreNode> tree
         {
             get
             {
-                HouseholdChoreNode toNode(HouseholdChore model) => new()
+                double calculatePercentProgress(HouseholdChore entity)
                 {
-                    Id = model.Id,
-                    Name = model.Name,
-                    PercentProgress = 0,
-                    ParentId = model.ParentId,
+                    if (entity.DayInterval != null && entity.LastDateDone != null)
+                        return percentsProgress[entity.Id];
+
+                    double[] childrenPercents = [.. entities.Where(x => x.ParentId == entity.Id).Select(x => calculatePercentProgress(x))];
+
+                    return childrenPercents.Aggregate(0.0, (acc, curr) => acc + curr) / childrenPercents.Length;
+                }
+
+                HouseholdChoreNode toNode(HouseholdChore entity) => new()
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    PercentProgress = calculatePercentProgress(entity),
+                    ParentId = entity.ParentId,
                     Children = new List<HouseholdChoreNode>()
                 };
 

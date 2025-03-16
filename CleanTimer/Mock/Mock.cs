@@ -33,7 +33,7 @@ namespace CleanTimer.Mock
                         Id = item.Id,
                         Name = item.Name,
                         DayInterval = item.DayInterval,
-                        LastDateDone = DateTime.Parse(item.LastDateDone),
+                        LastDateDone = item.LastDateDone != null ? DateTime.Parse(item.LastDateDone) : null,
                         ParentId = item.ParentId,
                     });
                 }

@@ -10,8 +10,15 @@
 .progress {
     height: 100%;
     width: 100%;
-    background-color: var(--primary-color);
 }
+
+    .progress.positive {
+        background-color: var(--primary-color);
+    }
+
+    .progress.negative {
+        background-color: var(--danger-color);
+    }
 
 .text {
     display: flex;
