@@ -16,28 +16,35 @@ namespace CleanTimer.Mock
 
     public class Generator
     {
-        public static void HouseholdChores(ApplicationDBContext context)
+        public async static void HouseholdChores(ApplicationDBContext context)
         {
             context.HouseholdChores.ExecuteDelete();
 
-            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Mock");
-            string householdChoresPath = Path.Combine(directoryPath, "household-chores.json");
+			try
+			{
+				using var stream = await FileSystem.OpenAppPackageFileAsync("mock/household-chores.json");
+				using var reader = new StreamReader(stream);
 
-            using (FileStream fs = File.OpenRead(householdChoresPath))
-            {
-                var items = JsonSerializer.Deserialize<IEnumerable<MockHouseholdChore>>(fs);
+				string contents = reader.ReadToEnd();
 
-                foreach(var item in items)
-                {
-                    context.HouseholdChores.Add(new() { 
-                        Id = item.Id,
-                        Name = item.Name,
-                        DayInterval = item.DayInterval,
-                        LastDateDone = item.LastDateDone != null ? DateTime.Parse(item.LastDateDone) : null,
-                        ParentId = item.ParentId,
-                    });
-                }
-            }
+				var items = JsonSerializer.Deserialize<IEnumerable<MockHouseholdChore>>(contents);
+
+				foreach (var item in items)
+				{
+					context.HouseholdChores.Add(new()
+					{
+						Id = item.Id,
+						Name = item.Name,
+						DayInterval = item.DayInterval,
+						LastDateDone = item.LastDateDone != null ? DateTime.Parse(item.LastDateDone) : null,
+						ParentId = item.ParentId,
+					});
+				}
+			}
+			catch (Exception ex)
+			{
+
+			}
 
             context.SaveChanges();
         }
