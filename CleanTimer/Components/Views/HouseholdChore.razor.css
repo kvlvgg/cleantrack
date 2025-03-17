@@ -8,6 +8,12 @@
     align-items: center;
 }
 
+    .householdDeals.editMode {
+        display: grid;
+        grid-template-columns: repeat(3, var(--btn-height-xs)) 5fr;
+        gap: var(--gap-xxxs) var(--gap-xxxs);
+    }
+
 .btn {
     grid-area: btn;
 }

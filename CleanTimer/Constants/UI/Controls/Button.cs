@@ -16,6 +16,7 @@
             public const string SECONDARY = "secondary";
             public const string TERTIARY = "tertiary";
             public const string DANGER = "danger";
+            public const string TRANSPARENT = "transparent";
         }
     }
 }

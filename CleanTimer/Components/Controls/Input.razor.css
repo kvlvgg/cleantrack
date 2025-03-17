@@ -1,0 +1,26 @@
+.input {
+    font-family: var(--font-family-body-md);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    width: 100%;
+
+    background-color: var(--surface-control);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--border-radius-md);
+    color: var(--text-primary-color);
+    outline: none;
+    padding: 0 var(--gap-sm);
+}
+
+    .input.size-lg {
+        height: var(--ipt-height-lg);
+    }
+
+    .input.size-md {
+        height: var(--ipt-height-md);
+    }
+
+    .input.size-sm {
+        height: var(--ipt-height-sm);
+    }

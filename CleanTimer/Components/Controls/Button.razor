@@ -1,7 +1,15 @@
 ﻿@namespace Controls
 
 <button class="@buttonClasses" onclick="@OnClick">
-    <Controls.Icon Text="@Icon" />
+    @if (Text != null)
+    {
+        @Text
+    }
+
+    @if (Icon != null)
+    {
+            <Controls.Icon Text="@Icon" />
+    }
 </button>
 
 @code {

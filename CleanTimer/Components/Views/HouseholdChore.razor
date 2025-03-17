@@ -2,25 +2,58 @@
 
 @using Node = CleanTimer.ViewModel.HouseholdChoreNode
 
-<div class="householdDeals">
-    @if (Node.Children.Count == 0)
-    {
-        <Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
-                         Variant="@UI.Controls.Button.Variant.PRIMARY"
-                         Size="@UI.Controls.Button.Size.XS" />
-    }
-    else
-    {
-        <Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
-                         Variant="@UI.Controls.Button.Variant.SECONDARY"
-                         Size="@UI.Controls.Button.Size.XS"
-                         OnClick="() => isChildrenToggled = !isChildrenToggled" />
-    }
+@inject NavigationManager Navigation
 
-    <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
-    <div />
-    <Controls.ProgressBar Value="@Node.PercentProgress" />
-</div>
+@if (!IsEditMode)
+{
+    <div class="householdDeals">
+        @if (Node.Children.Count == 0)
+        {
+            <Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
+                             Variant="@UI.Controls.Button.Variant.PRIMARY"
+                             Size="@UI.Controls.Button.Size.XS" />
+        }
+        else
+        {
+            <Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
+                             Variant="@UI.Controls.Button.Variant.SECONDARY"
+                             Size="@UI.Controls.Button.Size.XS"
+                             OnClick="() => isChildrenToggled = !isChildrenToggled" />
+        }
+
+        <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
+        <div />
+        <Controls.ProgressBar Value="@Node.PercentProgress" />
+    </div>
+}
+else
+{
+    <div class="householdDeals editMode">
+        @if (Node.Children.Count != 0)
+        {
+            <Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
+                             Variant="@UI.Controls.Button.Variant.SECONDARY"
+                             Size="@UI.Controls.Button.Size.XS"
+                             OnClick="() => isChildrenToggled = !isChildrenToggled" />
+        }
+        else
+        {
+            <div />
+        }
+
+        <Controls.Button Icon="@UI.Controls.Icon.Text.DRAG_INDICATOR"
+                         Variant="@UI.Controls.Button.Variant.TRANSPARENT"
+                         Size="@UI.Controls.Button.Size.XS" />
+
+        <Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+                         Variant="@UI.Controls.Button.Variant.TRANSPARENT"
+                         Size="@UI.Controls.Button.Size.XS"
+                         OnClick="goToEditPage" />
+
+        <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
+    </div>
+}
+
 
 
 @if (Node.Children.Count > 0 && isChildrenToggled)
@@ -28,7 +61,7 @@
     <div class="children">
         @foreach (HouseholdChoreNode node in Node.Children)
         {
-            <Views.HouseholdChore Node="@node" />
+            <Views.HouseholdChore Node="@node" IsEditMode="@IsEditMode" />
         }
     </div>
 }
@@ -37,5 +70,13 @@
     [Parameter]
     public required Node Node { get; set; }
 
+    [Parameter]
+    public bool IsEditMode { get; set; }
+
     private bool isChildrenToggled = false;
+
+    private void goToEditPage()
+    {
+        Navigation.NavigateTo($"household-chore?Id={Node.Id}");
+    }
 }

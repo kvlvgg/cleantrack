@@ -1,3 +1,13 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.separator {
+    height: var(--gap-xs);
+}
+
 .householdDeals {
     display: flex;
     flex-direction: column;

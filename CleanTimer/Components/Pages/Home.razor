@@ -3,10 +3,25 @@
 @page "/"
 
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+    <div>
+        <Controls.Text Value="22.48%" Size="@UI.Controls.Text.Size.SM" />
+    </div>
+</Controls.Card>
+
+<div class="separator"/>
+
+<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+    <div class="header">
+        <Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+        Variant="@UI.Controls.Button.Variant.SECONDARY"
+        Size="@UI.Controls.Button.Size.MD" 
+        OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+    </div>
+
     <div class="householdDeals">
         @foreach (HouseholdChoreNode node in ViewModel.tree)
         {
-            <Views.HouseholdChore Node="@node" />
+            <Views.HouseholdChore Node="@node" IsEditMode="@ViewModel.IsEditMode" />
         }
     </div>
 

@@ -21,6 +21,7 @@ public static class MauiProgram
 
 		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSingleton<IHouseholdChoresViewModel, HouseholdChoresViewModel>();
+		builder.Services.AddSingleton<IFormHouseholdChoresViewModel, FormHouseholdChoreViewModel>();
 		builder.Services.AddSingleton<IRepository<HouseholdChore>, HouseholdChoreRepository>();
 
         string dataSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cleantimer.db");

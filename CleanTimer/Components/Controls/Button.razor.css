@@ -46,7 +46,7 @@
 
     .button.size-xs {
         height: var(--btn-height-xs);
-        padding: 0 var(--gap-lg);
+        padding: 0 var(--gap-xs);
         min-width: unset;
     }
 
@@ -107,6 +107,19 @@
 
         .button.danger:active {
             background-color: color-mix(in srgb,var(--danger-color), #ffff 5%);
+            transform: scale(0.99);
+        }
+
+    .button.transparent {
+        background-color: transparent;
+        color: var(--button-text-primary-color);
+    }
+        .button.transparent ::deep .icon {
+/*            color: var(--button-text-primary-color);*/
+        }
+
+        .button.transparent:active {
+            background-color: color-mix(in srgb,var(--secondary-color), #ffff 5%);
             transform: scale(0.99);
         }
 

@@ -1,0 +1,39 @@
+﻿@namespace Controls
+
+@inject IJSRuntime JSRuntime
+
+<input id="@inputId" type="number" min="0" class="@inputClasses" value="@Value" @oninput="(ChangeEventArgs e) => onNumberChanged(e)" />
+
+@code {
+    [Parameter]
+    public int? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Size { get; set; }
+
+    private Guid inputId = Guid.NewGuid(); 
+
+    private string inputClasses => string.Join(" ", new Dictionary<string, bool>()
+    {
+        {"input", true },
+        {$"size-{Size}", Size != string.Empty},
+    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+    private void onNumberChanged(ChangeEventArgs e)
+    {
+        JSRuntime.InvokeAsync<string>("window.CT.utils.toUnsignedIntAndNotZero", inputId);
+
+        string number = toNumberString(e?.Value?.ToString() ?? "0");
+
+        int value = int.Parse(number == string.Empty ? "0" : number);
+        ValueChanged.InvokeAsync(value);
+    }
+
+    private string toNumberString(string input)
+    {
+        return new string(input.Where(c => char.IsDigit(c)).ToArray());
+    }
+}

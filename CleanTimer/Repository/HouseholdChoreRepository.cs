@@ -41,7 +41,7 @@ public class HouseholdChoreRepository : IRepository<HouseholdChore>
         return _context.HouseholdChores.ToList();
     }
 
-    public HouseholdChore GetById(int id)
+    public HouseholdChore GetById(Guid id)
     {
         return _context.HouseholdChores.Find(id);
     }

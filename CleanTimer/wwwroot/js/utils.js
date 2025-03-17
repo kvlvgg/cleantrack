@@ -20,6 +20,18 @@
         linkElement.parentNode?.insertBefore(cloneLinkElement, linkElement.nextSibling);
 
         return newTheme;
+    },
+
+    toUnsignedIntAndNotZero(inputId) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+
+        input.value = input.value.replace(/[\D]/, '')
+        if (input.value === '0') input.value = '';
+
+        window.setTimeout(() => {
+            if (input.value === '0') input.value = '';
+        }, 10)
     }
 }
 

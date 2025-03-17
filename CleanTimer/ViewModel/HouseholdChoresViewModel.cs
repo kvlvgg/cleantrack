@@ -24,6 +24,7 @@ namespace CleanTimer.ViewModel
     public interface IHouseholdChoresViewModel
     {
         public IList<HouseholdChoreNode> tree { get; }
+        public bool IsEditMode { get; set; }
         public void Load();
         public void Add(HouseholdChore householdChore);
         public void Save();
@@ -37,6 +38,7 @@ namespace CleanTimer.ViewModel
 
         private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
 
+        public bool IsEditMode { get; set; } = false;
 
         public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
         {

@@ -1,0 +1,20 @@
+﻿@namespace Controls
+
+<input class="@inputClasses" value="@Value" @oninput="(ChangeEventArgs e) => ValueChanged.InvokeAsync(e?.Value?.ToString())"/>
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Size { get; set; }
+
+    private string inputClasses => string.Join(" ", new Dictionary<string, bool>()
+    {
+        {"input", true },
+        {$"size-{Size}", Size != string.Empty},
+    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+}
