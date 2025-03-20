@@ -9,3 +9,16 @@
     flex-direction: column;
     margin-bottom: var(--gap-sm);
 }
+
+.datetimeLabel {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+
+    margin-bottom: var(--gap-xs);
+}
+
+.timeUnits {
+    display: flex;
+    gap: var(--gap-xs);
+}

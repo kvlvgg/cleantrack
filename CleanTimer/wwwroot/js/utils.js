@@ -32,6 +32,13 @@
         window.setTimeout(() => {
             if (input.value === '0') input.value = '';
         }, 10)
+    },
+
+    setInputValue(inputId, value) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+
+        input.value = value;
     }
 }
 

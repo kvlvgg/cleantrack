@@ -2,7 +2,7 @@
 
 @inject IJSRuntime JSRuntime
 
-<input id="@inputId" type="number" min="0" class="@inputClasses" value="@Value" @oninput="(ChangeEventArgs e) => onNumberChanged(e)" />
+<input id="@inputId" type="number" min="0" class="@inputClasses" value="@Value" placeholder="0" @oninput="(ChangeEventArgs e) => onNumberChanged(e)" />
 
 @code {
     [Parameter]
@@ -10,6 +10,12 @@
 
     [Parameter]
     public EventCallback<int?> ValueChanged { get; set; }
+
+    [Parameter]
+    public int? Min { get; set; }
+
+    [Parameter]
+    public int? Max { get; set; }
 
     [Parameter]
     public string Size { get; set; }
@@ -29,6 +35,11 @@
         string number = toNumberString(e?.Value?.ToString() ?? "0");
 
         int value = int.Parse(number == string.Empty ? "0" : number);
+
+        if (Min != null && value < Min) value = Min ?? value;
+        if (Max != null && value > Max) value = Max ?? value;
+
+        JSRuntime.InvokeAsync<string>("window.CT.utils.setInputValue", inputId, value);
         ValueChanged.InvokeAsync(value);
     }
 

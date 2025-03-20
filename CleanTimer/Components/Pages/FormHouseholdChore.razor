@@ -3,58 +3,101 @@
 @page "/household-chore"
 
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
-    <div class="title">
-        <Controls.H Level="3" Text="Edit" />
-    </div>
+	<div class="title">
+		<Controls.H Level="3" Text="Edit" />
+	</div>
 
-    <div>
-        <div class="field">
-            <Controls.Text Value="Name" Size="@UI.Controls.Text.Size.SM" />
-            <Controls.Input @bind-Value="@ViewModel.Form.Name" Size="@UI.Controls.Input.Size.MD" />
-        </div>
+	<div>
+		<div class="field">
+			<Controls.Text Value="Name" Size="@UI.Controls.Text.Size.SM" />
+			<Controls.Input @bind-Value="@ViewModel.Form.Name" Size="@UI.Controls.Input.Size.MD" />
+		</div>
 
-        <div class="field">
-            <Controls.Text Value="Day Interval" Size="@UI.Controls.Text.Size.SM" />
-            <Controls.NumberInput @bind-Value="@ViewModel.Form.DayInterval" Size="@UI.Controls.Input.Size.MD" />
-        </div>
+		<div class="field">
+			<Controls.Text Value="Day Interval" Size="@UI.Controls.Text.Size.SM" />
+			<Controls.NumberInput @bind-Value="@ViewModel.Form.DayInterval" Size="@UI.Controls.Input.Size.MD" />
+		</div>
 
-        <div class="field">
-            <Controls.Text Value="Last Date Done" Size="@UI.Controls.Text.Size.SM" />
-            <Controls.DateTimeInput @bind-Value="@ViewModel.Form.LastDateDone" Size="@UI.Controls.Input.Size.MD" />
-        </div>
+		<div class="field">
+			<div class="datetimeLabel">
+				<Controls.Text Value="Last Date Done" Size="@UI.Controls.Text.Size.SM" />
+				<Controls.Text Value="@ViewModel.LastDateDoneDisplayText" Size="@UI.Controls.Text.Size.SM" />
+			</div>
 
-        <div class="field">
-            <Controls.ProgressBar Value="@ViewModel.ProgressPercent" />
-        </div>
-    </div>
+			<div class="timeUnits">
+				<div class="field">
+					<Controls.Text Value="Days" Size="@UI.Controls.Text.Size.SM" />
+					<Controls.NumberInput Value="@ViewModel.LastTimeDoneAgo.Days"
+					Size="@UI.Controls.Input.Size.MD"
+					ValueChanged="@((int? e) => changeLastTimeDoneAgo("days", e))" />
+				</div>
+
+				<div class="field">
+					<Controls.Text Value="Hours" Size="@UI.Controls.Text.Size.SM" />
+					<Controls.NumberInput Value="@ViewModel.LastTimeDoneAgo.Hours"
+					Size="@UI.Controls.Input.Size.MD"
+					ValueChanged="@((int? e) => changeLastTimeDoneAgo("hours", e))"
+					Min="0"
+					Max="23" />
+				</div>
+
+				<div class="field">
+					<Controls.Text Value="Minutes" Size="@UI.Controls.Text.Size.SM" />
+					<Controls.NumberInput Value="@ViewModel.LastTimeDoneAgo.Minutes"
+					Size="@UI.Controls.Input.Size.MD"
+					ValueChanged="@((int? e) => changeLastTimeDoneAgo("minutes", e))"
+					Min="0"
+					Max="59" />
+				</div>
+			</div>
+		</div>
+
+		<div class="field">
+			<Controls.ProgressBar Value="@ViewModel.ProgressPercent" />
+		</div>
+	</div>
 </Controls.Card>
 
 <div>
-    <Controls.Text Value="@ViewModel.Form.Name" Size="@UI.Controls.Text.Size.SM" />
+	<Controls.Text Value="@ViewModel.Form.Name" Size="@UI.Controls.Text.Size.SM" />
 </div>
 
 <div>
-    <Controls.Text Value="@ViewModel.Form.DayInterval.ToString()" Size="@UI.Controls.Text.Size.SM" />
+	<Controls.Text Value="@ViewModel.Form.DayInterval.ToString()" Size="@UI.Controls.Text.Size.SM" />
 </div>
 
 <div>
-    <Controls.Text Value="@ViewModel.Form.LastDateDone.ToString()" Size="@UI.Controls.Text.Size.SM" />
+	<Controls.Text Value="@ViewModel.Form.LastDateDone.ToString()" Size="@UI.Controls.Text.Size.SM" />
 </div>
 
 
 @code {
-    [Parameter]
-    [SupplyParameterFromQuery]
-    public Guid Id { get; set; }
+	[Parameter]
+	[SupplyParameterFromQuery]
+	public Guid Id { get; set; }
 
-    [Inject]
-    IFormHouseholdChoresViewModel ViewModel { get; set; }
+	[Inject]
+	IFormHouseholdChoresViewModel ViewModel { get; set; }
 
-    private HouseholdChore householdChore { get; set; }
+	private HouseholdChore householdChore { get; set; }
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        ViewModel.LoadFormById(Id);
-    }
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		ViewModel.LoadFormById(Id);
+	}
+
+	private void changeLastTimeDoneAgo(string timeunit, int? value)
+	{
+		int days = ViewModel.LastTimeDoneAgo.Days;
+		int hours = ViewModel.LastTimeDoneAgo.Hours;
+		int minutes = ViewModel.LastTimeDoneAgo.Minutes;
+		int seconds = ViewModel.LastTimeDoneAgo.Seconds;
+
+		if (timeunit == "days") days = value ?? 0;
+		if (timeunit == "hours") hours = value ?? 0;
+		if (timeunit == "minutes") minutes = value ?? 0;
+
+		ViewModel.LastTimeDoneAgo = new TimeSpan(days, hours, minutes, seconds);
+	}
 }
