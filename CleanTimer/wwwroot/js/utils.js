@@ -39,7 +39,7 @@
         if (!input) return;
 
         input.value = value;
-    }
+    },
 }
 
 window.CT = {

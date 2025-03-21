@@ -2,39 +2,77 @@
 
 @page "/"
 
+@inject NavigationManager Navigation
+
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
-    <div>
-        <Controls.Text Value="22.48%" Size="@UI.Controls.Text.Size.SM" />
-    </div>
+	<div>
+		<Controls.Text Value="22.48%" Size="@UI.Controls.Text.Size.SM" />
+	</div>
 </Controls.Card>
 
-<div class="separator"/>
+<div class="separator" />
 
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
-    <div class="header">
-        <Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-        Variant="@UI.Controls.Button.Variant.SECONDARY"
-        Size="@UI.Controls.Button.Size.MD" 
-        OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-    </div>
+	<div class="header">
+		@if (!ViewModel.IsEditMode)
+		{
+			<div />
+			<div />
+			<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+		}
+		else
+		{
+			<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+							 Text="Chapter"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => goToAddPage(NodeType.Node)" />
 
-    <div class="householdDeals">
-        @foreach (HouseholdChoreNode node in ViewModel.tree)
-        {
-            <Views.HouseholdChore Node="@node" IsEditMode="@ViewModel.IsEditMode" />
-        }
-    </div>
+			<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+							 Text="Timer"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => goToAddPage(NodeType.Leaf)" />
+
+			<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+
+		}
+	</div>
+
+	<div class="householdDeals">
+		@foreach (HouseholdChoreNode node in ViewModel.tree)
+		{
+			<Views.HouseholdChore @key="node.Id"
+								  Node="@node"
+								  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
+								  IsEditMode="@ViewModel.IsEditMode" />
+		}
+	</div>
 
 </Controls.Card>
 
 <div style="height: 800px"></div>
 
 @code {
-    [Inject]
-    IHouseholdChoresViewModel ViewModel { get; set; }
+	[Inject]
+	IHouseholdChoresViewModel ViewModel { get; set; }
 
-    protected override void OnInitialized()
-    {
-        ViewModel.Load();
-    }
+	public Guid? SelectedHouseholdChoreId { get; set; }
+
+	protected override void OnInitialized()
+	{
+		ViewModel.Load();
+	}
+
+	private void goToAddPage(NodeType nodeType)
+	{
+		string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
+		Navigation.NavigateTo($"household-chore?Type={queryParam}");
+	}
 }

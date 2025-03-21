@@ -1,14 +1,18 @@
 ﻿@namespace Controls
 
 <button class="@buttonClasses" onclick="@OnClick">
+    @if (Icon != null)
+    {
+        <Controls.Icon Text="@Icon" />
+        @if(Text != string.Empty)
+        {
+            <div style="width: 4px;"/>
+        }
+    }
+
     @if (Text != null)
     {
         @Text
-    }
-
-    @if (Icon != null)
-    {
-            <Controls.Icon Text="@Icon" />
     }
 </button>
 

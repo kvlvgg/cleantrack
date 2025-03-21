@@ -1,7 +1,9 @@
 .header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+
+    gap: var(--gap-xs);
+    margin-bottom: var(--gap-md);
 }
 
 .separator {
@@ -11,5 +13,4 @@
 .householdDeals {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-xs);
 }

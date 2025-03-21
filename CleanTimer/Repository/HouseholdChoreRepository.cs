@@ -51,6 +51,11 @@ public class HouseholdChoreRepository : IRepository<HouseholdChore>
         _context.HouseholdChores.Add(entity);
     }
 
+    public void Update(HouseholdChore entity)
+    {
+        _context.HouseholdChores.Update(entity);
+    }
+
     public void Delete(HouseholdChore entity)
     {
         _context.HouseholdChores.Remove(entity);

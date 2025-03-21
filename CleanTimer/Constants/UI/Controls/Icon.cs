@@ -21,8 +21,10 @@ namespace CleanTimer.Constants.UI.Controls
             public const string DARK_MODE = "dark_mode";
             public const string CHEVRON_RIGHT = "chevron_right";
             public const string REFRESH = "refresh";
-            public const string EDIT = "edit";
+			public const string ADD = "add";
+			public const string EDIT = "edit";
             public const string DRAG_INDICATOR = "drag_indicator";
-        }
-    }
+            public const string CLOSE = "close";
+		}
+	}
 }

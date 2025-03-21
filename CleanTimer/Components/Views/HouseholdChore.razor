@@ -3,80 +3,122 @@
 @using Node = CleanTimer.ViewModel.HouseholdChoreNode
 
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 
 @if (!IsEditMode)
 {
-    <div class="householdDeals">
-        @if (Node.Children.Count == 0)
-        {
-            <Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
-                             Variant="@UI.Controls.Button.Variant.PRIMARY"
-                             Size="@UI.Controls.Button.Size.XS" />
-        }
-        else
-        {
-            <Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
-                             Variant="@UI.Controls.Button.Variant.SECONDARY"
-                             Size="@UI.Controls.Button.Size.XS"
-                             OnClick="() => isChildrenToggled = !isChildrenToggled" />
-        }
+	<div class="householdDeals">
+		@if (Node.isLeaf)
+		{
+			<Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
+							 Variant="@UI.Controls.Button.Variant.PRIMARY"
+							 Size="@UI.Controls.Button.Size.XS" />
+		}
+		else
+		{
+			<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.XS"
+							 OnClick="() => isChildrenToggled = !isChildrenToggled" />
+		}
 
-        <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
-        <div />
-        <Controls.ProgressBar Value="@Node.PercentProgress" />
-    </div>
+		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
+		<div />
+		<Controls.ProgressBar Value="@Node.PercentProgress" />
+	</div>
 }
 else
 {
-    <div class="householdDeals editMode">
-        @if (Node.Children.Count != 0)
-        {
-            <Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
-                             Variant="@UI.Controls.Button.Variant.SECONDARY"
-                             Size="@UI.Controls.Button.Size.XS"
-                             OnClick="() => isChildrenToggled = !isChildrenToggled" />
-        }
-        else
-        {
-            <div />
-        }
+	<div class="householdDeals editMode">
+		@if (!Node.isLeaf)
+		{
+			<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.XS"
+							 OnClick="() => isChildrenToggled = !isChildrenToggled" />
+		}
+		else
+		{
+			<div />
+		}
 
-        <Controls.Button Icon="@UI.Controls.Icon.Text.DRAG_INDICATOR"
-                         Variant="@UI.Controls.Button.Variant.TRANSPARENT"
-                         Size="@UI.Controls.Button.Size.XS" />
+		@* <Controls.Button Icon="@UI.Controls.Icon.Text.DRAG_INDICATOR" *@
+		@* 				 Variant="@UI.Controls.Button.Variant.TRANSPARENT" *@
+		@* 				 Size="@UI.Controls.Button.Size.XS" /> *@
 
-        <Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-                         Variant="@UI.Controls.Button.Variant.TRANSPARENT"
-                         Size="@UI.Controls.Button.Size.XS"
-                         OnClick="goToEditPage" />
+		<div class="@itemClasses" @onclick="() => SelectedHouseholdChoreIdChanged.InvokeAsync(Node.Id)" data-selected-id="@SelectedHouseholdChoreId">
+			<div class="tag">
+				<Controls.Text Value="@(Node.isLeaf ? "T" : "C")" Size="@UI.Controls.Text.Size.SM" />
+			</div>
 
-        <Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
-    </div>
+			<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
+		</div>
+
+		<div class="buttonsWrapper">
+			<div class="@buttonsClasses">
+				@if (isSelected)
+				{
+
+					<div>
+						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.SM"
+										 OnClick="goToEditPage" />
+					</div>
+				}
+			</div>
+		</div>
+	</div>
 }
 
 
 
 @if (Node.Children.Count > 0 && isChildrenToggled)
 {
-    <div class="children">
-        @foreach (HouseholdChoreNode node in Node.Children)
-        {
-            <Views.HouseholdChore Node="@node" IsEditMode="@IsEditMode" />
-        }
-    </div>
+	<div class="children">
+		@foreach (HouseholdChoreNode node in Node.Children)
+		{
+			<Views.HouseholdChore @key="node.Id"
+								  SelectedHouseholdChoreId="SelectedHouseholdChoreId"
+								  Node="@node"
+								  IsEditMode="@IsEditMode"
+								  SelectedHouseholdChoreIdChanged="(id) => SelectedHouseholdChoreIdChanged.InvokeAsync(id)" />
+		}
+	</div>
 }
 
 @code {
-    [Parameter]
-    public required Node Node { get; set; }
+	[Parameter]
+	public required Node Node { get; set; }
 
-    [Parameter]
-    public bool IsEditMode { get; set; }
+	[Parameter]
+	public bool IsEditMode { get; set; }
 
-    private bool isChildrenToggled = false;
+	/* Cannot put this in ViewModel. It seems like duplicate ViewModel for each node. */
+	[Parameter]
+	public Guid? SelectedHouseholdChoreId { get; set; }
 
-    private void goToEditPage()
-    {
-        Navigation.NavigateTo($"household-chore?Id={Node.Id}");
-    }
+	[Parameter]
+	public EventCallback<Guid?> SelectedHouseholdChoreIdChanged { get; set; }
+
+	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
+
+	private string itemClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"item", true},
+		{"selected", Node.Id == SelectedHouseholdChoreId },
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string buttonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", Node.Id == SelectedHouseholdChoreId },
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private bool isChildrenToggled = false;
+
+	private void goToEditPage()
+	{
+		Navigation.NavigateTo($"household-chore?Id={Node.Id}");
+	}
 }
