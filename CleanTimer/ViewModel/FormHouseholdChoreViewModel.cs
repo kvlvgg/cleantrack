@@ -10,135 +10,141 @@ using CleanTimer.Repository;
 
 namespace CleanTimer.ViewModel
 {
-	public enum Mode
-	{
-		Add,
-		Edit
-	}
+    public enum Mode
+    {
+        Add,
+        Edit
+    }
 
-	public enum NodeType
-	{
-		Node,
-		Leaf,
-	}
+    public enum NodeType
+    {
+        Node,
+        Leaf,
+    }
 
-	public class FormHouseholdChore
-	{
-		public Guid Id { get; set; }
+    public class FormHouseholdChore
+    {
+        public Guid Id { get; set; }
 
-		public string Name { get; set; } = string.Empty;
-	}
+        public string Name { get; set; } = string.Empty;
+    }
 
-	public interface IFormHouseholdChoresViewModel
-	{
-		public HouseholdChore Form { get; set; }
-		public NodeType NodeType { get; set; }
-		public Mode Mode { get; }
-		public TimeSpan LastTimeDoneAgo { get; set; }
-		public string LastDateDoneDisplayText { get; }
-		public double ProgressPercent { get; }
-		public void Create(Guid? parentId);
-		public void LoadFormById(Guid id);
-		public void Add();
-		public void Update();
-	}
+    public interface IFormHouseholdChoresViewModel
+    {
+        public HouseholdChore Form { get; set; }
+        public NodeType NodeType { get; set; }
+        public Mode Mode { get; }
+        public TimeSpan LastTimeDoneAgo { get; set; }
+        public string LastDateDoneDisplayText { get; }
+        public double ProgressPercent { get; }
+        public void Create(NodeType type, Guid? parentId);
+        public void LoadFormById(Guid id);
+        public void Add();
+        public void Update();
+    }
 
-	public class FormHouseholdChoreViewModel : IFormHouseholdChoresViewModel
-	{
-		[Inject]
-		IRepository<HouseholdChore> repo { get; set; }
+    public class FormHouseholdChoreViewModel : IFormHouseholdChoresViewModel
+    {
+        [Inject]
+        IRepository<HouseholdChore> repo { get; set; }
 
-		public FormHouseholdChoreViewModel(IRepository<HouseholdChore> repo)
-		{
-			this.repo = repo;
-			this.LastTimeDoneAgo = new TimeSpan();
-		}
+        public FormHouseholdChoreViewModel(IRepository<HouseholdChore> repo)
+        {
+            this.repo = repo;
+            this.LastTimeDoneAgo = new TimeSpan();
+        }
 
-		public HouseholdChore Form { get; set; } = new HouseholdChore();
+        public HouseholdChore Form { get; set; } = new HouseholdChore();
 
-		public Mode Mode => Form.Id == Guid.Empty ? Mode.Add : Mode.Edit;
+        public Mode Mode => Form.Id == Guid.Empty ? Mode.Add : Mode.Edit;
 
-		private NodeType? _type;
-		public NodeType NodeType
-		{
-			get
-			{
-				if (_type != null) return (NodeType)_type;
-				return (Form.DayInterval == null && Form.LastDateDone == null) ? NodeType.Node : NodeType.Leaf;
-			}
+        private NodeType? _type;
+        public NodeType NodeType
+        {
+            get
+            {
+                if (_type != null) return (NodeType)_type;
+                return (Form.DayInterval == null && Form.LastDateDone == null) ? NodeType.Node : NodeType.Leaf;
+            }
 
-			set => _type = value;
-		}
+            set => _type = value;
+        }
 
-		private TimeSpan lastTimeDoneAgo;
-		public TimeSpan LastTimeDoneAgo
-		{
-			get => lastTimeDoneAgo;
-			set
-			{
-				Form.LastDateDone = DateTime.Now - value;
-				lastTimeDoneAgo = value;
-			}
-		}
+        private TimeSpan lastTimeDoneAgo;
+        public TimeSpan LastTimeDoneAgo
+        {
+            get => lastTimeDoneAgo;
+            set
+            {
+                Form.LastDateDone = DateTime.Now - value;
+                lastTimeDoneAgo = value;
+            }
+        }
 
-		public string LastDateDoneDisplayText => string.Join(" ", [(Form.LastDateDone?.ToString("ddd dd MMM yyyy") ?? string.Empty), (Form.LastDateDone?.ToString("t") ?? string.Empty)]);
+        public string LastDateDoneDisplayText => string.Join(" ", [(Form.LastDateDone?.ToString("ddd dd MMM yyyy") ?? string.Empty), (Form.LastDateDone?.ToString("t") ?? string.Empty)]);
 
-		public double ProgressPercent
-		{
-			get
-			{
-				if (Form.DayInterval == null || Form.LastDateDone == null) return 0.0;
+        public double ProgressPercent
+        {
+            get
+            {
+                if (Form.DayInterval == null || Form.LastDateDone == null) return 0.0;
 
-				int hourInterval = (Form.DayInterval ?? 0) * 24;
-				TimeSpan diff = (Form.LastDateDone ?? DateTime.UtcNow) - DateTime.Now;
-				double percentProgress = (hourInterval + diff.TotalHours) / hourInterval;
+                int hourInterval = (Form.DayInterval ?? 0) * 24;
+                TimeSpan diff = (Form.LastDateDone ?? DateTime.UtcNow) - DateTime.Now;
+                double percentProgress = (hourInterval + diff.TotalHours) / hourInterval;
 
-				if (percentProgress < -1) percentProgress = -1;
+                if (percentProgress < -1) percentProgress = -1;
 
-				return percentProgress;
-			}
-		}
+                return percentProgress;
+            }
+        }
 
-		public void Create(Guid? parentId)
-		{
-			Form = new HouseholdChore() { ParentId = parentId };
-			lastTimeDoneAgo = default;
-		}
+        public void Create(NodeType type, Guid? parentId)
+        {
+            Form = new HouseholdChore()
+            {
+                DayInterval = type == NodeType.Leaf ? 1 : null,
+                LastDateDone = type == NodeType.Leaf ? DateTime.Now : null,
+                ParentId = parentId
+            };
 
-		public void LoadFormById(Guid id)
-		{
-			HouseholdChore entity = repo.GetById(id);
-			if (entity == null) return;
+            LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
+        }
 
-			Form = new HouseholdChore()
-			{
-				Id = entity.Id,
-				Name = entity.Name,
-				DayInterval = entity.DayInterval,
-				LastDateDone = entity.LastDateDone,
-				ParentId = entity.ParentId
-			};
+        public void LoadFormById(Guid id)
+        {
+            HouseholdChore entity = repo.GetById(id);
+            if (entity == null) return;
 
-			LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
-		}
+            Form = new HouseholdChore()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DayInterval = entity.DayInterval,
+                LastDateDone = entity.LastDateDone,
+                ParentId = entity.ParentId
+            };
 
-		public void Add()
-		{
-			repo.Add(Form);
-			repo.Save();
-		}
+            LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
+        }
 
-		public void Update()
-		{
-			HouseholdChore entity = repo.GetById(Form.Id);
-			if (entity == null) return;
+        public void Add()
+        {
+            repo.Add(Form);
+            repo.Save();
+        }
 
-			entity.Name = Form.Name;
-			entity.DayInterval = Form.DayInterval;
-			entity.LastDateDone = Form.LastDateDone;
-			entity.ParentId = Form.ParentId;
+        public void Update()
+        {
+            HouseholdChore entity = repo.GetById(Form.Id);
+            if (entity == null) return;
 
-			repo.Save();
-		}
-	}
+            entity.Name = Form.Name;
+            entity.DayInterval = Form.DayInterval;
+            entity.LastDateDone = Form.LastDateDone;
+            entity.ParentId = Form.ParentId;
+
+            repo.Save();
+        }
+    }
 }

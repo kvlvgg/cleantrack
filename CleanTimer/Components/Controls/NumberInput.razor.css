@@ -24,6 +24,10 @@
         height: var(--ipt-height-sm);
     }
 
+.invalid {
+    border: 2px solid var(--danger-color);
+}
+
 input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;

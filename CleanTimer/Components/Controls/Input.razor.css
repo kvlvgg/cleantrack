@@ -24,3 +24,7 @@
     .input.size-sm {
         height: var(--ipt-height-sm);
     }
+
+    .invalid {
+        border: 2px solid var(--danger-color);
+    }

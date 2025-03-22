@@ -2,7 +2,14 @@
 
 @inject IJSRuntime JSRuntime
 
-<input id="@inputId" type="number" min="0" class="@inputClasses" value="@Value" placeholder="0" @oninput="(ChangeEventArgs e) => onNumberChanged(e)" />
+<input 
+id="@inputId" 
+type="number" min="0" 
+class="@inputClasses" 
+value="@Value" 
+placeholder="0" 
+@oninput="(ChangeEventArgs e) => onNumberChanged(e)"
+@onfocusout="(FocusEventArgs e) => onFocusOut(e)" />
 
 @code {
     [Parameter]
@@ -20,12 +27,16 @@
     [Parameter]
     public string Size { get; set; }
 
-    private Guid inputId = Guid.NewGuid(); 
+    [Parameter]
+    public bool Invalid { get; set; } = false;
+
+    private Guid inputId = Guid.NewGuid();
 
     private string inputClasses => string.Join(" ", new Dictionary<string, bool>()
     {
         {"input", true },
         {$"size-{Size}", Size != string.Empty},
+        {"invalid", Invalid }
     }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
     private void onNumberChanged(ChangeEventArgs e)
@@ -41,6 +52,11 @@
 
         JSRuntime.InvokeAsync<string>("window.CT.utils.setInputValue", inputId, value);
         ValueChanged.InvokeAsync(value);
+    }
+
+    private void onFocusOut(FocusEventArgs e)
+    {
+        if (Value == 0) JSRuntime.InvokeAsync<string>("window.CT.utils.setInputValue", inputId, "0");
     }
 
     private string toNumberString(string input)

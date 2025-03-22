@@ -141,3 +141,7 @@
     .button.p-xxs {
         padding: var(--gap-xxs);
     }
+
+    .button[disabled] {
+        opacity: var(--disabled-opacity);
+    }
