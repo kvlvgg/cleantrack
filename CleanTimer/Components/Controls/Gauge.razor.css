@@ -1,0 +1,68 @@
+.wrapper {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+}
+
+    .wrapper .title {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: var(--gap-xs);
+    }
+
+.progress {
+    width: 200px;
+    height: 200px;
+    font-size: 30px;
+    color: #fff;
+    border-radius: 50%;
+    position: relative;
+    background: transparent;
+}
+
+    .progress .overlay {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-color: transparent;
+    }
+
+    .progress .empty {
+        border: 16px solid var(--surface-control);
+    }
+
+    .progress .positive {
+        border: 16px solid #22d3ee;
+    }
+
+    .progress .negative {
+        border: 16px solid rgb(248, 113, 113);
+    }
+
+    .progress .positive,
+    .progress .negative,
+    .progress .empty {
+        width: 100%;
+        height: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 100px 100px 0px 0px;
+        border-bottom: 0;
+        transform-origin: bottom;
+    }
+
+    .progress .positive {
+        transform: rotate(-40deg);
+    }
+
+    .progress .negative {
+        transform: rotate(180deg);
+    }

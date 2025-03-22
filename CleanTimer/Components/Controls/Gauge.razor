@@ -1,0 +1,43 @@
+﻿@namespace Controls
+
+<div class="wrapper">
+    <div class="title timer">
+        <Controls.Text Value="@($"{Math.Round(Value * 100, 2).ToString()}%")" Size="@UI.Controls.Text.Size.MD" />
+    </div>
+
+    <div class="progress">
+        <div class="overlay" />
+        <div class="empty" />
+        <div class="positive" style="@positiveStyle" />
+        <div class="negative" style="@negativeStyle" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public double Value { get; set; }
+
+    private string positiveStyle => $"transform: rotate(-{positiveBarDegree}deg)";
+
+    private string negativeStyle => $"transform: rotate(-{negativeBarDegree}deg)";
+
+    private double positiveBarDegree
+    {
+        get
+        {
+            if (Value <= 0) return 180;
+
+            return 180 - Math.Abs(Math.Round(180 * Value));
+        }
+    }
+
+    private double negativeBarDegree
+    {
+        get
+        {
+            if (Value >= 0) return 180;
+
+            return 180 - Math.Abs(Math.Round(180 * Value));
+        }
+    }
+}

@@ -31,11 +31,15 @@
     height: var(--gap-xs);
 }
 
-.householdDeals {
+.householdChores {
     display: flex;
     flex-direction: column;
     padding: var(--gap-lg);
 }
+
+    .householdChores.readMode {
+        gap: var(--gap-xxs);
+    }
 
 .buttonsWrapper {
     position: relative;
