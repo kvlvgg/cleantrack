@@ -3,6 +3,7 @@
 }
 
 .main {
+    position: relative;
     width: 100%;
     max-width: 1400px;
     margin: var(--header-height) auto 0 auto;

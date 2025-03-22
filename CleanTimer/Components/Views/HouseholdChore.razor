@@ -42,11 +42,7 @@ else
 			<div />
 		}
 
-		@* <Controls.Button Icon="@UI.Controls.Icon.Text.DRAG_INDICATOR" *@
-		@* 				 Variant="@UI.Controls.Button.Variant.TRANSPARENT" *@
-		@* 				 Size="@UI.Controls.Button.Size.XS" /> *@
-
-		<div class="@itemClasses" @onclick="() => SelectedHouseholdChoreIdChanged.InvokeAsync(Node.Id)" data-selected-id="@SelectedHouseholdChoreId">
+		<div class="@itemClasses" @onclick="() => toggleSelectedItem(Node.Id)">
 			<div class="tag">
 				<Controls.Text Value="@(Node.isLeaf ? "T" : "C")" Size="@UI.Controls.Text.Size.SM" />
 			</div>
@@ -58,13 +54,33 @@ else
 			<div class="@buttonsClasses">
 				@if (isSelected)
 				{
-
-					<div>
-						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+					@if (!Node.isLeaf)
+					{
+						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
 										 Variant="@UI.Controls.Button.Variant.SECONDARY"
 										 Size="@UI.Controls.Button.Size.SM"
-										 OnClick="goToEditPage" />
-					</div>
+										 PaddingXXS
+										 OnClick="() => goToAddPage(true, Node.Id)">
+							<div class="tag">
+								<Controls.Text Value="T" Size="@UI.Controls.Text.Size.SM" />
+							</div>
+						</Controls.Button>
+
+						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.SM"
+										 PaddingXXS
+										 OnClick="() => goToAddPage(false, Node.Id)">
+							<div class="tag">
+								<Controls.Text Value="C" Size="@UI.Controls.Text.Size.SM" />
+							</div>
+						</Controls.Button>
+					}
+
+					<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+									 Variant="@UI.Controls.Button.Variant.SECONDARY"
+									 Size="@UI.Controls.Button.Size.SM"
+									 OnClick="goToEditPage" />
 				}
 			</div>
 		</div>
@@ -82,7 +98,7 @@ else
 								  SelectedHouseholdChoreId="SelectedHouseholdChoreId"
 								  Node="@node"
 								  IsEditMode="@IsEditMode"
-								  SelectedHouseholdChoreIdChanged="(id) => SelectedHouseholdChoreIdChanged.InvokeAsync(id)" />
+								  SelectedHouseholdChoreIdChanged="(id) => toggleSelectedItem(id)" />
 		}
 	</div>
 }
@@ -117,8 +133,22 @@ else
 
 	private bool isChildrenToggled = false;
 
+	private void goToAddPage(bool isLeaf, Guid parentId)
+	{
+		string queryParam = !isLeaf ? "Node" : "Leaf";
+		Navigation.NavigateTo($"household-chore?Type={queryParam}&ParentId={parentId}");
+	}
+
 	private void goToEditPage()
 	{
 		Navigation.NavigateTo($"household-chore?Id={Node.Id}");
+	}
+
+	private void toggleSelectedItem(Guid? id)
+	{
+		if (SelectedHouseholdChoreId == id)
+			SelectedHouseholdChoreIdChanged.InvokeAsync(Guid.Empty);
+		else
+			SelectedHouseholdChoreIdChanged.InvokeAsync(id);
 	}
 }

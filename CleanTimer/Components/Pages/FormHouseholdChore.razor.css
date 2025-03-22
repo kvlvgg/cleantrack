@@ -1,3 +1,7 @@
+.form {
+    padding: var(--gap-lg);
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -28,5 +32,5 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    padding: var(--gap-xxs);
+    padding: var(--gap-lg);
 }

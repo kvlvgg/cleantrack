@@ -25,6 +25,8 @@ namespace CleanTimer.Constants.UI.Controls
 			public const string EDIT = "edit";
             public const string DRAG_INDICATOR = "drag_indicator";
             public const string CLOSE = "close";
+			public const string STAT_MINUS_1 = "stat_minus_1";
+			public const string STAT_1 = "stat_1";
 		}
 	}
 }

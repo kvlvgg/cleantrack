@@ -37,7 +37,7 @@ namespace CleanTimer.ViewModel
 		public TimeSpan LastTimeDoneAgo { get; set; }
 		public string LastDateDoneDisplayText { get; }
 		public double ProgressPercent { get; }
-		public void Create();
+		public void Create(Guid? parentId);
 		public void LoadFormById(Guid id);
 		public void Add();
 		public void Update();
@@ -99,9 +99,9 @@ namespace CleanTimer.ViewModel
 			}
 		}
 
-		public void Create()
+		public void Create(Guid? parentId)
 		{
-			Form = new HouseholdChore();
+			Form = new HouseholdChore() { ParentId = parentId };
 			lastTimeDoneAgo = default;
 		}
 

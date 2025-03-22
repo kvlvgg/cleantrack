@@ -4,7 +4,7 @@
 
 @inject NavigationManager Navigation
 
-<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+<div class="form">
 	<div class="title">
 		<Controls.H Level="3" Text="@(ViewModel.Mode == Mode.Add ? "Add" : "Edit")" />
 	</div>
@@ -61,7 +61,7 @@
 			</div>
 		}
 	</div>
-</Controls.Card>
+</div>
 
 @* <div> *@
 @* 	<Controls.Text Value="@ViewModel.Form.Name" Size="@UI.Controls.Text.Size.SM" /> *@
@@ -86,6 +86,10 @@
 
 	[Parameter]
 	[SupplyParameterFromQuery]
+	public Guid? ParentId { get; set; }
+
+	[Parameter]
+	[SupplyParameterFromQuery]
 	public string? Type { get; set; }
 
 	[Inject]
@@ -98,7 +102,7 @@
 		if (Type != null) ViewModel.NodeType = Type == "Node" ? NodeType.Node : NodeType.Leaf;
 
 		if (Id != Guid.Empty) ViewModel.LoadFormById(Id);
-		else ViewModel.Create();
+		else ViewModel.Create(ParentId);
 	}
 
 	private void changeLastTimeDoneAgo(string timeunit, int? value)

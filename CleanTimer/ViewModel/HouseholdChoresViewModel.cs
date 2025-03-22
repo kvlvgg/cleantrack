@@ -11,11 +11,8 @@ namespace CleanTimer.ViewModel
 	public class HouseholdChoreNode
 	{
 		public Guid Id { get; set; }
-
 		public string Name { get; set; } = string.Empty;
-
 		public double PercentProgress { get; set; }
-
 		public Guid? ParentId { get; set; }
 		public bool isLeaf { get; set; }
 		public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
