@@ -11,6 +11,7 @@ namespace CleanTimer.Mock
         public string Name { get; set; }
         public int? DayInterval { get; set; }
         public string? LastDateDone { get; set; }
+		public int Order { get; set; }
         public Guid? ParentId { get; set; }
     }
 
@@ -37,6 +38,7 @@ namespace CleanTimer.Mock
 						Name = item.Name,
 						DayInterval = item.DayInterval,
 						LastDateDone = item.LastDateDone != null ? DateTime.Parse(item.LastDateDone) : null,
+						Order = item.Order,
 						ParentId = item.ParentId,
 					});
 				}

@@ -41,6 +41,10 @@
     padding-left: calc(var(--gap-xl) + var(--gap-xs) / 2);
 }
 
+    .children.editMode {
+        gap: 0;
+    }
+
 .item {
     display: flex;
     justify-content: center;

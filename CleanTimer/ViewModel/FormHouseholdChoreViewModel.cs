@@ -101,10 +101,13 @@ namespace CleanTimer.ViewModel
 
         public void Create(NodeType type, Guid? parentId)
         {
+            IEnumerable<HouseholdChore> enities = repo.GetAll();
+
             Form = new HouseholdChore()
             {
                 DayInterval = type == NodeType.Leaf ? 1 : null,
                 LastDateDone = type == NodeType.Leaf ? DateTime.Now : null,
+                Order = enities.Where(x => x.ParentId == parentId).Select(x => x.Order).Count() + 1,
                 ParentId = parentId
             };
 

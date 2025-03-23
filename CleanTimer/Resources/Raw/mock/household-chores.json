@@ -4,6 +4,7 @@
     "Name": "Пол",
     "DayInterval": 4,
     "LastDateDone": "2025-03-16T15:54:53.665Z",
+    "Order": 1,
     "ParentId": null
   },
 
@@ -12,6 +13,7 @@
   {
     "Id": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2",
     "Name": "Пыль",
+    "Order": 2,
     "ParentId": null
   },
   {
@@ -19,6 +21,7 @@
     "Name": "Диван, пуфик",
     "DayInterval": 7,
     "LastDateDone": "2025-03-07T20:20:44.254Z",
+    "Order": 1,
     "ParentId": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2"
   },
   {
@@ -26,6 +29,7 @@
     "Name": "Подоконники",
     "DayInterval": 14,
     "LastDateDone": "2025-03-09T14:02:22.001Z",
+    "Order": 2,
     "ParentId": "9505F064-0D58-4E6E-A645-A5A17F0DBFC2"
   },
 
@@ -36,6 +40,7 @@
     "Name": "Кухня",
     "DayInterval": 7,
     "LastDateDone": "2025-03-07T17:05:36.870Z",
+    "Order": 3,
     "ParentId": null
   },
 
@@ -44,6 +49,7 @@
   {
     "Id": "0FBD9EA8-7A27-444B-B987-C60C56470EB0",
     "Name": "Рабочий стол",
+    "Order": 4,
     "ParentId": null
   },
   {
@@ -51,6 +57,7 @@
     "Name": "Поверхность",
     "DayInterval": 4,
     "LastDateDone": "2025-03-12T10:41:00.479Z",
+    "Order": 1,
     "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
   },
   {
@@ -58,6 +65,7 @@
     "Name": "Книги",
     "DayInterval": 14,
     "LastDateDone": "2025-03-04T16:07:10.349Z",
+    "Order": 2,
     "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
   },
   {
@@ -65,6 +73,7 @@
     "Name": "Техника",
     "DayInterval": 14,
     "LastDateDone": "2025-03-04T16:07:10.349Z",
+    "Order": 3,
     "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
   },
   {
@@ -72,6 +81,7 @@
     "Name": "Клавиатура",
     "DayInterval": 14,
     "LastDateDone": "2025-03-12T12:14:16.621Z",
+    "Order": 4,
     "ParentId": "0FBD9EA8-7A27-444B-B987-C60C56470EB0"
   },
 
@@ -82,6 +92,7 @@
     "Name": "Стирка",
     "DayInterval": 14,
     "LastDateDone": "2025-03-03T07:48:37.416Z",
+    "Order": 5,
     "ParentId": null
   },
 
@@ -92,6 +103,7 @@
     "Name": "Постельное белье",
     "DayInterval": 14,
     "LastDateDone": "2025-03-16T17:40:50.730Z",
+    "Order": 6,
     "ParentId": null
   },
 
@@ -100,6 +112,7 @@
   {
     "Id": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1",
     "Name": "Ванная комната",
+    "Order": 7,
     "ParentId": null
   },
   {
@@ -107,6 +120,7 @@
     "Name": "Пол",
     "DayInterval": 4,
     "LastDateDone": "2025-03-16T15:55:00.710Z",
+    "Order": 1,
     "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
   },
   {
@@ -114,6 +128,7 @@
     "Name": "Сантехника",
     "DayInterval": 7,
     "LastDateDone": "2025-03-11T16:00:14.725Z",
+    "Order": 2,
     "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
   },
   {
@@ -121,6 +136,7 @@
     "Name": "Стирка ковриков",
     "DayInterval": 14,
     "LastDateDone": "2025-03-04T00:50:56.205Z",
+    "Order": 3,
     "ParentId": "A9E72680-5D2B-4C84-A715-F73E1F72DDD1"
   }
 ]

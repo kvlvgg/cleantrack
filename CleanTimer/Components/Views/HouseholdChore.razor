@@ -91,7 +91,7 @@ else
 
 @if (Node.Children.Count > 0 && isChildrenToggled)
 {
-	<div class="children">
+	<div class="@childrenClasses">
 		@foreach (HouseholdChoreNode node in Node.Children)
 		{
 			<Views.HouseholdChore @key="node.Id"
@@ -129,6 +129,12 @@ else
 	{
 		{"buttons", true},
 		{"itemSelected", Node.Id == SelectedHouseholdChoreId },
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string childrenClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"children", true},
+		{"editMode", IsEditMode },
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
 	private bool isChildrenToggled = false;

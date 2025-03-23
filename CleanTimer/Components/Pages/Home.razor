@@ -59,11 +59,13 @@
                                 {
                                     <Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
                                                      Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD" />
+                                                     Size="@UI.Controls.Button.Size.MD" 
+                                                     OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)"/>
 
                                     <Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
                                                      Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD" />
+                                                     Size="@UI.Controls.Button.Size.MD"
+                                                     OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
                                 }
                             </div>
                         </div>

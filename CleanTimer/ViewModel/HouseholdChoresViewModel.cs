@@ -14,6 +14,7 @@ namespace CleanTimer.ViewModel
         public string Name { get; set; } = string.Empty;
         public double PercentProgress { get; set; }
         public Guid? ParentId { get; set; }
+        public int Order { get; set; }
         public bool isLeaf { get; set; }
         public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
     }
@@ -27,6 +28,7 @@ namespace CleanTimer.ViewModel
         public void Add(HouseholdChore householdChore);
         public void Save();
         public void Delete(HouseholdChore householdChore);
+        public void ChangeOrder(Guid? id, int step);
     }
 
     public class HouseholdChoresViewModel : IHouseholdChoresViewModel
@@ -86,6 +88,7 @@ namespace CleanTimer.ViewModel
                     Name = entity.Name,
                     PercentProgress = calculatePercentProgress(entity),
                     ParentId = entity.ParentId,
+                    Order = entity.Order,
                     isLeaf = entity.isLeaf,
                     Children = new List<HouseholdChoreNode>()
                 };
@@ -105,7 +108,7 @@ namespace CleanTimer.ViewModel
                         node.Children = buildTreeNodes(householdChore, node).ToList();
                     }
 
-                    return childNodes;
+                    return childNodes.OrderBy(x => x.Order).ToList();
                 }
 
                 return buildTreeNodes(entities);
@@ -130,6 +133,23 @@ namespace CleanTimer.ViewModel
         public void Delete(HouseholdChore householdChore)
         {
             repo.Delete(householdChore);
+        }
+
+        public void ChangeOrder(Guid? id, int step)
+        {
+            if (id == null) return;
+            HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
+
+            if (entity == null) return;
+            HouseholdChore? swappedEntity = entities.FirstOrDefault(x => x.ParentId == entity.ParentId && x.Order == entity.Order + step);
+
+            if (swappedEntity == null) return;
+
+            int tempOrder = entity.Order;
+            entity.Order = swappedEntity.Order;
+            swappedEntity.Order = tempOrder;
+
+            Save();
         }
     }
 }
