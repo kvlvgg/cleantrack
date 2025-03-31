@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using CleanTimer.Repository;
 using CleanTimer.ViewModel;
 using CleanTimer.Models;
+using CleanTimer.Services;
 
 namespace CleanTimer;
 
@@ -20,6 +21,7 @@ public static class MauiProgram
             });
 
 		builder.Services.AddMauiBlazorWebView();
+		builder.Services.AddSingleton<AppStateService>();
 		builder.Services.AddSingleton<IHouseholdChoresViewModel, HouseholdChoresViewModel>();
 		builder.Services.AddSingleton<IFormHouseholdChoresViewModel, FormHouseholdChoreViewModel>();
 		builder.Services.AddSingleton<IRepository<HouseholdChore>, HouseholdChoreRepository>();
@@ -32,6 +34,9 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+		var app = builder.Build();
+		App.Services = app.Services;
+
+		return app;
 	}
 }

@@ -1,8 +1,11 @@
 ﻿@using Models;
 
+@implements IDisposable
+
 @page "/"
 
 @inject NavigationManager Navigation
+@inject AppStateService AppState
 
 @* <Controls.Card Padding="@UI.Controls.Card.Padding.LG"> *@
 @* 	<div class="summary"> *@
@@ -23,130 +26,146 @@
 <div class="separator" />
 
 <div id="edit-section" class="editSection">
-    <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
-        <div>
-            <div class="header">
-                <div class="left">
-                    @if (!ViewModel.IsEditMode)
-                    {
-                        <Controls.Gauge Value="ViewModel.PercentProgressSummary" />
-                        <div />
-                    }
-                    else
-                    {
-                        <div class="buttonsWrapper">
-                            <div class="@addButtonsClasses">
-                                @if (SelectedHouseholdChoreId == Guid.Empty)
-                                {
-                                    <Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-                                                     Text="Chapter"
-                                                     Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD"
-                                                     OnClick="() => goToAddPage(NodeType.Node)" />
+	<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+		<div>
+			<div class="header">
+				<div class="left">
+					@if (!ViewModel.IsEditMode)
+					{
+						<Controls.Gauge Value="ViewModel.PercentProgressSummary" />
+						<div />
+					}
+					else
+					{
+						<div class="buttonsWrapper">
+							<div class="@addButtonsClasses">
+								@if (SelectedHouseholdChoreId == Guid.Empty)
+								{
+									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+													 Text="Chapter"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => goToAddPage(NodeType.Node)" />
 
-                                    <Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-                                                     Text="Timer"
-                                                     Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD"
-                                                     OnClick="() => goToAddPage(NodeType.Leaf)" />
-                                }
-                            </div>
-                        </div>
+									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+													 Text="Timer"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => goToAddPage(NodeType.Leaf)" />
+								}
+							</div>
+						</div>
 
-                        <div class="buttonsWrapper">
-                            <div class="@dragButtonsClasses">
-                                @if (SelectedHouseholdChoreId != Guid.Empty)
-                                {
-                                    <Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
-                                                     Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD" 
-                                                     OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)"/>
+						<div class="buttonsWrapper">
+							<div class="@dragButtonsClasses">
+								@if (SelectedHouseholdChoreId != Guid.Empty)
+								{
+									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)" />
 
-                                    <Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
-                                                     Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                                     Size="@UI.Controls.Button.Size.MD"
-                                                     OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
+									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
+								}
+							</div>
+						</div>
+					}
+				</div>
 
-                <div class="right">
-                    @if (!ViewModel.IsEditMode)
-                    {
-                        <Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-                                         Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                         Size="@UI.Controls.Button.Size.MD"
-                                         OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-                    }
-                    else
-                    {
-                        @if (SelectedHouseholdChoreId == Guid.Empty)
-                        {
-                            <Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-                                             Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                             Size="@UI.Controls.Button.Size.MD"
-                                             OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-                        }
-                        else
-                        {
-                            <Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-                                             Variant="@UI.Controls.Button.Variant.SECONDARY"
-                                             Size="@UI.Controls.Button.Size.MD"
-                                             OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </Controls.Card>
+				<div class="right">
+					@if (!ViewModel.IsEditMode)
+					{
+						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+					}
+					else
+					{
+						@if (SelectedHouseholdChoreId == Guid.Empty)
+						{
+							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+											 Variant="@UI.Controls.Button.Variant.SECONDARY"
+											 Size="@UI.Controls.Button.Size.MD"
+											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+						}
+						else
+						{
+							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+											 Variant="@UI.Controls.Button.Variant.SECONDARY"
+											 Size="@UI.Controls.Button.Size.MD"
+											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+						}
+					}
+				</div>
+			</div>
+		</div>
+	</Controls.Card>
 </div>
 
 <div class="@householdChores">
-    @foreach (HouseholdChoreNode node in ViewModel.tree)
-    {
-        <Views.HouseholdChore @key="node.Id"
-                              Node="@node"
-                              @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
-                              IsEditMode="@ViewModel.IsEditMode" />
-    }
+	@foreach (HouseholdChoreNode node in ViewModel.tree)
+	{
+		<Views.HouseholdChore @key="node.Id"
+							  Node="@node"
+							  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
+							  IsEditMode="@ViewModel.IsEditMode" />
+	}
 </div>
 
-@* <div style="height: 400px"></div> *@
-
 @code {
-    [Inject]
-    IHouseholdChoresViewModel ViewModel { get; set; }
+	[Inject]
+	IHouseholdChoresViewModel ViewModel { get; set; }
 
-    public Guid? SelectedHouseholdChoreId { get; set; } = Guid.Empty;
+	private bool isSubscribed = false;
 
-    private string addButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
-    {
-        {"buttons", true},
-        {"itemSelected", SelectedHouseholdChoreId == Guid.Empty},
-    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+	public Guid? SelectedHouseholdChoreId { get; set; } = Guid.Empty;
 
-    private string dragButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
-    {
-        {"buttons", true},
-        {"itemSelected", SelectedHouseholdChoreId != Guid.Empty},
-    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+	private string addButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", SelectedHouseholdChoreId == Guid.Empty},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
-    private string householdChores => string.Join(" ", new Dictionary<string, bool>()
-    {
-        {"householdChores", true},
-        {"readMode", !ViewModel.IsEditMode},
-    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+	private string dragButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", SelectedHouseholdChoreId != Guid.Empty},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
-    protected override void OnInitialized()
-    {
-        ViewModel.Load();
-    }
+	private string householdChores => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"householdChores", true},
+		{"readMode", !ViewModel.IsEditMode},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
-    private void goToAddPage(NodeType nodeType)
-    {
-        string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
-        Navigation.NavigateTo($"household-chore?Type={queryParam}");
-    }
+	protected override void OnInitialized()
+	{
+		ViewModel.Load();
+
+		if (!isSubscribed)
+		{
+			AppState.StateChanged += Refresh;
+			isSubscribed = true;
+		}
+	}
+
+	private void Refresh()
+	{
+		StateHasChanged();
+	}
+
+	private void goToAddPage(NodeType nodeType)
+	{
+		string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
+		Navigation.NavigateTo($"household-chore?Type={queryParam}");
+	}
+
+	public void Dispose()
+	{
+		AppState.StateChanged -= Refresh;
+	}
 }
