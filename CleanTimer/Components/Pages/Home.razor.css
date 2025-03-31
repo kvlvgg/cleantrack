@@ -41,6 +41,7 @@
     flex-direction: column;
     padding: var(--gap-lg);
     margin-top: calc(var(--gap-xxxl) + var(--gap-lg));
+    overflow-x: scroll;
 }
 
     .householdChores.readMode {

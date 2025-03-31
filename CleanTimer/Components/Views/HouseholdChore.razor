@@ -24,7 +24,9 @@
 
 		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
 		<div />
-		<Controls.ProgressBar Value="@Node.PercentProgress" />
+		<div class="progressbar">
+			<Controls.ProgressBar Value="@Node.PercentProgress" />
+		</div>
 	</div>
 }
 else
