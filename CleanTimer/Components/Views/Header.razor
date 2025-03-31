@@ -2,7 +2,7 @@
 
 @inject IJSRuntime JSRuntime
 
-<header class="header">
+<header id="header" class="header">
     <div>
         <Controls.H Level="2" Text="Clean Timer" />
     </div>
@@ -27,5 +27,13 @@
         string newTheme = theme == "light" ? "dark" : "light";
 
         theme = await JSRuntime.InvokeAsync<string>("window.CT.utils.switchTheme", theme, newTheme, "ct-theme");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("ctOnScroll");
+        }
     }
 }

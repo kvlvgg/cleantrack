@@ -8,6 +8,11 @@
     position: sticky;
     top: var(--header-height);
     z-index: 1;
+    padding: var(--gap-lg);
+    padding-bottom: 0;
+    /*    backdrop-filter: blur(50px);*/
+    background-color: var(--surface-ground);
+    transition: top linear 0.3s;
 }
 
 .header {
@@ -35,6 +40,7 @@
     display: flex;
     flex-direction: column;
     padding: var(--gap-lg);
+    margin-top: calc(var(--gap-xxxl) + var(--gap-lg));
 }
 
     .householdChores.readMode {

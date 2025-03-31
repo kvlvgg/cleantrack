@@ -7,11 +7,11 @@
     padding: 0 var(--gap-xl);
     backdrop-filter: blur(50px);
     z-index: 951;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--box-shadow-card);
+    transition: top linear 0.3s;
 }
 
 

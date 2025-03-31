@@ -1,5 +1,6 @@
 .form {
     padding: var(--gap-lg);
+    margin-top: var(--gap-lg);
 }
 
 .title {
