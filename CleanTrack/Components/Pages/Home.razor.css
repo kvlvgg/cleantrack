@@ -69,9 +69,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: var(--gap-lg);
-    border: 2px solid #5f7274;
-    border-radius: var(--border-radius-md);
 }
 
     .noItemFound .btnEditMode {
@@ -87,5 +84,6 @@
     }
         .noItemFound .glossary .glossaryItem {
             display: flex;
+            align-items: center;
             gap: var(--gap-xxs);
         }

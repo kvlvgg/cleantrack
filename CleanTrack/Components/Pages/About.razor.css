@@ -9,6 +9,7 @@
     .about .title {
         display: flex;
         justify-content: center;
+        margin: var(--gap-sm) 0 var(--gap-xxs) 0;
     }
 
     .about .glossary {
@@ -20,5 +21,6 @@
 
         .about .glossary .glossaryItem {
             display: flex;
+            align-items: center;
             gap: var(--gap-xxs);
         }

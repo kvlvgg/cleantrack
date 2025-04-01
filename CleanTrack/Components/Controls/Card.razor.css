@@ -16,3 +16,8 @@
     .card.padding-xl {
         padding: var(--gap-xl);
     }
+
+    .card.outline {
+        background-color: transparent;
+        border: 2px solid #5f7274;
+    }

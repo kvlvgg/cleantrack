@@ -108,37 +108,39 @@
 
 	@if (ViewModel.tree.Count == 0)
 	{
-		<div class="noItemFound">
-			<Controls.Text Value="@Resources.NoItemFoundLine1" Size="@UI.Controls.Text.Size.SM" />
-			<Controls.Text Value="@Resources.NoItemFoundLine2" Size="@UI.Controls.Text.Size.SM" />
+		<Controls.Card Padding="@UI.Controls.Card.Padding.LG" Outline>
+			<div class="noItemFound">
+				<Controls.Text Value="@Resources.NoItemFoundLine1" Size="@UI.Controls.Text.Size.SM" />
+				<Controls.Text Value="@Resources.NoItemFoundLine2" Size="@UI.Controls.Text.Size.SM" />
 
-			@if (!ViewModel.IsEditMode)
-			{
-				<div class="btnEditMode">
-					<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-									 Text="@Resources.BtnTextEditMode"
-									 Variant="@UI.Controls.Button.Variant.SECONDARY"
-									 Size="@UI.Controls.Button.Size.MD"
-									 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-				</div>
-			}
-			else
-			{
-				<div class="glossary">
-					<div class="glossaryItem">
-						<Controls.Tag Text="S" />
-						<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
-						<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
+				@if (!ViewModel.IsEditMode)
+				{
+					<div class="btnEditMode">
+						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+										 Text="@Resources.BtnTextEditMode"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
 					</div>
+				}
+				else
+				{
+					<div class="glossary">
+						<div class="glossaryItem">
+							<Controls.Tag Text="S" />
+							<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+							<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
+						</div>
 
-					<div class="glossaryItem">
-						<Controls.Tag Text="T" />
-						<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
-						<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
+						<div class="glossaryItem">
+							<Controls.Tag Text="T" />
+							<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+							<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
+						</div>
 					</div>
-				</div>
-			}
-		</div>
+				}
+			</div>
+		</Controls.Card>
 	}
 </div>
 

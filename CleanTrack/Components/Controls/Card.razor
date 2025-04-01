@@ -1,19 +1,23 @@
 ﻿@namespace Controls
 
 <div class="@cardClasses">
-    @ChildContent
+	@ChildContent
 </div>
 
 @code {
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
 
-    [Parameter]
-    public string Padding { get; set; } = UI.Controls.Card.Padding.XXS;
+	[Parameter]
+	public string Padding { get; set; } = UI.Controls.Card.Padding.XXS;
 
-    private string cardClasses => string.Join(" ", new Dictionary<string, bool>()
-    {
-        {"card", true },
-        {$"padding-{Padding}", true}
-    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+	[Parameter]
+	public bool Outline { get; set; } = false;
+
+	private string cardClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"card", true },
+		{$"padding-{Padding}", true},
+		{"outline", Outline}
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 }
