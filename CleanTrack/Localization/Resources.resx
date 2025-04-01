@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="BtnTextEditMode" xml:space="preserve">
     <value>Edit mode</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="lblFieldDayInterval" xml:space="preserve">
+    <value>Day Interval (min. 1)</value>
+  </data>
+  <data name="lblFieldTimeAgo" xml:space="preserve">
+    <value>Days/hours/minutes ago</value>
+  </data>
+  <data name="lblFieldLastDateDone" xml:space="preserve">
+    <value>Last Done</value>
+  </data>
+  <data name="LblFieldName" xml:space="preserve">
+    <value>Name *</value>
   </data>
   <data name="LblSection" xml:space="preserve">
     <value>Section</value>
@@ -140,5 +158,8 @@
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>👋 Welcome!</value>
+  </data>
+  <data name="BtnSaveText" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>

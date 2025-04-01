@@ -24,6 +24,9 @@
 
 		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
 		<div />
+
+		@* @if(Node.is) *@
+
 		<div class="progressbar">
 			<Controls.ProgressBar Value="@Node.PercentProgress" />
 		</div>
@@ -114,10 +117,10 @@ else
 	public EventCallback<Guid?> SelectedHouseholdChoreIdChanged { get; set; }
 
 	[Parameter]
-	public IList<Guid> ToggledChores { get; set; }
+	public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
 	[Parameter]
-	public EventCallback<Guid> ToggledChanged { get; set; }
+	public EventCallback<Guid> ToggledChanged { get; set; } 
 
 	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
 

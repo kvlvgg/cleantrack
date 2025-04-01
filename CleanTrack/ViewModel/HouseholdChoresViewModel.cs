@@ -8,151 +8,137 @@ using System.Xml.Linq;
 namespace CleanTrack.ViewModel
 {
 
-    public class HouseholdChoreNode
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public double PercentProgress { get; set; }
-        public Guid? ParentId { get; set; }
-        public int Order { get; set; }
-        public bool isLeaf { get; set; }
-        public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
-    }
+	public class HouseholdChoreNode : INode
+	{
+		public Guid Id { get; set; }
+		public string Name { get; set; } = string.Empty;
+		public double PercentProgress { get; set; }
+		public Guid? ParentId { get; set; }
+		public int Order { get; set; }
+		public bool isLeaf { get; set; }
+		public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
+	}
 
-    public interface IHouseholdChoresViewModel
-    {
-        public IList<HouseholdChoreNode> tree { get; }
-        public bool IsEditMode { get; set; }
-        public IList<Guid> ToggledChores { get; set; }
-        public double PercentProgressSummary { get; }
-        public void Load();
-        public void Add(HouseholdChore householdChore);
-        public void Save();
-        public void Delete(HouseholdChore householdChore);
-        public void ChangeOrder(Guid? id, int step);
-    }
+	public interface IHouseholdChoresViewModel
+	{
+		public IList<HouseholdChoreNode> tree { get; }
+		public bool IsEditMode { get; set; }
+		public IList<Guid> ToggledChores { get; set; }
+		public double PercentProgressSummary { get; }
+		public void Load();
+		public void Add(HouseholdChore householdChore);
+		public void Save();
+		public void Delete(HouseholdChore householdChore);
+		public void ChangeOrder(Guid? id, int step);
+	}
 
-    public class HouseholdChoresViewModel : IHouseholdChoresViewModel
-    {
-        [Inject]
-        IRepository<HouseholdChore> repo { get; set; }
+	public class HouseholdChoresViewModel : IHouseholdChoresViewModel
+	{
+		[Inject]
+		IRepository<HouseholdChore> repo { get; set; }
 
-        private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
+		private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
 
-        public bool IsEditMode { get; set; } = false;
+		public bool IsEditMode { get; set; } = false;
 
-        public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
+		public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
-        public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
-        {
-            this.repo = repo;
-        }
+		public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
+		{
+			this.repo = repo;
+		}
 
-        public double PercentProgressSummary => percentsProgress.Values.Aggregate(0.0, (acc, curr) => acc + curr) / percentsProgress.Count;
+		public double PercentProgressSummary => leafsProgressPercents.Values.Aggregate(0.0, (acc, curr) => acc + curr) / leafsProgressPercents.Count;
 
-        private Dictionary<Guid, double> percentsProgress
-        {
-            get
-            {
-                return entities.Aggregate(new Dictionary<Guid, double>(), (acc, curr) =>
-                {
-                    if (curr.DayInterval == null || curr.LastDateDone == null) return acc;
+		private Dictionary<Guid, double> leafsProgressPercents =>
+			UseCases.Chores
+				.GetAllLeafs(entities)
+				.ToDictionary(
+					x => x.Id,
+					x => UseCases.Chores.GetProgressPercent(x)
+				);
 
-                    int hourInterval = (curr.DayInterval ?? 0) * 24;
-                    TimeSpan diff = (curr.LastDateDone ?? DateTime.UtcNow) - DateTime.Now;
-                    double percentProgress = (hourInterval + diff.TotalHours) / hourInterval;
+		public IList<HouseholdChoreNode> tree
+		{
+			get
+			{
+				double calculatePercentProgress(HouseholdChore entity)
+				{
+					if (entity.isLeaf) return leafsProgressPercents[entity.Id];
 
-                    if (percentProgress < -1) percentProgress = -1;
+					double[] childrenPercents = [.. UseCases.Chores.GetDeepAllLeafs(entities, entity).Select(x => calculatePercentProgress(x))];
 
-                    acc[curr.Id] = percentProgress;
+					return UseCases.Chores.GetPercentSummary(childrenPercents);
+				}
 
-                    return acc;
-                });
-            }
-        }
+				HouseholdChoreNode toNode(HouseholdChore entity) => new()
+				{
+					Id = entity.Id,
+					Name = entity.Name,
+					PercentProgress = calculatePercentProgress(entity),
+					ParentId = entity.ParentId,
+					Order = entity.Order,
+					isLeaf = entity.isLeaf,
+					Children = new List<HouseholdChoreNode>()
+				};
 
-        public IList<HouseholdChoreNode> tree
-        {
-            get
-            {
-                double calculatePercentProgress(HouseholdChore entity)
-                {
-                    if (entity.DayInterval != null && entity.LastDateDone != null)
-                        return percentsProgress[entity.Id];
+				IList<HouseholdChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
+					UseCases.Chores.GetRoots(entities).Select(x => toNode(x)).ToList();
 
-                    double[] childrenPercents = [.. entities.Where(x => x.ParentId == entity.Id).Select(x => calculatePercentProgress(x))];
+				IList<HouseholdChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, HouseholdChoreNode node) =>
+					UseCases.Chores.GetChildren(entities, node).Select(x => toNode(x)).ToList();
 
-                    return childrenPercents.Aggregate(0.0, (acc, curr) => acc + curr) / childrenPercents.Length;
-                }
+				IList<HouseholdChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, HouseholdChoreNode? treeNode = null)
+				{
+					IList<HouseholdChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
 
-                HouseholdChoreNode toNode(HouseholdChore entity) => new()
-                {
-                    Id = entity.Id,
-                    Name = entity.Name,
-                    PercentProgress = calculatePercentProgress(entity),
-                    ParentId = entity.ParentId,
-                    Order = entity.Order,
-                    isLeaf = entity.isLeaf,
-                    Children = new List<HouseholdChoreNode>()
-                };
+					foreach (HouseholdChoreNode node in childNodes)
+					{
+						node.Children = buildTreeNodes(householdChore, node).ToList();
+					}
 
-                IList<HouseholdChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
-                    entities.Where(x => x.ParentId == null).Select(x => toNode(x)).ToList();
+					return childNodes.OrderBy(x => x.Order).ToList();
+				}
 
-                IList<HouseholdChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, HouseholdChoreNode node) =>
-                    entities.Where(x => x.ParentId == node.Id).Select(x => toNode(x)).ToList();
+				return buildTreeNodes(entities);
+			}
+		}
 
-                IList<HouseholdChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, HouseholdChoreNode? treeNode = null)
-                {
-                    IList<HouseholdChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
+		public void Load()
+		{
+			entities = repo.GetAll();
+		}
 
-                    foreach (HouseholdChoreNode node in childNodes)
-                    {
-                        node.Children = buildTreeNodes(householdChore, node).ToList();
-                    }
+		public void Add(HouseholdChore householdChore)
+		{
+			repo.Add(householdChore);
+		}
 
-                    return childNodes.OrderBy(x => x.Order).ToList();
-                }
+		public void Save()
+		{
+			repo.Save();
+		}
 
-                return buildTreeNodes(entities);
-            }
-        }
+		public void Delete(HouseholdChore householdChore)
+		{
+			repo.Delete(householdChore);
+		}
 
-        public void Load()
-        {
-            entities = repo.GetAll();
-        }
+		public void ChangeOrder(Guid? id, int step)
+		{
+			if (id == null) return;
+			HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
 
-        public void Add(HouseholdChore householdChore)
-        {
-            repo.Add(householdChore);
-        }
+			if (entity == null) return;
+			HouseholdChore? swappedEntity = entities.FirstOrDefault(x => x.ParentId == entity.ParentId && x.Order == entity.Order + step);
 
-        public void Save()
-        {
-            repo.Save();
-        }
+			if (swappedEntity == null) return;
 
-        public void Delete(HouseholdChore householdChore)
-        {
-            repo.Delete(householdChore);
-        }
+			int tempOrder = entity.Order;
+			entity.Order = swappedEntity.Order;
+			swappedEntity.Order = tempOrder;
 
-        public void ChangeOrder(Guid? id, int step)
-        {
-            if (id == null) return;
-            HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
-
-            if (entity == null) return;
-            HouseholdChore? swappedEntity = entities.FirstOrDefault(x => x.ParentId == entity.ParentId && x.Order == entity.Order + step);
-
-            if (swappedEntity == null) return;
-
-            int tempOrder = entity.Order;
-            entity.Order = swappedEntity.Order;
-            swappedEntity.Order = tempOrder;
-
-            Save();
-        }
-    }
+			Save();
+		}
+	}
 }

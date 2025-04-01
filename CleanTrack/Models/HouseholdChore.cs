@@ -1,6 +1,12 @@
 ﻿namespace CleanTrack.Models;
 
-public class HouseholdChore
+public interface INode
+{
+	public Guid Id { get; set; }
+	public Guid? ParentId { get; set; }
+}
+
+public class HouseholdChore: INode
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;

@@ -45,8 +45,6 @@
         console.log(name, value)
         const el = document.getElementById(elId);
         el.style.setProperty(name, value);
-
-        alert(value)
     }
 }
 

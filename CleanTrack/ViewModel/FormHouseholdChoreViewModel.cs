@@ -83,21 +83,7 @@ namespace CleanTrack.ViewModel
 
         public string LastDateDoneDisplayText => string.Join(" ", [(Form.LastDateDone?.ToString("ddd dd MMM yyyy") ?? string.Empty), (Form.LastDateDone?.ToString("t") ?? string.Empty)]);
 
-        public double ProgressPercent
-        {
-            get
-            {
-                if (Form.DayInterval == null || Form.LastDateDone == null) return 0.0;
-
-                int hourInterval = (Form.DayInterval ?? 0) * 24;
-                TimeSpan diff = (Form.LastDateDone ?? DateTime.UtcNow) - DateTime.Now;
-                double percentProgress = (hourInterval + diff.TotalHours) / hourInterval;
-
-                if (percentProgress < -1) percentProgress = -1;
-
-                return percentProgress;
-            }
-        }
+        public double ProgressPercent => UseCases.Chores.GetProgressPercent(Form);
 
         public void Create(NodeType type, Guid? parentId)
         {

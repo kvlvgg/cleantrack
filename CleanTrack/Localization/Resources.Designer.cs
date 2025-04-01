@@ -61,11 +61,74 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string BtnSaveText {
+            get {
+                return ResourceManager.GetString("BtnSaveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit mode.
         /// </summary>
         internal static string BtnTextEditMode {
             get {
                 return ResourceManager.GetString("BtnTextEditMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day Interval (min. 1).
+        /// </summary>
+        internal static string lblFieldDayInterval {
+            get {
+                return ResourceManager.GetString("lblFieldDayInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Done.
+        /// </summary>
+        internal static string lblFieldLastDateDone {
+            get {
+                return ResourceManager.GetString("lblFieldLastDateDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name *.
+        /// </summary>
+        internal static string LblFieldName {
+            get {
+                return ResourceManager.GetString("LblFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Days/hours/minutes ago.
+        /// </summary>
+        internal static string lblFieldTimeAgo {
+            get {
+                return ResourceManager.GetString("lblFieldTimeAgo", resourceCulture);
             }
         }
         

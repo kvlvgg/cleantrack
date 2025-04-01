@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
   <data name="BtnTextEditMode" xml:space="preserve">
     <value>Режим редактирования</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="lblFieldDayInterval" xml:space="preserve">
+    <value>Интервал в днях (мин. 1)</value>
+  </data>
+  <data name="lblFieldTimeAgo" xml:space="preserve">
+    <value>Дней/часов/минут назад</value>
+  </data>
+  <data name="lblFieldLastDateDone" xml:space="preserve">
+    <value>Последний раз</value>
+  </data>
+  <data name="LblFieldName" xml:space="preserve">
+    <value>Название *</value>
   </data>
   <data name="LblSection" xml:space="preserve">
     <value>Раздел</value>
@@ -140,5 +158,8 @@
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>👋 Добро пожаловать!</value>
+  </data>
+  <data name="BtnSaveText" xml:space="preserve">
+    <value>Сохранить</value>
   </data>
 </root>
