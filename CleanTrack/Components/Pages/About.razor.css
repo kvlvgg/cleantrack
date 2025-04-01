@@ -1,0 +1,24 @@
+.about {
+    margin-top: var(--header-height);
+    padding-top: var(--gap-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+}
+
+    .about .title {
+        display: flex;
+        justify-content: center;
+    }
+
+    .about .glossary {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-xxs);
+        margin-top: var(--gap-sm);
+    }
+
+        .about .glossary .glossaryItem {
+            display: flex;
+            gap: var(--gap-xxs);
+        }

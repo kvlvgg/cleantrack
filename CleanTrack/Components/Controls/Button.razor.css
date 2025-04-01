@@ -145,3 +145,7 @@
     .button[disabled] {
         opacity: var(--disabled-opacity);
     }
+
+    .button.outline {
+        border: 2px solid var(--button-text-secondary-color);
+    }

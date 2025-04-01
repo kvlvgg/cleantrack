@@ -9,4 +9,5 @@
 /*    margin: var(--header-height) auto 0 auto;*/
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
 /*    padding: var(--gap-lg) var(--gap-xxs);*/
+    padding: 0 var(--gap-lg)
 }

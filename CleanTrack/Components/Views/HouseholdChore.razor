@@ -45,10 +45,7 @@ else
 		}
 
 		<div class="@itemClasses" @onclick="() => toggleSelectedItem(Node.Id)">
-			<div class="tag">
-				<Controls.Text Value="@(Node.isLeaf ? "T" : "C")" Size="@UI.Controls.Text.Size.SM" />
-			</div>
-
+			<Controls.Tag Text="@(Node.isLeaf ? "T" : "C")" />
 			<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
 		</div>
 
@@ -63,9 +60,7 @@ else
 										 Size="@UI.Controls.Button.Size.SM"
 										 PaddingXXS
 										 OnClick="() => goToAddPage(true, Node.Id)">
-							<div class="tag">
-								<Controls.Text Value="T" Size="@UI.Controls.Text.Size.SM" />
-							</div>
+							<Controls.Tag Text="T" />
 						</Controls.Button>
 
 						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
@@ -73,9 +68,7 @@ else
 										 Size="@UI.Controls.Button.Size.SM"
 										 PaddingXXS
 										 OnClick="() => goToAddPage(false, Node.Id)">
-							<div class="tag">
-								<Controls.Text Value="C" Size="@UI.Controls.Text.Size.SM" />
-							</div>
+							<Controls.Tag Text="S" />
 						</Controls.Button>
 					}
 

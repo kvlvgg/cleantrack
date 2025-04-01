@@ -8,8 +8,7 @@
     position: sticky;
     top: var(--header-height);
     z-index: 1;
-    padding: var(--gap-lg);
-    padding-bottom: 0;
+    padding-top: var(--gap-lg);
     /*    backdrop-filter: blur(50px);*/
     background-color: var(--surface-ground);
     transition: top linear 0.3s;
@@ -39,7 +38,7 @@
 .householdChores {
     display: flex;
     flex-direction: column;
-    padding: var(--gap-lg);
+    padding: var(--gap-lg) 0;
     margin-top: calc(var(--gap-xxxl) + var(--gap-lg));
     overflow-x: scroll;
 }
@@ -63,4 +62,30 @@
 
         .buttonsWrapper .buttons.itemSelected {
             transform: translateY(0%);
+        }
+
+.noItemFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--gap-lg);
+    border: 2px solid #5f7274;
+    border-radius: var(--border-radius-md);
+}
+
+    .noItemFound .btnEditMode {
+        margin-top: var(--gap-sm);
+    }
+
+    .noItemFound .glossary {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-xxs);
+
+        margin-top: var(--gap-sm);
+    }
+        .noItemFound .glossary .glossaryItem {
+            display: flex;
+            gap: var(--gap-xxs);
         }

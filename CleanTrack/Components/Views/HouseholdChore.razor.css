@@ -94,17 +94,6 @@
             transform: translateX(0%);
         }
 
-.tag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid white;
-    border-radius: var(--border-radius-sm);
-    width: 22px;
-    height: 22px;
-    aspect-ratio: 1/1;
-}
-
 @keyframes skeleton-animation {
     0% {
         transform: translateX(-100%);

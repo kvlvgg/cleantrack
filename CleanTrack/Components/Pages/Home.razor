@@ -1,4 +1,5 @@
 ﻿@using Models;
+@using CleanTrack.Localization;
 
 @implements IDisposable
 
@@ -6,22 +7,6 @@
 
 @inject NavigationManager Navigation
 @inject AppStateService AppState
-
-@* <Controls.Card Padding="@UI.Controls.Card.Padding.LG"> *@
-@* 	<div class="summary"> *@
-@* 		<Controls.Text Value="22.48%" Size="@UI.Controls.Text.Size.SM" /> *@
-
-@* 		<div> *@
-@* 			@if (!ViewModel.IsEditMode) *@
-@* 			{ *@
-@* 				<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT" *@
-@* 								 Variant="@UI.Controls.Button.Variant.SECONDARY" *@
-@* 								 Size="@UI.Controls.Button.Size.MD" *@
-@* 								 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" /> *@
-@* 			} *@
-@* 		</div> *@
-@* 	</div> *@
-@* </Controls.Card> *@
 
 <div class="separator" />
 
@@ -32,72 +17,76 @@
 				<div class="left">
 					@if (!ViewModel.IsEditMode)
 					{
-							<Controls.Gauge Value="ViewModel.PercentProgressSummary" />
-							<div />
+						<Controls.Gauge Value="ViewModel.PercentProgressSummary" />
+						<div />
 					}
 					else
 					{
-							<div class="buttonsWrapper">
-								<div class="@addButtonsClasses">
+						<div class="buttonsWrapper">
+							<div class="@addButtonsClasses">
 								@if (SelectedHouseholdChoreId == Guid.Empty)
 								{
-											<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-											Text="Chapter"
-											Variant="@UI.Controls.Button.Variant.SECONDARY"
-											Size="@UI.Controls.Button.Size.MD"
-											OnClick="() => goToAddPage(NodeType.Node)" />
+									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 PaddingXXS
+													 OnClick="() => goToAddPage(NodeType.Node)">
+										<Controls.Tag Text="S" />
+									</Controls.Button>
 
-											<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-											Text="Timer"
-											Variant="@UI.Controls.Button.Variant.SECONDARY"
-											Size="@UI.Controls.Button.Size.MD"
-											OnClick="() => goToAddPage(NodeType.Leaf)" />
+									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 PaddingXXS
+													 OnClick="() => goToAddPage(NodeType.Leaf)">
+										<Controls.Tag Text="T" />
+									</Controls.Button>
 								}
-								</div>
 							</div>
+						</div>
 
-							<div class="buttonsWrapper">
-								<div class="@dragButtonsClasses">
+						<div class="buttonsWrapper">
+							<div class="@dragButtonsClasses">
 								@if (SelectedHouseholdChoreId != Guid.Empty)
 								{
-											<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
-											Variant="@UI.Controls.Button.Variant.SECONDARY"
-											Size="@UI.Controls.Button.Size.MD"
-											OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)" />
+									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)" />
 
-											<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
-											Variant="@UI.Controls.Button.Variant.SECONDARY"
-											Size="@UI.Controls.Button.Size.MD"
-											OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
+									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
+													 Variant="@UI.Controls.Button.Variant.SECONDARY"
+													 Size="@UI.Controls.Button.Size.MD"
+													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
 								}
-								</div>
 							</div>
+						</div>
 					}
 				</div>
 
 				<div class="right">
 					@if (!ViewModel.IsEditMode)
 					{
-							<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-							Variant="@UI.Controls.Button.Variant.SECONDARY"
-							Size="@UI.Controls.Button.Size.MD"
-							OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
 					}
 					else
 					{
 						@if (SelectedHouseholdChoreId == Guid.Empty)
 						{
-									<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-									Variant="@UI.Controls.Button.Variant.SECONDARY"
-									Size="@UI.Controls.Button.Size.MD"
-									OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+											 Variant="@UI.Controls.Button.Variant.SECONDARY"
+											 Size="@UI.Controls.Button.Size.MD"
+											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
 						}
 						else
 						{
-									<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-									Variant="@UI.Controls.Button.Variant.SECONDARY"
-									Size="@UI.Controls.Button.Size.MD"
-									OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+											 Variant="@UI.Controls.Button.Variant.SECONDARY"
+											 Size="@UI.Controls.Button.Size.MD"
+											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
 						}
 					}
 				</div>
@@ -109,12 +98,47 @@
 <div class="@householdChores">
 	@foreach (HouseholdChoreNode node in ViewModel.tree)
 	{
-			<Views.HouseholdChore @key="node.Id"
-			Node="@node"
-			ToggledChores="ViewModel.ToggledChores"
-			ToggledChanged="onToggledChanged"
-			@bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
-			IsEditMode="@ViewModel.IsEditMode" />
+		<Views.HouseholdChore @key="node.Id"
+							  Node="@node"
+							  ToggledChores="ViewModel.ToggledChores"
+							  ToggledChanged="onToggledChanged"
+							  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
+							  IsEditMode="@ViewModel.IsEditMode" />
+	}
+
+	@if (ViewModel.tree.Count == 0)
+	{
+		<div class="noItemFound">
+			<Controls.Text Value="@Resources.NoItemFoundLine1" Size="@UI.Controls.Text.Size.SM" />
+			<Controls.Text Value="@Resources.NoItemFoundLine2" Size="@UI.Controls.Text.Size.SM" />
+
+			@if (!ViewModel.IsEditMode)
+			{
+				<div class="btnEditMode">
+					<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+									 Text="@Resources.BtnTextEditMode"
+									 Variant="@UI.Controls.Button.Variant.SECONDARY"
+									 Size="@UI.Controls.Button.Size.MD"
+									 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+				</div>
+			}
+			else
+			{
+				<div class="glossary">
+					<div class="glossaryItem">
+						<Controls.Tag Text="S" />
+						<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+						<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
+					</div>
+
+					<div class="glossaryItem">
+						<Controls.Tag Text="T" />
+						<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+						<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
+					</div>
+				</div>
+			}
+		</div>
 	}
 </div>
 

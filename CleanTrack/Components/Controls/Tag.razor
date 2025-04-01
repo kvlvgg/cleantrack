@@ -1,0 +1,10 @@
+﻿@namespace Controls
+
+<div class="tag">
+	<Controls.Text Value="@Text" Size="@UI.Controls.Text.Size.SM" />
+</div>
+
+@code {
+	[Parameter]
+	public string Text { get; set; } = string.Empty;
+}

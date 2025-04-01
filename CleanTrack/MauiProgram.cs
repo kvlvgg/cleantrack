@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Globalization;
+
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
 using CleanTrack.Repository;
@@ -33,6 +35,10 @@ public static class MauiProgram
         builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
+
+		CultureInfo culture = CultureInfo.CurrentCulture;
+		CultureInfo.DefaultThreadCurrentCulture = culture;
+		CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 		var app = builder.Build();
 		App.Services = app.Services;

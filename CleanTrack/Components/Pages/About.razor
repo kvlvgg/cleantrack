@@ -1,0 +1,31 @@
+﻿@using CleanTrack.Localization;
+
+@page "/about"
+
+<div class="about">
+	<div class="title">
+		<Controls.Text Value="@Resources.WelcomeTitle" Size="@UI.Controls.Text.Size.MD" />
+	</div>
+
+	<Controls.Text Value="@Resources.TutorialDescription1" Size="@UI.Controls.Text.Size.MD" />
+	<Controls.Text Value="@Resources.TutorialDescription2" Size="@UI.Controls.Text.Size.MD" />
+	@* 📌 Long-press an item to open the action menu. *@
+
+	<div class="glossary">
+		<div class="glossaryItem">
+			<Controls.Tag Text="S" />
+			<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+			<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
+		</div>
+
+		<div class="glossaryItem">
+			<Controls.Tag Text="T" />
+			<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+			<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
+		</div>
+	</div>
+</div>
+
+@code {
+
+}

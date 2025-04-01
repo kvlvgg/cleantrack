@@ -1,5 +1,6 @@
 ﻿@namespace Views
 
+@inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
 <header id="header" class="header">
@@ -8,7 +9,8 @@
     </div>
 
     <div class="right">
-        <Controls.Button Icon="@themeIcon" Variant="@UI.Controls.Button.Variant.TERTIARY" Size="@UI.Controls.Button.Size.MD" OnClick="switchTheme"/>
+        @* <Controls.Button Icon="@themeIcon" Variant="@UI.Controls.Button.Variant.TERTIARY" Size="@UI.Controls.Button.Size.MD" OnClick="switchTheme" /> *@
+        <Controls.Button Icon="@UI.Controls.Icon.Text.INFO" Variant="@UI.Controls.Button.Variant.TRANSPARENT" Size="@UI.Controls.Button.Size.LG" OnClick="goToAboutPage" />
     </div>
 </header>
 
@@ -35,5 +37,10 @@
         {
             await JSRuntime.InvokeVoidAsync("ctOnScroll");
         }
+    }
+
+    private void goToAboutPage()
+    {
+        Navigation.NavigateTo($"about");
     }
 }
