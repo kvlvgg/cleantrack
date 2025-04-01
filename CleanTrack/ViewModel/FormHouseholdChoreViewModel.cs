@@ -22,13 +22,6 @@ namespace CleanTrack.ViewModel
         Leaf,
     }
 
-    public class FormHouseholdChore
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-    }
-
     public interface IFormHouseholdChoresViewModel
     {
         public HouseholdChore Form { get; set; }
