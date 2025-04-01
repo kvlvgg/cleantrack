@@ -40,6 +40,14 @@
 
         input.value = value;
     },
+
+    setStyleProperty(elId, name, value) {
+        console.log(name, value)
+        const el = document.getElementById(elId);
+        el.style.setProperty(name, value);
+
+        alert(value)
+    }
 }
 
 window.CT = {

@@ -23,6 +23,7 @@ namespace CleanTrack.ViewModel
     {
         public IList<HouseholdChoreNode> tree { get; }
         public bool IsEditMode { get; set; }
+        public IList<Guid> ToggledChores { get; set; }
         public double PercentProgressSummary { get; }
         public void Load();
         public void Add(HouseholdChore householdChore);
@@ -39,6 +40,8 @@ namespace CleanTrack.ViewModel
         private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
 
         public bool IsEditMode { get; set; } = false;
+
+        public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
         public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
         {

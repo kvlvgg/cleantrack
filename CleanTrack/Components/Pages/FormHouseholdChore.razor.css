@@ -1,12 +1,24 @@
 .form {
-    padding: var(--gap-lg);
-    margin-top: var(--gap-lg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    padding: var(--gap-xl);
+    margin-top: var(--header-height);
+
+    height: calc(100dvh - var(--header-height));
 }
 
 .title {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: var(--gap-lg);
+}
+
+.fields {
+/*    flex-grow: 1;*/
 }
 
 .field {
@@ -30,8 +42,5 @@
 
 .saveButton {
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: var(--gap-lg);
+    margin-top: var(--gap-xl);
 }

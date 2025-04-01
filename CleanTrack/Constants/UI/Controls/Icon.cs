@@ -27,6 +27,7 @@ namespace CleanTrack.Constants.UI.Controls
             public const string CLOSE = "close";
 			public const string STAT_MINUS_1 = "stat_minus_1";
 			public const string STAT_1 = "stat_1";
+			public const string SAVE = "save";
 		}
 	}
 }

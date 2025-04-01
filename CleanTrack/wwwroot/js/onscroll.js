@@ -1,7 +1,7 @@
-const isActivated = false
+const isScrollObserverActivated = false
 
 function ctOnScroll() {
-    if (isActivated) return;
+    if (isScrollObserverActivated) return;
 
     document.addEventListener('scroll', e => {
         const headerEl = document.getElementById('header');
