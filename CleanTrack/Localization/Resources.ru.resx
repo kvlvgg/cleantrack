@@ -165,4 +165,23 @@
   <data name="msgProgressBarNaN" xml:space="preserve">
     <value>В разделе еще нет таймеров</value>
   </data>
+  <data name="ConfirmModalDeleteSectionTitle" xml:space="preserve">
+    <value>Удаление раздела</value>
+  </data>
+  <data name="ConfirmModalDeleteSectionMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить раздел &lt;br /&gt; &lt;span class="text-danger"&gt;{0}&lt;/span&gt;?
+Это также приведёт к удалению всех вложенных элементов.</value>
+  </data>
+  <data name="BtnDeleteText" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="BtnCloseText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="ConfirmModalDeleteTimerTitle" xml:space="preserve">
+    <value>Удаления таймера</value>
+  </data>
+  <data name="ConfirmModalDeleteTimerMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить таймер &lt;br /&gt; &lt;span class="text-danger"&gt;{0}&lt;/span&gt;?</value>
+  </data>
 </root>

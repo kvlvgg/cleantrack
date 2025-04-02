@@ -1,0 +1,21 @@
+.backdrop {
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1;
+    padding: var(--gap-lg);
+    background-color: rgba(0,0,0,0.5);
+}
+
+    .backdrop .content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        width: 100%;
+        max-width: 450px;
+    }

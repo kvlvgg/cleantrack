@@ -30,6 +30,7 @@ namespace CleanTrack.Constants.UI.Controls
 			public const string SAVE = "save";
 			public const string QUESTION_MARK = "question_mark";
 			public const string INFO = "info";
+			public const string DELETE = "delete";
 		}
 	}
 }

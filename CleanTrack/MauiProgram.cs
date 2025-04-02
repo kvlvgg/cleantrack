@@ -24,6 +24,7 @@ public static class MauiProgram
 
 		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSingleton<AppStateService>();
+		builder.Services.AddSingleton<ModalService>();
 		builder.Services.AddSingleton<IHouseholdChoresViewModel, HouseholdChoresViewModel>();
 		builder.Services.AddSingleton<IFormHouseholdChoresViewModel, FormHouseholdChoreViewModel>();
 		builder.Services.AddSingleton<IRepository<HouseholdChore>, HouseholdChoreRepository>();

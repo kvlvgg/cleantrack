@@ -1,0 +1,50 @@
+﻿@namespace Controls
+
+<Controls.Card>
+	<div class="modal" @onclick:stopPropagation>
+		<div class="title">
+			<Controls.H Level="3" Text="@Title" />
+		</div>
+
+		<div class="message">
+			<Controls.Text Size="@UI.Controls.Text.Size.SM">
+				@Message
+			</Controls.Text>
+		</div>
+
+		<div class="buttons">
+			<Controls.Button Text="@NoText"
+							 Icon="@UI.Controls.Icon.Text.CLOSE"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => OnCancel.InvokeAsync()" />
+
+			<Controls.Button Text="@YesText"
+							 Icon="@UI.Controls.Icon.Text.DELETE"
+							 Variant="@UI.Controls.Button.Variant.DANGER"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => OnConfirm.InvokeAsync()" />
+		</div>
+	</div>
+</Controls.Card>
+
+@code {
+
+	[Parameter]
+	public string YesText { get; set; } = string.Empty;
+
+	[Parameter]
+	public string NoText { get; set; } = string.Empty;
+
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public MarkupString Message { get; set; }
+
+	[Parameter]
+	public EventCallback OnConfirm { get; set; }
+
+	[Parameter]
+	public EventCallback OnCancel { get; set; }
+}

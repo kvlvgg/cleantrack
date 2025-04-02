@@ -3,6 +3,7 @@
 @using Node = CleanTrack.ViewModel.HouseholdChoreNode
 @using CleanTrack.Localization;
 
+@inject ModalService ModalService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
@@ -12,16 +13,16 @@
 		@if (Node.isLeaf)
 		{
 			<Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
-			Variant="@UI.Controls.Button.Variant.PRIMARY"
-			Size="@UI.Controls.Button.Size.XS" />
+							 Variant="@UI.Controls.Button.Variant.PRIMARY"
+							 Size="@UI.Controls.Button.Size.XS" />
 		}
 		else
 		{
 			<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
-			Variant="@UI.Controls.Button.Variant.SECONDARY"
-			Size="@UI.Controls.Button.Size.XS"
-			Disabled="@(Node.Children.Count == 0)"
-			OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.XS"
+							 Disabled="@(Node.Children.Count == 0)"
+							 OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
 		}
 
 		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
@@ -49,7 +50,7 @@ else
 		}
 
 		<div class="@itemClasses" @onclick="() => toggleSelectedItem(Node.Id)">
-			<Controls.Tag Text="@(Node.isLeaf ? "T" : "C")" />
+			<Controls.Tag Text="@(Node.isLeaf ? "T" : "S")" />
 			<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
 		</div>
 
@@ -63,16 +64,16 @@ else
 										 Variant="@UI.Controls.Button.Variant.SECONDARY"
 										 Size="@UI.Controls.Button.Size.SM"
 										 PaddingXXS
-										 OnClick="() => goToAddPage(true, Node.Id)">
-							<Controls.Tag Text="T" />
+										 OnClick="() => goToAddPage(false, Node.Id)">
+							<Controls.Tag Text="S" />
 						</Controls.Button>
 
 						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
 										 Variant="@UI.Controls.Button.Variant.SECONDARY"
 										 Size="@UI.Controls.Button.Size.SM"
 										 PaddingXXS
-										 OnClick="() => goToAddPage(false, Node.Id)">
-							<Controls.Tag Text="S" />
+										 OnClick="() => goToAddPage(true, Node.Id)">
+							<Controls.Tag Text="T" />
 						</Controls.Button>
 					}
 
@@ -80,6 +81,11 @@ else
 									 Variant="@UI.Controls.Button.Variant.SECONDARY"
 									 Size="@UI.Controls.Button.Size.SM"
 									 OnClick="goToEditPage" />
+
+					<Controls.Button Icon="@UI.Controls.Icon.Text.DELETE"
+									 Variant="@UI.Controls.Button.Variant.DANGER"
+									 Size="@UI.Controls.Button.Size.SM"
+									 OnClick="() => openConfirmationModal()" />
 				}
 			</div>
 		</div>
@@ -121,7 +127,7 @@ else
 	public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
 	[Parameter]
-	public EventCallback<Guid> ToggledChanged { get; set; } 
+	public EventCallback<Guid> ToggledChanged { get; set; }
 
 	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
 
@@ -162,5 +168,15 @@ else
 			SelectedHouseholdChoreIdChanged.InvokeAsync(Guid.Empty);
 		else
 			SelectedHouseholdChoreIdChanged.InvokeAsync(id);
+	}
+
+	private void openConfirmationModal()
+	{
+		string title = Node.isLeaf ? Resources.ConfirmModalDeleteTimerTitle : Resources.ConfirmModalDeleteSectionTitle;
+
+		string safeNodeName = System.Net.WebUtility.HtmlEncode(Node.Name);
+		string message = string.Format(Node.isLeaf ? Resources.ConfirmModalDeleteTimerMessage : Resources.ConfirmModalDeleteSectionMessage, safeNodeName);
+
+		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { });
 	}
 }

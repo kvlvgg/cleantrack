@@ -70,6 +70,24 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string BtnCloseText {
+            get {
+                return ResourceManager.GetString("BtnCloseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string BtnDeleteText {
+            get {
+                return ResourceManager.GetString("BtnDeleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string BtnSaveText {
@@ -84,6 +102,44 @@ namespace CleanTrack.Localization {
         internal static string BtnTextEditMode {
             get {
                 return ResourceManager.GetString("BtnTextEditMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the section &lt;br /&gt;&lt;span class=&quot;text-danger&quot;&gt;{0}&lt;/span&gt;?
+        ///This will also remove all of its contents..
+        /// </summary>
+        internal static string ConfirmModalDeleteSectionMessage {
+            get {
+                return ResourceManager.GetString("ConfirmModalDeleteSectionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Section.
+        /// </summary>
+        internal static string ConfirmModalDeleteSectionTitle {
+            get {
+                return ResourceManager.GetString("ConfirmModalDeleteSectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the section &lt;br /&gt; &lt;span class=&quot;text-danger&quot;&gt;{0}&lt;/span&gt;?
+        ///.
+        /// </summary>
+        internal static string ConfirmModalDeleteTimerMessage {
+            get {
+                return ResourceManager.GetString("ConfirmModalDeleteTimerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Timer.
+        /// </summary>
+        internal static string ConfirmModalDeleteTimerTitle {
+            get {
+                return ResourceManager.GetString("ConfirmModalDeleteTimerTitle", resourceCulture);
             }
         }
         

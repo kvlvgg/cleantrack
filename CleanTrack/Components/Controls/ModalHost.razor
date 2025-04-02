@@ -1,0 +1,24 @@
+﻿@namespace Controls
+
+@inject ModalService ModalService
+
+@if (ModalService.Current != null)
+{
+    <div class="backdrop" @onclick="ModalService.Close">
+        <div class="content" @onclick:stopPropagation>
+            @ModalService.Current
+        </div>
+    </div>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        ModalService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ModalService.OnChange -= StateHasChanged;
+    }
+}

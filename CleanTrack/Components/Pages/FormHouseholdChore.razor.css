@@ -20,6 +20,7 @@
 .fields {
     display: flex;
     flex-direction: column;
+    padding: var(--gap-sm) var(--gap-lg);
     gap: var(--gap-sm);
 }
 
