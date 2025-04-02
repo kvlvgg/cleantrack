@@ -1,23 +1,34 @@
 ﻿@namespace Controls
 
-<div class="bar">
-    <div class="@progressBarClasses" style="@progressWidth" />
-    <div class="text">
-        <Controls.Text Value="@text" Size="@UI.Controls.Text.Size.SM" />
-    </div>
+<div class="@barClasses">
+	<div class="@progressBarClasses" style="@progressWidth" />
+	<div class="text">
+		<Controls.Text Value="@text" Size="@UI.Controls.Text.Size.SM" />
+	</div>
 </div>
 
 @code {
-    [Parameter]
-    public double Value { get; set; }
+	[Parameter]
+	public double Value { get; set; }
 
-    private string text => Math.Round(Value * 100).ToString();
-    public string progressWidth => $"width: {Math.Round(Math.Abs(Value) * 100)}%";
+	[Parameter]
+	public string EmptyText { get; set; } = string.Empty;
 
-    private string progressBarClasses => string.Join(" ", new Dictionary<string, bool>()
-    {
-        {"progress", true },
-        {"positive", Value > 0},
-        {"negative", Value < 0},
-    }.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+	private string text => !isNaN ? Math.Round(Value * 100).ToString() : EmptyText;
+	private bool isNaN => double.IsNaN(Math.Round(Value * 100));
+	private string progressWidth => $"width: {Math.Round(Math.Abs(Value) * 100)}%";
+
+	private string barClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"bar", true },
+		{"notDefined", isNaN }
+
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string progressBarClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"progress", true },
+		{"positive", Value > 0},
+		{"negative", Value < 0},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 }

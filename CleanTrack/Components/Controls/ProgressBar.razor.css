@@ -1,11 +1,19 @@
 ﻿.bar {
+    --progress-bar-height: 24px;
+
     position: relative;
-    height: 24px;
+    height: var(--progress-bar-height);
     width: 100%;
     background-color: var(--surface-control);
     border-radius: 6px;
     overflow: hidden;
 }
+
+    .bar.notDefined {
+        height: calc(var(--progress-bar-height) + 4px);
+        background-color: transparent;
+        border: 2px solid #5f7274;
+    }
 
 .progress {
     height: 100%;

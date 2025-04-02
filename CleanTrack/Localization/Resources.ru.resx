@@ -162,4 +162,7 @@
   <data name="BtnSaveText" xml:space="preserve">
     <value>Сохранить</value>
   </data>
+  <data name="msgProgressBarNaN" xml:space="preserve">
+    <value>В разделе еще нет таймеров</value>
+  </data>
 </root>

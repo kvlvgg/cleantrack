@@ -1,6 +1,7 @@
 ﻿@namespace Views
 
 @using Node = CleanTrack.ViewModel.HouseholdChoreNode
+@using CleanTrack.Localization;
 
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
@@ -11,24 +12,23 @@
 		@if (Node.isLeaf)
 		{
 			<Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
-							 Variant="@UI.Controls.Button.Variant.PRIMARY"
-							 Size="@UI.Controls.Button.Size.XS" />
+			Variant="@UI.Controls.Button.Variant.PRIMARY"
+			Size="@UI.Controls.Button.Size.XS" />
 		}
 		else
 		{
 			<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
-							 Variant="@UI.Controls.Button.Variant.SECONDARY"
-							 Size="@UI.Controls.Button.Size.XS"
-							 OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
+			Variant="@UI.Controls.Button.Variant.SECONDARY"
+			Size="@UI.Controls.Button.Size.XS"
+			Disabled="@(Node.Children.Count == 0)"
+			OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
 		}
 
 		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.SM" />
 		<div />
 
-		@* @if(Node.is) *@
-
 		<div class="progressbar">
-			<Controls.ProgressBar Value="@Node.PercentProgress" />
+			<Controls.ProgressBar Value="@Node.PercentProgress" EmptyText="@Resources.msgProgressBarNaN" />
 		</div>
 	</div>
 }
@@ -40,6 +40,7 @@ else
 			<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
 							 Variant="@UI.Controls.Button.Variant.SECONDARY"
 							 Size="@UI.Controls.Button.Size.XS"
+							 Disabled="@(Node.Children.Count == 0)"
 							 OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
 		}
 		else

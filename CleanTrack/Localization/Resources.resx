@@ -162,4 +162,7 @@
   <data name="BtnSaveText" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="msgProgressBarNaN" xml:space="preserve">
+    <value>No timers in this section</value>
+  </data>
 </root>

@@ -151,6 +151,15 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No timers in this section.
+        /// </summary>
+        internal static string msgProgressBarNaN {
+            get {
+                return ResourceManager.GetString("msgProgressBarNaN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your activities will appear here..
         /// </summary>
         internal static string NoItemFoundLine1 {

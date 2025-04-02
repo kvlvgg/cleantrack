@@ -2,15 +2,15 @@
 
 namespace CleanTrack.UseCases
 {
-    public static class Chores
-    {
-        public static double GetPercentSummary(double[] percents)
-        {
-            return percents.Aggregate(0.0, (acc, curr) => acc + curr) / percents.Length;
-        }
+	public static class Chores
+	{
+		public static double GetPercentSummary(double[] percents)
+		{
+			return percents.Aggregate(0.0, (acc, curr) => acc + curr) / percents.Length;
+		}
 
-        public static double GetProgressPercent(HouseholdChore entity)
-        {
+		public static double GetProgressPercent(HouseholdChore entity)
+		{
 			if (entity.DayInterval == null || entity.LastDateDone == null) return 0.0;
 
 			int hourInterval = (entity.DayInterval ?? 0) * 24;
@@ -22,10 +22,10 @@ namespace CleanTrack.UseCases
 			return percentProgress;
 		}
 
-        public static IEnumerable<HouseholdChore> GetAllLeafs(IEnumerable<HouseholdChore> entities)
-        {
-            return entities.Where(x => x.isLeaf);
-        }
+		public static IEnumerable<HouseholdChore> GetAllLeafs(IEnumerable<HouseholdChore> entities)
+		{
+			return entities.Where(x => x.isLeaf);
+		}
 
 		public static IEnumerable<HouseholdChore> GetRoots(IEnumerable<HouseholdChore> entities)
 		{
@@ -38,9 +38,9 @@ namespace CleanTrack.UseCases
 		}
 
 		public static IEnumerable<HouseholdChore> GetDeepAllLeafs(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
-        {
-            return GetChildren(entities, entity).Where(x => IsLeafOrHasLeaf(entities, x));
-        }
+		{
+			return GetChildren(entities, entity).Where(x => IsLeafOrHasLeaf(entities, x));
+		}
 
 		public static bool IsRoot(INode entity)
 		{
@@ -48,15 +48,15 @@ namespace CleanTrack.UseCases
 		}
 
 		public static bool IsChild(INode parent, INode child)
-        {
-            return parent.Id == child.ParentId;
-        }
+		{
+			return parent.Id == child.ParentId;
+		}
 
-        public static bool IsLeafOrHasLeaf(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
-        {
-            if (entity.isLeaf) return true;
+		public static bool IsLeafOrHasLeaf(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
+		{
+			if (entity.isLeaf) return true;
 
-            return entities.Any(x => x.ParentId == entity.Id && x.isLeaf || IsLeafOrHasLeaf(entities, x));
-        }
-    }
+			return GetChildren(entities, entity).Any(child => IsLeafOrHasLeaf(entities, child));
+		}
+	}
 }
