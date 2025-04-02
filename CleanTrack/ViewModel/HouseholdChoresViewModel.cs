@@ -48,7 +48,7 @@ namespace CleanTrack.ViewModel
 			this.repo = repo;
 		}
 
-		public double PercentProgressSummary => leafsProgressPercents.Values.Aggregate(0.0, (acc, curr) => acc + curr) / leafsProgressPercents.Count;
+		public double PercentProgressSummary => UseCases.Chores.GetPercentSummary(leafsProgressPercents.Values.ToArray());
 
 		private Dictionary<Guid, double> leafsProgressPercents =>
 			UseCases.Chores
