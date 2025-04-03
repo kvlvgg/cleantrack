@@ -39,11 +39,11 @@
     }
 
     .progress .positive {
-        border: 16px solid #22d3ee;
+        border: 16px solid var(--primary-color);
     }
 
     .progress .negative {
-        border: 16px solid rgb(248, 113, 113);
+        border: 16px solid var(--danger-color);
     }
 
     .progress .positive,

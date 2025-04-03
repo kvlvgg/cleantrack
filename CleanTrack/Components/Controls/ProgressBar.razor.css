@@ -1,6 +1,5 @@
 ﻿.bar {
-    --progress-bar-height: 24px;
-
+    --progress-bar-height: 16px;
     position: relative;
     height: var(--progress-bar-height);
     width: 100%;
@@ -22,20 +21,48 @@
 
     .progress.positive {
         background-color: var(--primary-color);
+        background-image: linear-gradient( 45deg, #22d3ee 25%, #1baec4 25%, #1baec4 50%, #22d3ee 50%, #22d3ee 75%, #1baec4 75%, #1baec4 );
+        background-size: 5px 5px;
+        animation: progress-stripes-left 4s linear infinite;
+        transition: width 0.3s ease;
     }
 
     .progress.negative {
         background-color: var(--danger-color);
+        background-image: linear-gradient( -45deg, #f87171 25%, #d75b5b 25%, #d75b5b 50%, #f87171 50%, #f87171 75%, #d75b5b 75%, #d75b5b );
+        background-size: 5px 5px;
+        animation: progress-stripes-right 4s linear infinite;
+        transition: width 0.3s ease;
     }
 
 .text {
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+}
+
+@keyframes progress-stripes-right {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 24px 0;
+    }
+}
+
+
+@keyframes progress-stripes-left {
+    0% {
+        background-position: 24px 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
