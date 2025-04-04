@@ -75,20 +75,10 @@
 					}
 					else
 					{
-						@if (SelectedHouseholdChoreId == Guid.Empty)
-						{
-							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-											 Variant="@UI.Controls.Button.Variant.SECONDARY"
-											 Size="@UI.Controls.Button.Size.MD"
-											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-						}
-						else
-						{
-							<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-											 Variant="@UI.Controls.Button.Variant.SECONDARY"
-											 Size="@UI.Controls.Button.Size.MD"
-											 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-						}
+						<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
 					}
 				</div>
 			</div>
