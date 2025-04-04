@@ -108,6 +108,7 @@ namespace CleanTrack.ViewModel
             };
 
             if (Form.isLeaf) LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
+            NodeType = Form.isLeaf ? NodeType.Leaf : NodeType.Node;
         }
 
         public void Add()
