@@ -124,7 +124,7 @@ namespace CleanTrack.ViewModel
 			HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
 			if (entity == null) return;
 
-			IEnumerable<HouseholdChore> deepChildren = UseCases.Chores.GetDeepChildren(entities, entity);
+			IEnumerable<HouseholdChore> deepChildren = !entity.isLeaf ? UseCases.Chores.GetDeepChildren(entities, entity) : [];
 			repo.Delete(entity);
 
 			foreach (HouseholdChore child in deepChildren)

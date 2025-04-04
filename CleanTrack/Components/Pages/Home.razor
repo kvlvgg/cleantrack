@@ -7,6 +7,7 @@
 
 @inject NavigationManager Navigation
 @inject AppStateService AppState
+@inject ModalService ModalService
 
 <div class="separator" />
 
@@ -104,7 +105,7 @@
 							  ToggledChanged="onToggledChanged"
 							  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
 							  IsEditMode="@ViewModel.IsEditMode"
-							  onDelete="(Guid id) => onDelete(id)" />
+							  onDelete="(HouseholdChoreNode node) => openDeleteConfirmationModal(node)" />
 	}
 
 	@if (ViewModel.tree.Count == 0)
@@ -199,10 +200,22 @@
 		Navigation.NavigateTo($"household-chore?Type={queryParam}");
 	}
 
+	private void openDeleteConfirmationModal(HouseholdChoreNode node)
+	{
+		string title = node.isLeaf ? Resources.ConfirmModalDeleteTimerTitle : Resources.ConfirmModalDeleteSectionTitle;
+
+		string safeNodeName = System.Net.WebUtility.HtmlEncode(node.Name);
+		string message = string.Format(node.isLeaf ? Resources.ConfirmModalDeleteTimerMessage : Resources.ConfirmModalDeleteSectionMessage, safeNodeName);
+
+		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { onDelete(node.Id); });
+	}
+
 	private void onDelete(Guid id)
 	{
 		ViewModel.Delete(id);
 		if (SelectedHouseholdChoreId == id) SelectedHouseholdChoreId = Guid.Empty;
+
+		StateHasChanged();
 	}
 
 	public void Dispose()

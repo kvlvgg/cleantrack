@@ -3,7 +3,6 @@
 @using Node = CleanTrack.ViewModel.HouseholdChoreNode
 @using CleanTrack.Localization;
 
-@inject ModalService ModalService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
@@ -85,7 +84,7 @@ else
 					<Controls.Button Icon="@UI.Controls.Icon.Text.DELETE"
 									 Variant="@UI.Controls.Button.Variant.DANGER"
 									 Size="@UI.Controls.Button.Size.SM"
-									 OnClick="() => openConfirmationModal()" />
+									 OnClick="() => onDelete.InvokeAsync(Node)" />
 				}
 			</div>
 		</div>
@@ -105,7 +104,8 @@ else
 								  IsEditMode="@IsEditMode"
 								  ToggledChores="ToggledChores"
 								  SelectedHouseholdChoreIdChanged="(id) => toggleSelectedItem(id)"
-								  ToggledChanged="(id) => ToggledChanged.InvokeAsync(id)" />
+								  ToggledChanged="(id) => ToggledChanged.InvokeAsync(id)"
+								  onDelete="(Node node) => onDelete.InvokeAsync(node)"/>
 		}
 	</div>
 }
@@ -131,7 +131,7 @@ else
 	public EventCallback<Guid> ToggledChanged { get; set; }
 
 	[Parameter]
-	public EventCallback<Guid> onDelete { get; set; }
+	public EventCallback<Node> onDelete { get; set; }
 
 	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
 
@@ -172,15 +172,5 @@ else
 			SelectedHouseholdChoreIdChanged.InvokeAsync(Guid.Empty);
 		else
 			SelectedHouseholdChoreIdChanged.InvokeAsync(id);
-	}
-
-	private void openConfirmationModal()
-	{
-		string title = Node.isLeaf ? Resources.ConfirmModalDeleteTimerTitle : Resources.ConfirmModalDeleteSectionTitle;
-
-		string safeNodeName = System.Net.WebUtility.HtmlEncode(Node.Name);
-		string message = string.Format(Node.isLeaf ? Resources.ConfirmModalDeleteTimerMessage : Resources.ConfirmModalDeleteSectionMessage, safeNodeName);
-
-		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { onDelete.InvokeAsync(Node.Id); });
 	}
 }
