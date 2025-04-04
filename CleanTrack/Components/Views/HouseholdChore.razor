@@ -103,6 +103,7 @@ else
 								  SelectedHouseholdChoreId="SelectedHouseholdChoreId"
 								  Node="@node"
 								  IsEditMode="@IsEditMode"
+								  ToggledChores="ToggledChores"
 								  SelectedHouseholdChoreIdChanged="(id) => toggleSelectedItem(id)"
 								  ToggledChanged="(id) => ToggledChanged.InvokeAsync(id)" />
 		}
@@ -128,6 +129,9 @@ else
 
 	[Parameter]
 	public EventCallback<Guid> ToggledChanged { get; set; }
+
+	[Parameter]
+	public EventCallback<Guid> onDelete { get; set; }
 
 	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
 
@@ -177,6 +181,6 @@ else
 		string safeNodeName = System.Net.WebUtility.HtmlEncode(Node.Name);
 		string message = string.Format(Node.isLeaf ? Resources.ConfirmModalDeleteTimerMessage : Resources.ConfirmModalDeleteSectionMessage, safeNodeName);
 
-		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { });
+		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { onDelete.InvokeAsync(Node.Id); });
 	}
 }

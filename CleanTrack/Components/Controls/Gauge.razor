@@ -2,7 +2,7 @@
 
 <div class="wrapper">
     <div class="title timer">
-        <Controls.Text Value="@($"{Math.Round(Value * 100, 2).ToString()}%")" Size="@UI.Controls.Text.Size.MD" />
+        <Controls.Text Value="@displayText" Size="@UI.Controls.Text.Size.MD" />
     </div>
 
     <div class="progress">
@@ -16,6 +16,8 @@
 @code {
     [Parameter]
     public double Value { get; set; }
+
+    private string displayText => !double.IsNaN(Value) ? $"{Math.Round(Value * 100, 2).ToString()}%" : "0.00%";
 
     private string positiveStyle => $"transform: rotate(-{positiveBarDegree}deg)";
 

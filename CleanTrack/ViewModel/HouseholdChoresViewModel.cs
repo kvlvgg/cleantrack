@@ -28,7 +28,7 @@ namespace CleanTrack.ViewModel
 		public void Load();
 		public void Add(HouseholdChore householdChore);
 		public void Save();
-		public void Delete(HouseholdChore householdChore);
+		public void Delete(Guid id);
 		public void ChangeOrder(Guid? id, int step);
 	}
 
@@ -119,9 +119,21 @@ namespace CleanTrack.ViewModel
 			repo.Save();
 		}
 
-		public void Delete(HouseholdChore householdChore)
+		public void Delete(Guid id)
 		{
-			repo.Delete(householdChore);
+			HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
+			if (entity == null) return;
+
+			IEnumerable<HouseholdChore> deepChildren = UseCases.Chores.GetDeepChildren(entities, entity);
+			repo.Delete(entity);
+
+			foreach (HouseholdChore child in deepChildren)
+			{
+				repo.Delete(child);
+			}
+
+			repo.Save();
+			Load();
 		}
 
 		public void ChangeOrder(Guid? id, int step)

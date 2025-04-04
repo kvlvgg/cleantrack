@@ -103,7 +103,8 @@
 							  ToggledChores="ViewModel.ToggledChores"
 							  ToggledChanged="onToggledChanged"
 							  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
-							  IsEditMode="@ViewModel.IsEditMode" />
+							  IsEditMode="@ViewModel.IsEditMode"
+							  onDelete="(Guid id) => onDelete(id)" />
 	}
 
 	@if (ViewModel.tree.Count == 0)
@@ -196,6 +197,12 @@
 	{
 		string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
 		Navigation.NavigateTo($"household-chore?Type={queryParam}");
+	}
+
+	private void onDelete(Guid id)
+	{
+		ViewModel.Delete(id);
+		if (SelectedHouseholdChoreId == id) SelectedHouseholdChoreId = Guid.Empty;
 	}
 
 	public void Dispose()

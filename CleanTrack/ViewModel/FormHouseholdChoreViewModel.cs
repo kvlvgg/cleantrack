@@ -90,7 +90,7 @@ namespace CleanTrack.ViewModel
                 ParentId = parentId
             };
 
-            LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
+			if (Form.isLeaf) LastTimeDoneAgo = DateTime.Now - (Form.LastDateDone ?? DateTime.Now);
         }
 
         public void LoadFormById(Guid id)
