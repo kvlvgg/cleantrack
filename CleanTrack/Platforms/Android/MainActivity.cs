@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using CleanTrack.Services;
 
 namespace CleanTrack;
 
@@ -16,6 +17,21 @@ public class MainActivity : MauiAppCompatActivity
 		{
 			Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#101D24"));
 		}
+	}
+
+	public override bool DispatchKeyEvent(KeyEvent? e)
+	{
+		if ((e.KeyCode == Keycode.Back) && (e.Action == KeyEventActions.Down))
+		{
+			var appStateService = IPlatformApplication.Current?.Services.GetService<AppStateService>();
+			if (appStateService?.IsOnRootPage == true)
+			{
+				Platform.CurrentActivity?.MoveTaskToBack(true);
+				return true; // событие обработано, дальше не идёт
+			}
+		}
+
+		return base.DispatchKeyEvent(e);
 	}
 }
 

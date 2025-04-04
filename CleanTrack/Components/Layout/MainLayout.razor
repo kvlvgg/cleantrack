@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
+@inject NavigationManager Nav
+@inject AppStateService AppState
+
 <HeadContent>
     <link id="ct-theme" rel="stylesheet" href="css/themes/dark/theme.css" />
 </HeadContent>
@@ -13,3 +16,10 @@
 </div>
 
 <Controls.ModalHost />
+
+@code {
+    protected override void OnInitialized()
+    {
+        AppState.SetNavigationManager(Nav);
+    }
+}
