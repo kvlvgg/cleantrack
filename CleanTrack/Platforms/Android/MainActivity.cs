@@ -25,6 +25,12 @@ public class MainActivity : MauiAppCompatActivity
 		{
 			var appStateService = IPlatformApplication.Current?.Services.GetService<AppStateService>();
 
+			if (appStateService?.IsModalOpened == true)
+			{
+				appStateService.CloseModal();
+				return true; // событие обработано, дальше не идёт
+			}
+
 			if (appStateService?.IsChoreSelected == true && appStateService?.IsEditMode == true && appStateService?.IsOnRootPage == true)
 			{
 				appStateService.UnselectChore();

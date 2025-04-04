@@ -3,6 +3,7 @@
 @inject NavigationManager Nav
 @inject AppStateService AppState
 @inject IHouseholdChoresViewModel ViewModel
+@inject ModalService ModalService
 
 <HeadContent>
     <link id="ct-theme" rel="stylesheet" href="css/themes/dark/theme.css" />
@@ -23,5 +24,6 @@
     {
         AppState.SetNavigationManager(Nav);
         AppState.SetViewModel(ViewModel);
+        AppState.SetModalService(ModalService);
     }
 }

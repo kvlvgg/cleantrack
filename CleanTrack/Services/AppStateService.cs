@@ -10,20 +10,28 @@ namespace CleanTrack.Services
 
 		private IHouseholdChoresViewModel? viewModel { get; set; }
 
+		private ModalService? modalService { get; set; }
+
 		public event Action? StateChanged;
 
 		public bool IsOnRootPage => navigationManager?.Uri.EndsWith("/") == true;
 		public bool IsEditMode => viewModel?.IsEditMode == true;
 		public bool IsChoreSelected => viewModel?.SelectedChoreId != Guid.Empty;
+		public bool IsModalOpened => modalService?.Current != null;
 
 		public void SetNavigationManager(NavigationManager navigationManager)
 		{
 			this.navigationManager = navigationManager;
 		}
 
-		public void SetViewModel(IHouseholdChoresViewModel householdChoreViewModel)
+		public void SetViewModel(IHouseholdChoresViewModel viewModel)
 		{
-			this.viewModel = householdChoreViewModel;
+			this.viewModel = viewModel;
+		}
+
+		public void SetModalService(ModalService modalService)
+		{
+			this.modalService = modalService;
 		}
 
 		public void ExitEditMode()
@@ -42,17 +50,16 @@ namespace CleanTrack.Services
 			StateChanged?.Invoke();
 		}
 
+		public void CloseModal()
+		{
+			if (modalService == null) return;
+
+			modalService.Close();
+		}
+
 		public void NotifyStateChanged()
 		{
 			StateChanged?.Invoke();
-		}
-
-		// Нужно для доступа из статического метода
-		private static AppStateService? _instance;
-
-		public AppStateService()
-		{
-			_instance = this;
 		}
 	}
 }
