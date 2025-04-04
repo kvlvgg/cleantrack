@@ -25,10 +25,16 @@ public class MainActivity : MauiAppCompatActivity
 		{
 			var appStateService = IPlatformApplication.Current?.Services.GetService<AppStateService>();
 
-			if(appStateService?.IsEditMode == true)
+			if (appStateService?.IsChoreSelected == true && appStateService?.IsEditMode == true && appStateService?.IsOnRootPage == true)
+			{
+				appStateService.UnselectChore();
+				return true; // событие обработано, дальше не идёт
+			}
+
+			if (appStateService?.IsOnRootPage == true && appStateService?.IsEditMode == true)
 			{
 				appStateService.ExitEditMode();
-				return true;
+				return true; // событие обработано, дальше не идёт
 			}
 
 			if (appStateService?.IsOnRootPage == true)

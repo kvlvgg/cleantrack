@@ -14,6 +14,7 @@ namespace CleanTrack.Services
 
 		public bool IsOnRootPage => navigationManager?.Uri.EndsWith("/") == true;
 		public bool IsEditMode => viewModel?.IsEditMode == true;
+		public bool IsChoreSelected => viewModel?.SelectedChoreId != Guid.Empty;
 
 		public void SetNavigationManager(NavigationManager navigationManager)
 		{
@@ -30,6 +31,14 @@ namespace CleanTrack.Services
 			if (viewModel == null) return;
 
 			viewModel.IsEditMode = false;
+			StateChanged?.Invoke();
+		}
+
+		public void UnselectChore()
+		{
+			if (viewModel == null) return;
+
+			viewModel.SelectedChoreId = Guid.Empty;
 			StateChanged?.Invoke();
 		}
 

@@ -25,7 +25,7 @@
 					{
 						<div class="buttonsWrapper">
 							<div class="@addButtonsClasses">
-								@if (SelectedHouseholdChoreId == Guid.Empty)
+								@if (ViewModel.SelectedChoreId == Guid.Empty)
 								{
 									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
 													 Variant="@UI.Controls.Button.Variant.SECONDARY"
@@ -48,17 +48,17 @@
 
 						<div class="buttonsWrapper">
 							<div class="@dragButtonsClasses">
-								@if (SelectedHouseholdChoreId != Guid.Empty)
+								@if (ViewModel.SelectedChoreId != Guid.Empty)
 								{
 									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
 													 Variant="@UI.Controls.Button.Variant.SECONDARY"
 													 Size="@UI.Controls.Button.Size.MD"
-													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, -1)" />
+													 OnClick="() => ViewModel.ChangeOrder(ViewModel.SelectedChoreId, -1)" />
 
 									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
 													 Variant="@UI.Controls.Button.Variant.SECONDARY"
 													 Size="@UI.Controls.Button.Size.MD"
-													 OnClick="() => ViewModel.ChangeOrder(SelectedHouseholdChoreId, 1)" />
+													 OnClick="() => ViewModel.ChangeOrder(ViewModel.SelectedChoreId, 1)" />
 								}
 							</div>
 						</div>
@@ -93,7 +93,7 @@
 							  Node="@node"
 							  ToggledChores="ViewModel.ToggledChores"
 							  ToggledChanged="onToggledChanged"
-							  @bind-SelectedHouseholdChoreId="SelectedHouseholdChoreId"
+							  @bind-SelectedHouseholdChoreId="ViewModel.SelectedChoreId"
 							  IsEditMode="@ViewModel.IsEditMode"
 							  onDelete="(HouseholdChoreNode node) => openDeleteConfirmationModal(node)" />
 	}
@@ -142,18 +142,16 @@
 
 	private bool isSubscribed = false;
 
-	public Guid? SelectedHouseholdChoreId { get; set; } = Guid.Empty;
-
 	private string addButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
 	{
 		{"buttons", true},
-		{"itemSelected", SelectedHouseholdChoreId == Guid.Empty},
+		{"itemSelected", ViewModel.SelectedChoreId == Guid.Empty},
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
 	private string dragButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
 	{
 		{"buttons", true},
-		{"itemSelected", SelectedHouseholdChoreId != Guid.Empty},
+		{"itemSelected", ViewModel.SelectedChoreId != Guid.Empty},
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
 	private string householdChores => string.Join(" ", new Dictionary<string, bool>()
@@ -203,7 +201,7 @@
 	private void onDelete(Guid id)
 	{
 		ViewModel.Delete(id);
-		if (SelectedHouseholdChoreId == id) SelectedHouseholdChoreId = Guid.Empty;
+		if (ViewModel.SelectedChoreId == id) ViewModel.SelectedChoreId = Guid.Empty;
 
 		StateHasChanged();
 	}
