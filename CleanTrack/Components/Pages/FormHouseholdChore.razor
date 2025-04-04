@@ -3,7 +3,6 @@
 
 @page "/household-chore"
 
-@inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @inject AppStateService AppState
 
@@ -107,28 +106,14 @@
 
 	private bool saveButtonDisabled => ViewModel.NodeType == NodeType.Node ? nameInputInvalid : nameInputInvalid || dayIntervalInvalid;
 
-	private bool isResizeObserverActivated = false;
-
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
-
-		if (!isResizeObserverActivated)
-		{
-			JSRuntime.InvokeVoidAsync("ctOnResize");
-			AppState.ViewportHeightChanged += onViewportHeightChanged;
-			isResizeObserverActivated = true;
-		}
 
 		if (Type != null) ViewModel.NodeType = Type == "Node" ? NodeType.Node : NodeType.Leaf;
 
 		if (Id != Guid.Empty) ViewModel.LoadFormById(Id);
 		else ViewModel.Create(ViewModel.NodeType, ParentId);
-	}
-
-	private void onViewportHeightChanged(double height)
-	{
-		JSRuntime.InvokeVoidAsync("window.CT.utils.setStyleProperty", "form", "height", $"calc({height}px - var(--header-height))");
 	}
 
 	private void changeLastTimeDoneAgo(string timeunit, int? value)

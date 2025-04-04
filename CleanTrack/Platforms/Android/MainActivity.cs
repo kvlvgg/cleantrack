@@ -24,6 +24,13 @@ public class MainActivity : MauiAppCompatActivity
 		if ((e.KeyCode == Keycode.Back) && (e.Action == KeyEventActions.Down))
 		{
 			var appStateService = IPlatformApplication.Current?.Services.GetService<AppStateService>();
+
+			if(appStateService?.IsEditMode == true)
+			{
+				appStateService.ExitEditMode();
+				return true;
+			}
+
 			if (appStateService?.IsOnRootPage == true)
 			{
 				Platform.CurrentActivity?.MoveTaskToBack(true);

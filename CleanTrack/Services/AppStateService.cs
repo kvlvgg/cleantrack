@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CleanTrack.ViewModel;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace CleanTrack.Services
@@ -7,27 +8,34 @@ namespace CleanTrack.Services
 	{
 		private NavigationManager? navigationManager { get; set; }
 
-		public event Action? StateChanged;
-		public event Action<double>? ViewportHeightChanged;
+		private IHouseholdChoresViewModel? viewModel { get; set; }
 
-		public bool IsOnRootPage => navigationManager.Uri.EndsWith("/");
+		public event Action? StateChanged;
+
+		public bool IsOnRootPage => navigationManager?.Uri.EndsWith("/") == true;
+		public bool IsEditMode => viewModel?.IsEditMode == true;
 
 		public void SetNavigationManager(NavigationManager navigationManager)
 		{
 			this.navigationManager = navigationManager;
 		}
 
-		public void NotifyStateChanged()
+		public void SetViewModel(IHouseholdChoresViewModel householdChoreViewModel)
 		{
+			this.viewModel = householdChoreViewModel;
+		}
+
+		public void ExitEditMode()
+		{
+			if (viewModel == null) return;
+
+			viewModel.IsEditMode = false;
 			StateChanged?.Invoke();
 		}
 
-		[JSInvokable("OnViewportResize")]
-		public static Task OnViewportResize(double height)
+		public void NotifyStateChanged()
 		{
-			// Получить текущий экземпляр через синглтон — нужен трюк
-			_instance?.ViewportHeightChanged?.Invoke(height);
-			return Task.CompletedTask;
+			StateChanged?.Invoke();
 		}
 
 		// Нужно для доступа из статического метода

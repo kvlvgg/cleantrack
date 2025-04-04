@@ -2,6 +2,7 @@
 
 @inject NavigationManager Nav
 @inject AppStateService AppState
+@inject IHouseholdChoresViewModel ViewModel
 
 <HeadContent>
     <link id="ct-theme" rel="stylesheet" href="css/themes/dark/theme.css" />
@@ -21,5 +22,6 @@
     protected override void OnInitialized()
     {
         AppState.SetNavigationManager(Nav);
+        AppState.SetViewModel(ViewModel);
     }
 }
