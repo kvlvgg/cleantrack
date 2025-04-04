@@ -1,9 +1,7 @@
 ﻿using CleanTrack.Models;
 using CleanTrack.Repository;
+using CleanTrack.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.VisualBasic;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace CleanTrack.ViewModel
 {
@@ -30,6 +28,8 @@ namespace CleanTrack.ViewModel
 		public void Save();
 		public void Delete(Guid id);
 		public void ChangeOrder(Guid? id, int step);
+		public void Export();
+		public void Import();
 	}
 
 	public class HouseholdChoresViewModel : IHouseholdChoresViewModel
@@ -37,15 +37,20 @@ namespace CleanTrack.ViewModel
 		[Inject]
 		IRepository<HouseholdChore> repo { get; set; }
 
+		IExportService ExportService { get; set; }
+		IImportService ImportService { get; set; }
+
 		private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
 
 		public bool IsEditMode { get; set; } = false;
 
 		public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
-		public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
+		public HouseholdChoresViewModel(IRepository<HouseholdChore> repo, IExportService exportService, IImportService importService)
 		{
 			this.repo = repo;
+			this.ExportService = exportService;
+			this.ImportService = importService;
 		}
 
 		public double PercentProgressSummary => UseCases.Chores.GetPercentSummary(leafsProgressPercents.Values.ToArray());
@@ -151,6 +156,16 @@ namespace CleanTrack.ViewModel
 			swappedEntity.Order = tempOrder;
 
 			Save();
+		}
+
+		public void Export()
+		{
+			ExportService.Export(entities.ToArray());
+		}
+
+		public void Import()
+		{
+			ImportService.Import();
 		}
 	}
 }

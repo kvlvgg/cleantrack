@@ -31,6 +31,8 @@ namespace CleanTrack.Constants.UI.Controls
 			public const string QUESTION_MARK = "question_mark";
 			public const string INFO = "info";
 			public const string DELETE = "delete";
+			public const string SHARE = "share";
+			public const string PUBLISH = "publish";
 		}
 	}
 }

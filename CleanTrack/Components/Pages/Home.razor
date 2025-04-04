@@ -68,10 +68,22 @@
 				<div class="right">
 					@if (!ViewModel.IsEditMode)
 					{
+						<div />
+
 						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
 										 Variant="@UI.Controls.Button.Variant.SECONDARY"
 										 Size="@UI.Controls.Button.Size.MD"
 										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
+
+						<Controls.Button Icon="@UI.Controls.Icon.Text.SHARE"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.Export()" />
+
+						<Controls.Button Icon="@UI.Controls.Icon.Text.PUBLISH"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => ViewModel.Import()" />
 					}
 					else
 					{
