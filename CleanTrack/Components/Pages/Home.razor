@@ -195,7 +195,7 @@
 		string safeNodeName = System.Net.WebUtility.HtmlEncode(node.Name);
 		string message = string.Format(node.isLeaf ? Resources.ConfirmModalDeleteTimerMessage : Resources.ConfirmModalDeleteSectionMessage, safeNodeName);
 
-		ModalService.Confirm(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { onDelete(node.Id); });
+		ModalService.ConfirmDelete(title, message, Resources.BtnDeleteText, Resources.BtnCloseText, () => { onDelete(node.Id); });
 	}
 
 	private void onDelete(Guid id)

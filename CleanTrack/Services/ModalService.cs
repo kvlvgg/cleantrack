@@ -19,14 +19,13 @@ namespace CleanTrack.Services
 			OnChange?.Invoke();
 		}
 
-		public void Confirm(string title, string message, string yesText, string noText, Action onConfirm)
+		public void ConfirmDelete(string title, string message, string yesText, string noText, Action onConfirm)
 		{
 			MarkupString msMessage = new MarkupString(message);
 
 			Show(builder =>
 			{
-				Console.WriteLine(typeof(Controls.ConfirmModal).FullName);
-				builder.OpenComponent(0, typeof(Controls.ConfirmModal));
+				builder.OpenComponent(0, typeof(Views.ConfirmDeleteModal));
 				builder.AddAttribute(1, "Title", title);
 				builder.AddAttribute(2, "Message", msMessage);
 				builder.AddAttribute(3, "YesText", yesText);
