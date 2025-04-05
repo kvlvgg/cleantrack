@@ -27,7 +27,7 @@
 </div>
 
 <div class="@choresClasses">
-	@foreach (HouseholdChoreNode node in ViewModel.tree)
+	@foreach (ChoreNode node in ViewModel.tree)
 	{
 		<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="ViewModel.IsEditMode" ToggledChores="ViewModel.ToggledChores">
 			<ViewTemplate Context="n">
@@ -86,7 +86,7 @@
 		Navigation.NavigateTo($"chore?Type={queryParam}");
 	}
 
-	private void openDeleteConfirmationModal(HouseholdChoreNode node)
+	private void openDeleteConfirmationModal(ChoreNode node)
 	{
 		string title = node.isLeaf ? Resources.ConfirmModalDeleteTimerTitle : Resources.ConfirmModalDeleteSectionTitle;
 

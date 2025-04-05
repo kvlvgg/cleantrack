@@ -1,7 +1,6 @@
 ﻿@namespace Views.Chores.Mode.View
 
 @using CleanTrack.Localization
-@using Node = CleanTrack.ViewModel.HouseholdChoreNode
 
 <div class="chore">
 	@if (Node.isLeaf)
@@ -29,7 +28,7 @@
 
 @code {
 	[Parameter]
-	public required Node Node { get; set; }
+	public required ChoreNode Node { get; set; }
 
 	[Parameter]
 	public EventCallback<Guid> ToggledChanged { get; set; }

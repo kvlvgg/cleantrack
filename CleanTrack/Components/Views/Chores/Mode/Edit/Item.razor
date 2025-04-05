@@ -1,7 +1,5 @@
 ﻿@namespace Views.Chores.Mode.Edit
 
-@using Node = CleanTrack.ViewModel.HouseholdChoreNode
-
 @inject NavigationManager Navigation
 
 <div class="chore">
@@ -62,7 +60,7 @@
 
 @code {
 	[Parameter]
-	public required Node Node { get; set; }
+	public required ChoreNode Node { get; set; }
 
 	[Parameter]
 	public EventCallback<Guid> ToggledChanged { get; set; }
@@ -75,7 +73,7 @@
 	public EventCallback<Guid?> SelectedHouseholdChoreIdChanged { get; set; }
 
 	[Parameter]
-	public EventCallback<Node> onDelete { get; set; }
+	public EventCallback<ChoreNode> onDelete { get; set; }
 
 	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
 

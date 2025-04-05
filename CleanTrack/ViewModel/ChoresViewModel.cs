@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace CleanTrack.ViewModel
 {
 
-	public class HouseholdChoreNode : INode
+	public class ChoreNode : INode
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; } = string.Empty;
@@ -16,12 +16,12 @@ namespace CleanTrack.ViewModel
 		public Guid? ParentId { get; set; }
 		public int Order { get; set; }
 		public bool isLeaf { get; set; }
-		public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
+		public IList<ChoreNode> Children { get; set; } = new List<ChoreNode>();
 	}
 
 	public interface IChoresViewModel
 	{
-		public IList<HouseholdChoreNode> tree { get; }
+		public IList<ChoreNode> tree { get; }
 		public bool IsEditMode { get; set; }
 		public Guid? SelectedChoreId { get; set; }
 		public IList<Guid> ToggledChores { get; set; }
@@ -61,7 +61,7 @@ namespace CleanTrack.ViewModel
 					x => UseCases.Chores.GetProgressPercent(x)
 				);
 
-		public IList<HouseholdChoreNode> tree
+		public IList<ChoreNode> tree
 		{
 			get
 			{
@@ -74,7 +74,7 @@ namespace CleanTrack.ViewModel
 					return UseCases.Chores.GetPercentSummary(childrenPercents);
 				}
 
-				HouseholdChoreNode toNode(HouseholdChore entity) => new()
+				ChoreNode toNode(HouseholdChore entity) => new()
 				{
 					Id = entity.Id,
 					Name = entity.Name,
@@ -82,20 +82,20 @@ namespace CleanTrack.ViewModel
 					ParentId = entity.ParentId,
 					Order = entity.Order,
 					isLeaf = entity.isLeaf,
-					Children = new List<HouseholdChoreNode>()
+					Children = new List<ChoreNode>()
 				};
 
-				IList<HouseholdChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
+				IList<ChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
 					UseCases.Chores.GetRoots(entities).Select(x => toNode(x)).ToList();
 
-				IList<HouseholdChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, HouseholdChoreNode node) =>
+				IList<ChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, ChoreNode node) =>
 					UseCases.Chores.GetChildren(entities, node).Select(x => toNode(x)).ToList();
 
-				IList<HouseholdChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, HouseholdChoreNode? treeNode = null)
+				IList<ChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, ChoreNode? treeNode = null)
 				{
-					IList<HouseholdChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
+					IList<ChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
 
-					foreach (HouseholdChoreNode node in childNodes)
+					foreach (ChoreNode node in childNodes)
 					{
 						node.Children = buildTreeNodes(householdChore, node).ToList();
 					}

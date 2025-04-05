@@ -1,7 +1,5 @@
 ﻿@namespace Views.Chores
 
-@using Node = CleanTrack.ViewModel.HouseholdChoreNode
-
 @if (!IsEditMode)
 {
 	@ViewTemplate?.Invoke(Node)
@@ -14,7 +12,7 @@ else
 @if (Node.Children.Count > 0 && isChildrenToggled)
 {
 	<div class="@childrenClasses">
-		@foreach (HouseholdChoreNode node in Node.Children)
+		@foreach (ChoreNode node in Node.Children)
 		{
 			<Views.Chores.Item @key="node.Id"
 							   Node="node"
@@ -27,11 +25,11 @@ else
 }
 
 @code {
-	[Parameter] public RenderFragment<HouseholdChoreNode>? ViewTemplate { get; set; }
-	[Parameter] public RenderFragment<HouseholdChoreNode>? EditTemplate { get; set; }
+	[Parameter] public RenderFragment<ChoreNode>? ViewTemplate { get; set; }
+	[Parameter] public RenderFragment<ChoreNode>? EditTemplate { get; set; }
 
 	[Parameter]
-	public required Node Node { get; set; }
+	public required ChoreNode Node { get; set; }
 
 	[Parameter]
 	public bool IsEditMode { get; set; }
