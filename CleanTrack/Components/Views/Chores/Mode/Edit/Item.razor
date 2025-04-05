@@ -67,26 +67,26 @@
 
 	/* Cannot put this in ViewModel. It seems like duplicate ViewModel for each node. */
 	[Parameter]
-	public Guid? SelectedHouseholdChoreId { get; set; }
+	public Guid? SelectedChoreId { get; set; }
 
 	[Parameter]
-	public EventCallback<Guid?> SelectedHouseholdChoreIdChanged { get; set; }
+	public EventCallback<Guid?> SelectedChoreIdChanged { get; set; }
 
 	[Parameter]
 	public EventCallback<ChoreNode> onDelete { get; set; }
 
-	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
+	private bool isSelected => Node.Id == SelectedChoreId;
 
 	private string itemClasses => string.Join(" ", new Dictionary<string, bool>()
 	{
 		{"item", true},
-		{"selected", Node.Id == SelectedHouseholdChoreId },
+		{"selected", Node.Id == SelectedChoreId },
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
 	private string buttonsClasses => string.Join(" ", new Dictionary<string, bool>()
 	{
 		{"buttons", true},
-		{"itemSelected", Node.Id == SelectedHouseholdChoreId },
+		{"itemSelected", Node.Id == SelectedChoreId },
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
 	private void goToAddPage(bool isLeaf, Guid parentId)
@@ -102,9 +102,9 @@
 
 	private void toggleSelectedItem(Guid? id)
 	{
-		if (SelectedHouseholdChoreId == id)
-			SelectedHouseholdChoreIdChanged.InvokeAsync(Guid.Empty);
+		if (SelectedChoreId == id)
+			SelectedChoreIdChanged.InvokeAsync(Guid.Empty);
 		else
-			SelectedHouseholdChoreIdChanged.InvokeAsync(id);
+			SelectedChoreIdChanged.InvokeAsync(id);
 	}
 }

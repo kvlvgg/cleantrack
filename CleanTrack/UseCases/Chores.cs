@@ -10,7 +10,7 @@ namespace CleanTrack.UseCases
 			return percents.Aggregate(0.0, (acc, curr) => acc + curr) / percents.Length;
 		}
 
-		public static double GetProgressPercent(HouseholdChore entity)
+		public static double GetProgressPercent(Chore entity)
 		{
 			if (!entity.isLeaf) return 0.0;
 
@@ -23,27 +23,27 @@ namespace CleanTrack.UseCases
 			return percentProgress;
 		}
 
-		public static IEnumerable<HouseholdChore> GetAllLeafs(IEnumerable<HouseholdChore> entities)
+		public static IEnumerable<Chore> GetAllLeafs(IEnumerable<Chore> entities)
 		{
 			return entities.Where(x => x.isLeaf);
 		}
 
-		public static IEnumerable<HouseholdChore> GetRoots(IEnumerable<HouseholdChore> entities)
+		public static IEnumerable<Chore> GetRoots(IEnumerable<Chore> entities)
 		{
 			return entities.Where(x => IsRoot(x));
 		}
 
-		public static IEnumerable<HouseholdChore> GetChildren(IEnumerable<HouseholdChore> entities, INode entity)
+		public static IEnumerable<Chore> GetChildren(IEnumerable<Chore> entities, INode entity)
 		{
 			return entities.Where(x => IsChild(entity, x));
 		}
 
-		public static IEnumerable<HouseholdChore> GetDeepChildren(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
+		public static IEnumerable<Chore> GetDeepChildren(IEnumerable<Chore> entities, Chore entity)
 		{
 			return entities.Where(x => IsDeepChild(entities, entity, x));
 		}
 
-		public static IEnumerable<HouseholdChore> GetDeepAllLeafs(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
+		public static IEnumerable<Chore> GetDeepAllLeafs(IEnumerable<Chore> entities, Chore entity)
 		{
 			return GetChildren(entities, entity).Where(x => IsLeafOrHasLeaf(entities, x));
 		}
@@ -58,7 +58,7 @@ namespace CleanTrack.UseCases
 			return parent.Id == child.ParentId;
 		}
 
-		public static bool IsDeepChild(IEnumerable<HouseholdChore> entities, HouseholdChore entity, HouseholdChore target)
+		public static bool IsDeepChild(IEnumerable<Chore> entities, Chore entity, Chore target)
 		{
 			if (IsChild(entity, target)) return true;
 
@@ -68,7 +68,7 @@ namespace CleanTrack.UseCases
 			return IsDeepChild(entities, entity, parent);
 		}
 
-		public static bool IsLeafOrHasLeaf(IEnumerable<HouseholdChore> entities, HouseholdChore entity)
+		public static bool IsLeafOrHasLeaf(IEnumerable<Chore> entities, Chore entity)
 		{
 			if (entity.isLeaf) return true;
 

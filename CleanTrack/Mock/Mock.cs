@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanTrack.Mock
 {
-    class MockHouseholdChore
+    class MockChore
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -17,22 +17,22 @@ namespace CleanTrack.Mock
 
     public class Generator
     {
-        public async static void HouseholdChores(ApplicationDBContext context)
+        public async static void Chores(ApplicationDBContext context)
         {
-            context.HouseholdChores.ExecuteDelete();
+            context.Chores.ExecuteDelete();
 
 			try
 			{
-				using var stream = await FileSystem.OpenAppPackageFileAsync("mock/household-chores.json");
+				using var stream = await FileSystem.OpenAppPackageFileAsync("mock/chores.json");
 				using var reader = new StreamReader(stream);
 
 				string contents = reader.ReadToEnd();
 
-				var items = JsonSerializer.Deserialize<IEnumerable<MockHouseholdChore>>(contents);
+				var items = JsonSerializer.Deserialize<IEnumerable<MockChore>>(contents);
 
 				foreach (var item in items)
 				{
-					context.HouseholdChores.Add(new()
+					context.Chores.Add(new()
 					{
 						Id = item.Id,
 						Name = item.Name,

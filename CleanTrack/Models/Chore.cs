@@ -6,7 +6,7 @@ public interface INode
 	public Guid? ParentId { get; set; }
 }
 
-public class HouseholdChore: INode
+public class Chore: INode
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;

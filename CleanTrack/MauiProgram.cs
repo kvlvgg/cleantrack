@@ -27,7 +27,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ModalService>();
 		builder.Services.AddSingleton<IChoresViewModel, ChoresViewModel>();
 		builder.Services.AddSingleton<IFormChoresViewModel, FormChoreViewModel>();
-		builder.Services.AddSingleton<IRepository<HouseholdChore>, HouseholdChoreRepository>();
+		builder.Services.AddSingleton<IRepository<Chore>, ChoreRepository>();
 
         string dataSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cleantrack.db");
         builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlite($"Data Source={dataSource}"));

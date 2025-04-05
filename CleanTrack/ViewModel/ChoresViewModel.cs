@@ -27,7 +27,7 @@ namespace CleanTrack.ViewModel
 		public IList<Guid> ToggledChores { get; set; }
 		public double PercentProgressSummary { get; }
 		public void Load();
-		public void Add(HouseholdChore householdChore);
+		public void Add(Chore chore);
 		public void Save();
 		public void Delete(Guid id);
 		public void ChangeOrder(Guid? id, int step);
@@ -36,9 +36,9 @@ namespace CleanTrack.ViewModel
 	public class ChoresViewModel : IChoresViewModel
 	{
 		[Inject]
-		IRepository<HouseholdChore> repo { get; set; }
+		IRepository<Chore> repo { get; set; }
 
-		private IEnumerable<HouseholdChore> entities = new List<HouseholdChore>();
+		private IEnumerable<Chore> entities = new List<Chore>();
 
 		public bool IsEditMode { get; set; } = false;
 
@@ -46,7 +46,7 @@ namespace CleanTrack.ViewModel
 
 		public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
-		public ChoresViewModel(IRepository<HouseholdChore> repo)
+		public ChoresViewModel(IRepository<Chore> repo)
 		{
 			this.repo = repo;
 		}
@@ -65,7 +65,7 @@ namespace CleanTrack.ViewModel
 		{
 			get
 			{
-				double calculatePercentProgress(HouseholdChore entity)
+				double calculatePercentProgress(Chore entity)
 				{
 					if (entity.isLeaf) return leafsProgressPercents[entity.Id];
 
@@ -74,7 +74,7 @@ namespace CleanTrack.ViewModel
 					return UseCases.Chores.GetPercentSummary(childrenPercents);
 				}
 
-				ChoreNode toNode(HouseholdChore entity) => new()
+				ChoreNode toNode(Chore entity) => new()
 				{
 					Id = entity.Id,
 					Name = entity.Name,
@@ -85,19 +85,19 @@ namespace CleanTrack.ViewModel
 					Children = new List<ChoreNode>()
 				};
 
-				IList<ChoreNode> buildRootNodes(IEnumerable<HouseholdChore> entities) =>
+				IList<ChoreNode> buildRootNodes(IEnumerable<Chore> entities) =>
 					UseCases.Chores.GetRoots(entities).Select(x => toNode(x)).ToList();
 
-				IList<ChoreNode> buildChildNodes(IEnumerable<HouseholdChore> entities, ChoreNode node) =>
+				IList<ChoreNode> buildChildNodes(IEnumerable<Chore> entities, ChoreNode node) =>
 					UseCases.Chores.GetChildren(entities, node).Select(x => toNode(x)).ToList();
 
-				IList<ChoreNode> buildTreeNodes(IEnumerable<HouseholdChore> householdChore, ChoreNode? treeNode = null)
+				IList<ChoreNode> buildTreeNodes(IEnumerable<Chore> chore, ChoreNode? treeNode = null)
 				{
-					IList<ChoreNode> childNodes = treeNode == null ? buildRootNodes(householdChore) : buildChildNodes(householdChore, treeNode);
+					IList<ChoreNode> childNodes = treeNode == null ? buildRootNodes(chore) : buildChildNodes(chore, treeNode);
 
 					foreach (ChoreNode node in childNodes)
 					{
-						node.Children = buildTreeNodes(householdChore, node).ToList();
+						node.Children = buildTreeNodes(chore, node).ToList();
 					}
 
 					return childNodes.OrderBy(x => x.Order).ToList();
@@ -112,9 +112,9 @@ namespace CleanTrack.ViewModel
 			entities = repo.GetAll();
 		}
 
-		public void Add(HouseholdChore householdChore)
+		public void Add(Chore chore)
 		{
-			repo.Add(householdChore);
+			repo.Add(chore);
 		}
 
 		public void Save()
@@ -124,13 +124,13 @@ namespace CleanTrack.ViewModel
 
 		public void Delete(Guid id)
 		{
-			HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
+			Chore? entity = entities.FirstOrDefault(x => x.Id == id);
 			if (entity == null) return;
 
-			IEnumerable<HouseholdChore> deepChildren = !entity.isLeaf ? UseCases.Chores.GetDeepChildren(entities, entity) : [];
+			IEnumerable<Chore> deepChildren = !entity.isLeaf ? UseCases.Chores.GetDeepChildren(entities, entity) : [];
 			repo.Delete(entity);
 
-			foreach (HouseholdChore child in deepChildren)
+			foreach (Chore child in deepChildren)
 			{
 				repo.Delete(child);
 			}
@@ -142,10 +142,10 @@ namespace CleanTrack.ViewModel
 		public void ChangeOrder(Guid? id, int step)
 		{
 			if (id == null) return;
-			HouseholdChore? entity = entities.FirstOrDefault(x => x.Id == id);
+			Chore? entity = entities.FirstOrDefault(x => x.Id == id);
 
 			if (entity == null) return;
-			HouseholdChore? swappedEntity = entities.FirstOrDefault(x => x.ParentId == entity.ParentId && x.Order == entity.Order + step);
+			Chore? swappedEntity = entities.FirstOrDefault(x => x.ParentId == entity.ParentId && x.Order == entity.Order + step);
 
 			if (swappedEntity == null) return;
 

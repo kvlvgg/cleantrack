@@ -19,7 +19,7 @@ namespace CleanTrack.ViewModel
 
     public interface IFormChoresViewModel
     {
-        public HouseholdChore Form { get; set; }
+        public Chore Form { get; set; }
         public NodeType NodeType { get; set; }
         public Mode Mode { get; }
         public TimeSpan LastTimeDoneAgo { get; set; }
@@ -34,15 +34,15 @@ namespace CleanTrack.ViewModel
     public class FormChoreViewModel : IFormChoresViewModel
 	{
         [Inject]
-        IRepository<HouseholdChore> repo { get; set; }
+        IRepository<Chore> repo { get; set; }
 
-        public FormChoreViewModel(IRepository<HouseholdChore> repo)
+        public FormChoreViewModel(IRepository<Chore> repo)
         {
             this.repo = repo;
             this.LastTimeDoneAgo = new TimeSpan();
         }
 
-        public HouseholdChore Form { get; set; } = new HouseholdChore();
+        public Chore Form { get; set; } = new Chore();
 
         public Mode Mode => Form.Id == Guid.Empty ? Mode.Add : Mode.Edit;
 
@@ -75,9 +75,9 @@ namespace CleanTrack.ViewModel
 
         public void Create(NodeType type, Guid? parentId)
         {
-            IEnumerable<HouseholdChore> enities = repo.GetAll();
+            IEnumerable<Chore> enities = repo.GetAll();
 
-            Form = new HouseholdChore()
+            Form = new Chore()
             {
                 DayInterval = type == NodeType.Leaf ? 1 : null,
                 LastDateDone = type == NodeType.Leaf ? DateTime.Now : null,
@@ -90,10 +90,10 @@ namespace CleanTrack.ViewModel
 
         public void LoadFormById(Guid id)
         {
-            HouseholdChore entity = repo.GetById(id);
+            Chore entity = repo.GetById(id);
             if (entity == null) return;
 
-            Form = new HouseholdChore()
+            Form = new Chore()
             {
                 Id = entity.Id,
                 Name = entity.Name,
@@ -114,7 +114,7 @@ namespace CleanTrack.ViewModel
 
         public void Update()
         {
-            HouseholdChore entity = repo.GetById(Form.Id);
+            Chore entity = repo.GetById(Form.Id);
             if (entity == null) return;
 
             entity.Name = Form.Name;
