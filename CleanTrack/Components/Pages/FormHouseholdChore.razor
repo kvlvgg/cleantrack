@@ -86,7 +86,7 @@
 	public string? Type { get; set; }
 
 	[Inject]
-	IFormHouseholdChoresViewModel ViewModel { get; set; }
+	IFormChoresViewModel ViewModel { get; set; }
 
 	private bool nameInputInvalid => ViewModel.Form.Name.Length < 1;
 

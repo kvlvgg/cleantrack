@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using CleanTrack.Models;
 using CleanTrack.Repository;
@@ -22,7 +17,7 @@ namespace CleanTrack.ViewModel
         Leaf,
     }
 
-    public interface IFormHouseholdChoresViewModel
+    public interface IFormChoresViewModel
     {
         public HouseholdChore Form { get; set; }
         public NodeType NodeType { get; set; }
@@ -36,12 +31,12 @@ namespace CleanTrack.ViewModel
         public void Update();
     }
 
-    public class FormHouseholdChoreViewModel : IFormHouseholdChoresViewModel
-    {
+    public class FormChoreViewModel : IFormChoresViewModel
+	{
         [Inject]
         IRepository<HouseholdChore> repo { get; set; }
 
-        public FormHouseholdChoreViewModel(IRepository<HouseholdChore> repo)
+        public FormChoreViewModel(IRepository<HouseholdChore> repo)
         {
             this.repo = repo;
             this.LastTimeDoneAgo = new TimeSpan();

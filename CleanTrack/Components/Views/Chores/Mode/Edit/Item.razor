@@ -94,12 +94,12 @@
 	private void goToAddPage(bool isLeaf, Guid parentId)
 	{
 		string queryParam = !isLeaf ? "Node" : "Leaf";
-		Navigation.NavigateTo($"household-chore?Type={queryParam}&ParentId={parentId}");
+		Navigation.NavigateTo($"chore?Type={queryParam}&ParentId={parentId}");
 	}
 
 	private void goToEditPage()
 	{
-		Navigation.NavigateTo($"household-chore?Id={Node.Id}");
+		Navigation.NavigateTo($"chore?Id={Node.Id}");
 	}
 
 	private void toggleSelectedItem(Guid? id)
