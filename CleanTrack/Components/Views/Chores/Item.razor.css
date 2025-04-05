@@ -12,7 +12,6 @@
         display: grid;
         grid-template-columns: var(--btn-height-xs) auto 1fr;
         gap: var(--gap-xxxs) var(--gap-xxs);
-
         align-content: center;
         height: 36px;
     }
@@ -38,7 +37,6 @@
     display: flex;
     gap: var(--gap-xxs);
     flex-direction: column;
-
     padding-left: calc(var(--gap-xl) + var(--gap-xs) / 2);
 }
 
@@ -55,6 +53,7 @@
     width: max-content;
     padding-right: var(--gap-xs);
 }
+
     .item.selected {
         position: relative;
         overflow: hidden;
@@ -79,13 +78,12 @@
 .buttonsWrapper {
     position: relative;
     height: 100%;
-/*    overflow: hidden;*/
+    /*    overflow: hidden;*/
 }
 
     .buttonsWrapper .buttons {
         display: flex;
         gap: var(--gap-xxs);
-
         transform: translateX(-100%);
         transition: transform 0.3s linear;
     }

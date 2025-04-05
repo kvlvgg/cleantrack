@@ -89,7 +89,7 @@
 <div class="@householdChores">
 	@foreach (HouseholdChoreNode node in ViewModel.tree)
 	{
-		<Views.HouseholdChore @key="node.Id"
+		<Views.Chores.Item @key="node.Id"
 							  Node="@node"
 							  ToggledChores="ViewModel.ToggledChores"
 							  ToggledChanged="onToggledChanged"

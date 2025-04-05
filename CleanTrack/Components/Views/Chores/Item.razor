@@ -1,4 +1,4 @@
-﻿@namespace Views
+﻿@namespace Views.Chores
 
 @using Node = CleanTrack.ViewModel.HouseholdChoreNode
 @using CleanTrack.Localization;
@@ -98,14 +98,14 @@ else
 	<div class="@childrenClasses">
 		@foreach (HouseholdChoreNode node in Node.Children)
 		{
-			<Views.HouseholdChore @key="node.Id"
+			<Views.Chores.Item @key="node.Id"
 								  SelectedHouseholdChoreId="SelectedHouseholdChoreId"
 								  Node="@node"
 								  IsEditMode="@IsEditMode"
 								  ToggledChores="ToggledChores"
 								  SelectedHouseholdChoreIdChanged="(id) => toggleSelectedItem(id)"
 								  ToggledChanged="(id) => ToggledChanged.InvokeAsync(id)"
-								  onDelete="(Node node) => onDelete.InvokeAsync(node)"/>
+								  onDelete="(Node node) => onDelete.InvokeAsync(node)" />
 		}
 	</div>
 }
