@@ -1,5 +1,7 @@
 ﻿@namespace Views.Home
 
+@using CleanTrack.Localization
+
 <Controls.Card Padding="@UI.Controls.Card.Padding.LG">
 	<div class="panel">
 		<div class="left">
@@ -12,7 +14,7 @@
 										 Size="@UI.Controls.Button.Size.MD"
 										 PaddingXXS
 										 OnClick="() => OnNavigateToAddPageClick.InvokeAsync(NodeType.Node)">
-							<Controls.Tag Text="S" />
+							<Controls.Tag Text="@Resources.ShortcutSection" />
 						</Controls.Button>
 
 						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
@@ -20,7 +22,7 @@
 										 Size="@UI.Controls.Button.Size.MD"
 										 PaddingXXS
 										 OnClick="() => OnNavigateToAddPageClick.InvokeAsync(NodeType.Leaf)">
-							<Controls.Tag Text="T" />
+							<Controls.Tag Text="@Resources.ShortcutTimer" />
 						</Controls.Button>
 					}
 				</div>

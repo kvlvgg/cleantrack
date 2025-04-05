@@ -184,4 +184,10 @@
   <data name="ConfirmModalDeleteTimerMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить таймер &lt;br /&gt; &lt;span class="text-danger"&gt;{0}&lt;/span&gt;?</value>
   </data>
+  <data name="ShortcutSection" xml:space="preserve">
+    <value>Р</value>
+  </data>
+  <data name="ShortcutTimer" xml:space="preserve">
+    <value>Т</value>
+  </data>
 </root>

@@ -1,5 +1,7 @@
 ﻿@namespace Views.Chores.Mode.Edit
 
+@using CleanTrack.Localization
+
 @inject NavigationManager Navigation
 
 <div class="chore">
@@ -17,7 +19,7 @@
 	}
 
 	<div class="@itemClasses" @onclick="() => toggleSelectedItem(Node.Id)">
-		<Controls.Tag Text="@(Node.isLeaf ? "T" : "S")" />
+		<Controls.Tag Text="@(Node.isLeaf ? Resources.ShortcutTimer : Resources.ShortcutSection)" />
 		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
 	</div>
 
@@ -32,7 +34,7 @@
 									 Size="@UI.Controls.Button.Size.SM"
 									 PaddingXXS
 									 OnClick="() => goToAddPage(false, Node.Id)">
-						<Controls.Tag Text="S" />
+						<Controls.Tag Text="@Resources.ShortcutSection" />
 					</Controls.Button>
 
 					<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
@@ -40,7 +42,7 @@
 									 Size="@UI.Controls.Button.Size.SM"
 									 PaddingXXS
 									 OnClick="() => goToAddPage(true, Node.Id)">
-						<Controls.Tag Text="T" />
+						<Controls.Tag Text="@Resources.ShortcutTimer" />
 					</Controls.Button>
 				}
 

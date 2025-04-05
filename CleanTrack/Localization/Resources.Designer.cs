@@ -234,6 +234,24 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to S.
+        /// </summary>
+        internal static string ShortcutSection {
+            get {
+                return ResourceManager.GetString("ShortcutSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T.
+        /// </summary>
+        internal static string ShortcutTimer {
+            get {
+                return ResourceManager.GetString("ShortcutTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In this app, you can create sections (like rooms, areas, or tasks) and add timers inside them, shown as progress bars..
         /// </summary>
         internal static string TutorialDescription1 {

@@ -185,4 +185,10 @@ This will also remove all of its contents.</value>
     <value>Are you sure you want to delete the section &lt;br /&gt; &lt;span class="text-danger"&gt;{0}&lt;/span&gt;?
 </value>
   </data>
+  <data name="ShortcutSection" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="ShortcutTimer" xml:space="preserve">
+    <value>T</value>
+  </data>
 </root>
