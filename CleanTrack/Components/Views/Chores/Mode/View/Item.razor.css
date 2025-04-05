@@ -1,0 +1,14 @@
+.chore {
+    display: grid;
+    grid-template-areas:
+        'btn title'
+        '. progressbar';
+    grid-template-columns: auto 5fr;
+    gap: var(--gap-xxxs) var(--gap-xs);
+    align-items: center;
+}
+
+.progressbar {
+    grid-area: progressbar;
+    min-width: 250px;
+}

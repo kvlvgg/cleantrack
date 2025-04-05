@@ -89,13 +89,15 @@
 <div class="@householdChores">
 	@foreach (HouseholdChoreNode node in ViewModel.tree)
 	{
-		<Views.Chores.Item @key="node.Id"
-							  Node="@node"
-							  ToggledChores="ViewModel.ToggledChores"
-							  ToggledChanged="onToggledChanged"
-							  @bind-SelectedHouseholdChoreId="ViewModel.SelectedChoreId"
-							  IsEditMode="@ViewModel.IsEditMode"
-							  onDelete="(HouseholdChoreNode node) => openDeleteConfirmationModal(node)" />
+		<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="ViewModel.IsEditMode" ToggledChores="ViewModel.ToggledChores">
+			<ViewTemplate Context="n">
+				<Views.Chores.Mode.View.Item Node="n" ToggledChanged="onToggledChanged" />
+			</ViewTemplate>
+
+			<EditTemplate Context="n">
+				<Views.Chores.Mode.Edit.Item Node="n" ToggledChanged="onToggledChanged" @bind-SelectedHouseholdChoreId="ViewModel.SelectedChoreId" onDelete="openDeleteConfirmationModal" />
+			</EditTemplate>
+		</Views.Chores.Item>
 	}
 
 	@if (ViewModel.tree.Count == 0)

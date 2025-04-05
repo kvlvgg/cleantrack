@@ -1,0 +1,112 @@
+﻿@namespace Views.Chores.Mode.Edit
+
+@using Node = CleanTrack.ViewModel.HouseholdChoreNode
+
+@inject NavigationManager Navigation
+
+<div class="chore">
+	@if (!Node.isLeaf)
+	{
+		<Controls.Button Icon="@UI.Controls.Icon.Text.CHEVRON_RIGHT"
+						 Variant="@UI.Controls.Button.Variant.SECONDARY"
+						 Size="@UI.Controls.Button.Size.XS"
+						 Disabled="@(Node.Children.Count == 0)"
+						 OnClick="() => ToggledChanged.InvokeAsync(Node.Id)" />
+	}
+	else
+	{
+		<div />
+	}
+
+	<div class="@itemClasses" @onclick="() => toggleSelectedItem(Node.Id)">
+		<Controls.Tag Text="@(Node.isLeaf ? "T" : "S")" />
+		<Controls.Text Value="@Node.Name" Size="@UI.Controls.Text.Size.MD" />
+	</div>
+
+	<div class="buttonsWrapper">
+		<div class="@buttonsClasses">
+			@if (isSelected)
+			{
+				@if (!Node.isLeaf)
+				{
+					<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+									 Variant="@UI.Controls.Button.Variant.SECONDARY"
+									 Size="@UI.Controls.Button.Size.SM"
+									 PaddingXXS
+									 OnClick="() => goToAddPage(false, Node.Id)">
+						<Controls.Tag Text="S" />
+					</Controls.Button>
+
+					<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+									 Variant="@UI.Controls.Button.Variant.SECONDARY"
+									 Size="@UI.Controls.Button.Size.SM"
+									 PaddingXXS
+									 OnClick="() => goToAddPage(true, Node.Id)">
+						<Controls.Tag Text="T" />
+					</Controls.Button>
+				}
+
+				<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+								 Variant="@UI.Controls.Button.Variant.SECONDARY"
+								 Size="@UI.Controls.Button.Size.SM"
+								 OnClick="goToEditPage" />
+
+				<Controls.Button Icon="@UI.Controls.Icon.Text.DELETE"
+								 Variant="@UI.Controls.Button.Variant.DANGER"
+								 Size="@UI.Controls.Button.Size.SM"
+								 OnClick="() => onDelete.InvokeAsync(Node)" />
+			}
+		</div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public required Node Node { get; set; }
+
+	[Parameter]
+	public EventCallback<Guid> ToggledChanged { get; set; }
+
+	/* Cannot put this in ViewModel. It seems like duplicate ViewModel for each node. */
+	[Parameter]
+	public Guid? SelectedHouseholdChoreId { get; set; }
+
+	[Parameter]
+	public EventCallback<Guid?> SelectedHouseholdChoreIdChanged { get; set; }
+
+	[Parameter]
+	public EventCallback<Node> onDelete { get; set; }
+
+	private bool isSelected => Node.Id == SelectedHouseholdChoreId;
+
+	private string itemClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"item", true},
+		{"selected", Node.Id == SelectedHouseholdChoreId },
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string buttonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", Node.Id == SelectedHouseholdChoreId },
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private void goToAddPage(bool isLeaf, Guid parentId)
+	{
+		string queryParam = !isLeaf ? "Node" : "Leaf";
+		Navigation.NavigateTo($"household-chore?Type={queryParam}&ParentId={parentId}");
+	}
+
+	private void goToEditPage()
+	{
+		Navigation.NavigateTo($"household-chore?Id={Node.Id}");
+	}
+
+	private void toggleSelectedItem(Guid? id)
+	{
+		if (SelectedHouseholdChoreId == id)
+			SelectedHouseholdChoreIdChanged.InvokeAsync(Guid.Empty);
+		else
+			SelectedHouseholdChoreIdChanged.InvokeAsync(id);
+	}
+}

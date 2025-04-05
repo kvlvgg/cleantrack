@@ -1,0 +1,71 @@
+.chore {
+    display: grid;
+    grid-template-columns: var(--btn-height-xs) auto 1fr;
+    gap: var(--gap-xxxs) var(--gap-xxs);
+    align-items: center;
+    align-content: center;
+    height: 36px;
+}
+
+.progressbar {
+    grid-area: progressbar;
+    min-width: 250px;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    gap: var(--gap-xxs);
+    width: max-content;
+    padding-right: var(--gap-xs);
+}
+
+    .item.selected {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--border-radius-sm);
+        box-shadow: 14px 2px 20px 9px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255,255,255,0.1));
+    }
+
+        .item.selected::after {
+            content: "";
+            animation: skeleton-animation 1.2s 7 ease-in-out;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translateX(-100%);
+            z-index: 1;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255,255,255,0.4), rgba(255, 255, 255, 0));
+        }
+
+.buttonsWrapper {
+    position: relative;
+    height: 100%;
+    /*    overflow: hidden;*/
+}
+
+    .buttonsWrapper .buttons {
+        display: flex;
+        gap: var(--gap-xxs);
+        transform: translateX(-100%);
+        transition: transform 0.3s linear;
+    }
+
+        .buttonsWrapper .buttons.itemSelected {
+            transform: translateX(0%);
+        }
+
+@keyframes skeleton-animation {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
