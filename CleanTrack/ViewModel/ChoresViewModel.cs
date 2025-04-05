@@ -19,7 +19,7 @@ namespace CleanTrack.ViewModel
 		public IList<HouseholdChoreNode> Children { get; set; } = new List<HouseholdChoreNode>();
 	}
 
-	public interface IHouseholdChoresViewModel
+	public interface IChoresViewModel
 	{
 		public IList<HouseholdChoreNode> tree { get; }
 		public bool IsEditMode { get; set; }
@@ -33,7 +33,7 @@ namespace CleanTrack.ViewModel
 		public void ChangeOrder(Guid? id, int step);
 	}
 
-	public class HouseholdChoresViewModel : IHouseholdChoresViewModel
+	public class ChoresViewModel : IChoresViewModel
 	{
 		[Inject]
 		IRepository<HouseholdChore> repo { get; set; }
@@ -46,7 +46,7 @@ namespace CleanTrack.ViewModel
 
 		public IList<Guid> ToggledChores { get; set; } = new List<Guid>();
 
-		public HouseholdChoresViewModel(IRepository<HouseholdChore> repo)
+		public ChoresViewModel(IRepository<HouseholdChore> repo)
 		{
 			this.repo = repo;
 		}

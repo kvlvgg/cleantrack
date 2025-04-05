@@ -8,7 +8,7 @@ namespace CleanTrack.Services
 	{
 		private NavigationManager? navigationManager { get; set; }
 
-		private IHouseholdChoresViewModel? viewModel { get; set; }
+		private IChoresViewModel? viewModel { get; set; }
 
 		private ModalService? modalService { get; set; }
 
@@ -24,7 +24,7 @@ namespace CleanTrack.Services
 			this.navigationManager = navigationManager;
 		}
 
-		public void SetViewModel(IHouseholdChoresViewModel viewModel)
+		public void SetViewModel(IChoresViewModel viewModel)
 		{
 			this.viewModel = viewModel;
 		}
