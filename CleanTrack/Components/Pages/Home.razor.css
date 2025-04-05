@@ -63,27 +63,3 @@
         .buttonsWrapper .buttons.itemSelected {
             transform: translateY(0%);
         }
-
-.noItemFound {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-    .noItemFound .btnEditMode {
-        margin-top: var(--gap-sm);
-    }
-
-    .noItemFound .glossary {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-xxs);
-
-        margin-top: var(--gap-sm);
-    }
-        .noItemFound .glossary .glossaryItem {
-            display: flex;
-            align-items: center;
-            gap: var(--gap-xxs);
-        }
