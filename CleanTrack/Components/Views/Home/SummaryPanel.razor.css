@@ -1,0 +1,16 @@
+.panel {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+}
+
+    .panel .left {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap-xs);
+    }
+
+    .panel .right {
+        display: flex;
+        gap: var(--gap-xs);
+    }

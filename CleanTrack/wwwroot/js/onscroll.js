@@ -5,7 +5,7 @@ function ctOnScroll() {
 
     document.addEventListener('scroll', e => {
         const headerEl = document.getElementById('header');
-        const editSection = document.getElementById('edit-section');
+        const editSection = document.getElementById('chores-panel');
         let lastPageYOffset = 0;
         const currentPageYOffset = window.pageYOffset;
 

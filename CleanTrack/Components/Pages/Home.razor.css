@@ -4,38 +4,20 @@
     align-items: center;
 }
 
-.editSection {
+.choresPanel {
     position: sticky;
     top: var(--header-height);
     z-index: 1;
     padding-top: var(--gap-lg);
-    /*    backdrop-filter: blur(50px);*/
     background-color: var(--surface-ground);
     transition: top linear 0.3s;
 }
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--gap-xs);
-}
-
-    .header .left {
-        display: flex;
-        flex-direction: row;
-        gap: var(--gap-xs);
-    }
-
-    .header .right {
-        display: flex;
-        gap: var(--gap-xs);
-    }
 
 .separator {
     height: var(--gap-xs);
 }
 
-.householdChores {
+.chores {
     display: flex;
     flex-direction: column;
     padding: var(--gap-lg) 0;
@@ -43,23 +25,6 @@
     overflow-x: scroll;
 }
 
-    .householdChores.readMode {
+    .chores.readMode {
         gap: var(--gap-xxs);
     }
-
-.buttonsWrapper {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-}
-
-    .buttonsWrapper .buttons {
-        display: flex;
-        gap: var(--gap-xxs);
-        transform: translateY(-100%);
-        transition: transform 0.3s linear;
-    }
-
-        .buttonsWrapper .buttons.itemSelected {
-            transform: translateY(0%);
-        }

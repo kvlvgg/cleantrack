@@ -1,7 +1,7 @@
 ﻿@using Models;
 @using Localization;
 
-@page "/household-chore"
+@page "/chore"
 
 @inject NavigationManager Navigation
 @inject AppStateService AppState
@@ -71,18 +71,6 @@
 		<Controls.Button Text="@Resources.BtnSaveText" Size="@UI.Controls.Button.Size.LG" Variant="@UI.Controls.Button.Variant.PRIMARY" Disabled="@saveButtonDisabled" OnClick="onSave" />
 	</div>
 </div>
-
-@* <div> *@
-@* 	<Controls.Text Value="@ViewModel.Form.Name" Size="@UI.Controls.Text.Size.SM" /> *@
-@* </div> *@
-
-@* <div> *@
-@* 	<Controls.Text Value="@ViewModel.Form.DayInterval.ToString()" Size="@UI.Controls.Text.Size.SM" /> *@
-@* </div> *@
-
-@* <div> *@
-@* 	<Controls.Text Value="@ViewModel.Form.LastDateDone.ToString()" Size="@UI.Controls.Text.Size.SM" /> *@
-@* </div> *@
 
 @code {
 	[Parameter]

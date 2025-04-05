@@ -1,0 +1,27 @@
+﻿@namespace Views.Home
+
+<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+	<div class="panel">
+		<div class="left">
+			<Controls.Gauge Value="PercentProgressSummary" />
+		</div>
+
+		<div class="right">
+			<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => IsEditModeChanged.InvokeAsync(!IsEditMode)" />
+		</div>
+	</div>
+</Controls.Card>
+
+@code {
+	[Parameter]
+	public double PercentProgressSummary { get; set; }
+
+	[Parameter]
+	public bool IsEditMode { get; set; }
+
+	[Parameter]
+	public EventCallback<bool> IsEditModeChanged { get; set; }
+}

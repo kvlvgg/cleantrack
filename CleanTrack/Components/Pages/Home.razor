@@ -11,82 +11,22 @@
 
 <div class="separator" />
 
-<div id="edit-section" class="editSection">
-	<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
-		<div>
-			<div class="header">
-				<div class="left">
-					@if (!ViewModel.IsEditMode)
-					{
-						<Controls.Gauge Value="ViewModel.PercentProgressSummary" />
-						<div />
-					}
-					else
-					{
-						<div class="buttonsWrapper">
-							<div class="@addButtonsClasses">
-								@if (ViewModel.SelectedChoreId == Guid.Empty)
-								{
-									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-													 Variant="@UI.Controls.Button.Variant.SECONDARY"
-													 Size="@UI.Controls.Button.Size.MD"
-													 PaddingXXS
-													 OnClick="() => goToAddPage(NodeType.Node)">
-										<Controls.Tag Text="S" />
-									</Controls.Button>
-
-									<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
-													 Variant="@UI.Controls.Button.Variant.SECONDARY"
-													 Size="@UI.Controls.Button.Size.MD"
-													 PaddingXXS
-													 OnClick="() => goToAddPage(NodeType.Leaf)">
-										<Controls.Tag Text="T" />
-									</Controls.Button>
-								}
-							</div>
-						</div>
-
-						<div class="buttonsWrapper">
-							<div class="@dragButtonsClasses">
-								@if (ViewModel.SelectedChoreId != Guid.Empty)
-								{
-									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
-													 Variant="@UI.Controls.Button.Variant.SECONDARY"
-													 Size="@UI.Controls.Button.Size.MD"
-													 OnClick="() => ViewModel.ChangeOrder(ViewModel.SelectedChoreId, -1)" />
-
-									<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
-													 Variant="@UI.Controls.Button.Variant.SECONDARY"
-													 Size="@UI.Controls.Button.Size.MD"
-													 OnClick="() => ViewModel.ChangeOrder(ViewModel.SelectedChoreId, 1)" />
-								}
-							</div>
-						</div>
-					}
-				</div>
-
-				<div class="right">
-					@if (!ViewModel.IsEditMode)
-					{
-						<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
-										 Variant="@UI.Controls.Button.Variant.SECONDARY"
-										 Size="@UI.Controls.Button.Size.MD"
-										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-					}
-					else
-					{
-						<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
-										 Variant="@UI.Controls.Button.Variant.SECONDARY"
-										 Size="@UI.Controls.Button.Size.MD"
-										 OnClick="() => ViewModel.IsEditMode = !ViewModel.IsEditMode" />
-					}
-				</div>
-			</div>
-		</div>
-	</Controls.Card>
+@* id="chores-panel" используется в onscroll.js *@
+<div id="chores-panel" class="choresPanel">
+	@if (!ViewModel.IsEditMode)
+	{
+		<Views.Home.SummaryPanel @bind-IsEditMode="ViewModel.IsEditMode" PercentProgressSummary="ViewModel.PercentProgressSummary" />
+	}
+	else
+	{
+		<Views.Home.EditPanel @bind-IsEditMode="ViewModel.IsEditMode"
+							  IsChoreSelected=@(ViewModel.SelectedChoreId != Guid.Empty)
+							  OnChangeOrderClick="(int order) => ViewModel.ChangeOrder(ViewModel.SelectedChoreId, order)"
+							  OnNavigateToAddPageClick="(NodeType type) => goToAddPage(type)" />
+	}
 </div>
 
-<div class="@householdChores">
+<div class="@choresClasses">
 	@foreach (HouseholdChoreNode node in ViewModel.tree)
 	{
 		<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="ViewModel.IsEditMode" ToggledChores="ViewModel.ToggledChores">
@@ -112,21 +52,9 @@
 
 	private bool isSubscribed = false;
 
-	private string addButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	private string choresClasses => string.Join(" ", new Dictionary<string, bool>()
 	{
-		{"buttons", true},
-		{"itemSelected", ViewModel.SelectedChoreId == Guid.Empty},
-	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
-
-	private string dragButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
-	{
-		{"buttons", true},
-		{"itemSelected", ViewModel.SelectedChoreId != Guid.Empty},
-	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
-
-	private string householdChores => string.Join(" ", new Dictionary<string, bool>()
-	{
-		{"householdChores", true},
+		{"chores", true},
 		{"readMode", !ViewModel.IsEditMode},
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
 
@@ -155,7 +83,7 @@
 	private void goToAddPage(NodeType nodeType)
 	{
 		string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
-		Navigation.NavigateTo($"household-chore?Type={queryParam}");
+		Navigation.NavigateTo($"chore?Type={queryParam}");
 	}
 
 	private void openDeleteConfirmationModal(HouseholdChoreNode node)

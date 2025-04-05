@@ -1,0 +1,83 @@
+﻿@namespace Views.Home
+
+<Controls.Card Padding="@UI.Controls.Card.Padding.LG">
+	<div class="panel">
+		<div class="left">
+			<div class="buttonsWrapper">
+				<div class="@addButtonsClasses">
+					@if (!IsChoreSelected)
+					{
+						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 PaddingXXS
+										 OnClick="() => OnNavigateToAddPageClick.InvokeAsync(NodeType.Node)">
+							<Controls.Tag Text="S" />
+						</Controls.Button>
+
+						<Controls.Button Icon="@UI.Controls.Icon.Text.ADD"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 PaddingXXS
+										 OnClick="() => OnNavigateToAddPageClick.InvokeAsync(NodeType.Leaf)">
+							<Controls.Tag Text="T" />
+						</Controls.Button>
+					}
+				</div>
+			</div>
+
+			<div class="buttonsWrapper">
+				<div class="@dragButtonsClasses">
+					@if (IsChoreSelected)
+					{
+						<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_1"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => OnChangeOrderClick.InvokeAsync(-1)" />
+
+						<Controls.Button Icon="@UI.Controls.Icon.Text.STAT_MINUS_1"
+										 Variant="@UI.Controls.Button.Variant.SECONDARY"
+										 Size="@UI.Controls.Button.Size.MD"
+										 OnClick="() => OnChangeOrderClick.InvokeAsync(1)" />
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="right">
+			<Controls.Button Icon="@UI.Controls.Icon.Text.CLOSE"
+							 Variant="@UI.Controls.Button.Variant.SECONDARY"
+							 Size="@UI.Controls.Button.Size.MD"
+							 OnClick="() => IsEditModeChanged.InvokeAsync(!IsEditMode)" />
+		</div>
+	</div>
+</Controls.Card>
+
+@code {
+	[Parameter]
+	public bool IsEditMode { get; set; }
+
+	[Parameter]
+	public EventCallback<bool> IsEditModeChanged { get; set; }
+
+	[Parameter]
+	public bool IsChoreSelected { get; set; }
+
+	[Parameter]
+	public EventCallback<int> OnChangeOrderClick { get; set; }
+
+	[Parameter]
+	public EventCallback<NodeType> OnNavigateToAddPageClick { get; set; }
+
+	private string addButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", !IsChoreSelected},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string dragButtonsClasses => string.Join(" ", new Dictionary<string, bool>()
+	{
+		{"buttons", true},
+		{"itemSelected", IsChoreSelected},
+	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+}
