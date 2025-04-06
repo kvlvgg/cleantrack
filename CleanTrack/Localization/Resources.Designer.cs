@@ -153,6 +153,15 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Mode.
+        /// </summary>
+        internal static string EditMode {
+            get {
+                return ResourceManager.GetString("EditMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Day Interval (min. 1).
         /// </summary>
         internal static string lblFieldDayInterval {
@@ -266,6 +275,33 @@ namespace CleanTrack.Localization {
         internal static string TutorialDescription2 {
             get {
                 return ResourceManager.GetString("TutorialDescription2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tap the name to show or hide actions.
+        /// </summary>
+        internal static string TutorialEditModeDescription {
+            get {
+                return ResourceManager.GetString("TutorialEditModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The timer fills to 100% when updated, then decreases to 0% over the set number of days. If overdue, it drops to –100%..
+        /// </summary>
+        internal static string TutorialReadModeDescription {
+            get {
+                return ResourceManager.GetString("TutorialReadModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Mode.
+        /// </summary>
+        internal static string ViewMode {
+            get {
+                return ResourceManager.GetString("ViewMode", resourceCulture);
             }
         }
         

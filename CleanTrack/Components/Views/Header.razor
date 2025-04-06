@@ -1,5 +1,6 @@
 ﻿@namespace Views
 
+@inject AppStateService AppState
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
@@ -41,6 +42,7 @@
 
     private void goToAboutPage()
     {
+        if (AppState.IsAboutPage) return;
         Navigation.NavigateTo($"about");
     }
 }

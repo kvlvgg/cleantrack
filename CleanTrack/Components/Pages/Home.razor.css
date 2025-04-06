@@ -26,5 +26,5 @@
 }
 
     .chores.readMode {
-        gap: var(--gap-xxs);
+        gap: var(--gap-xs);
     }

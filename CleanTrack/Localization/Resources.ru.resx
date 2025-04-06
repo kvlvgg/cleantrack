@@ -190,4 +190,16 @@
   <data name="ShortcutTimer" xml:space="preserve">
     <value>Т</value>
   </data>
+  <data name="TutorialReadModeDescription" xml:space="preserve">
+    <value>Таймер заполняется до 100% при обновлении, затем уменьшается до 0% через заданное количество дней. Если просрочен — уходит до –100%.</value>
+  </data>
+  <data name="ViewMode" xml:space="preserve">
+    <value>Режим просмотра</value>
+  </data>
+  <data name="EditMode" xml:space="preserve">
+    <value>Режим редактирования</value>
+  </data>
+  <data name="TutorialEditModeDescription" xml:space="preserve">
+    <value>Нажмите на название для открытия/закрытия действий</value>
+  </data>
 </root>

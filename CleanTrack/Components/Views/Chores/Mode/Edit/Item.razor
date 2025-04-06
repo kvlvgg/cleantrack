@@ -49,7 +49,7 @@
 				<Controls.Button Icon="@UI.Controls.Icon.Text.EDIT"
 								 Variant="@UI.Controls.Button.Variant.SECONDARY"
 								 Size="@UI.Controls.Button.Size.SM"
-								 OnClick="goToEditPage" />
+								 OnClick="() => onEdit.InvokeAsync(Node)" />
 
 				<Controls.Button Icon="@UI.Controls.Icon.Text.DELETE"
 								 Variant="@UI.Controls.Button.Variant.DANGER"
@@ -75,6 +75,12 @@
 	public EventCallback<Guid?> SelectedChoreIdChanged { get; set; }
 
 	[Parameter]
+	public EventCallback<(bool, Guid)> onAdd { get; set; }
+
+	[Parameter]
+	public EventCallback<ChoreNode> onEdit { get; set; }
+
+	[Parameter]
 	public EventCallback<ChoreNode> onDelete { get; set; }
 
 	private bool isSelected => Node.Id == SelectedChoreId;
@@ -93,13 +99,7 @@
 
 	private void goToAddPage(bool isLeaf, Guid parentId)
 	{
-		string queryParam = !isLeaf ? "Node" : "Leaf";
-		Navigation.NavigateTo($"chore?Type={queryParam}&ParentId={parentId}");
-	}
-
-	private void goToEditPage()
-	{
-		Navigation.NavigateTo($"chore?Id={Node.Id}");
+		onAdd.InvokeAsync((isLeaf, parentId));
 	}
 
 	private void toggleSelectedItem(Guid? id)

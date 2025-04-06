@@ -9,23 +9,106 @@
 
 	<Controls.Text Value="@Resources.TutorialDescription1" Size="@UI.Controls.Text.Size.MD" />
 	<Controls.Text Value="@Resources.TutorialDescription2" Size="@UI.Controls.Text.Size.MD" />
-	@* 📌 Long-press an item to open the action menu. *@
 
-	<div class="glossary">
-		<div class="glossaryItem">
-			<Controls.Tag Text="@Resources.ShortcutSection" />
-			<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
-			<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
-		</div>
-
-		<div class="glossaryItem">
-			<Controls.Tag Text="@Resources.ShortcutTimer" />
-			<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
-			<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
-		</div>
+	<div class="subtitle">
+		<div class="separator" />
+		<Controls.H Level="4" Text="@Resources.ViewMode" />
 	</div>
+
+	<div class="chores read">
+		<div class="description">
+			<Controls.Text Value="@Resources.TutorialReadModeDescription" Size="@UI.Controls.Text.Size.SM" />
+		</div>
+
+		@foreach (ChoreNode node in nodes)
+		{
+			<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="false" ToggledChores="toggledChoresReadMode">
+				<ViewTemplate Context="n">
+					<Views.Chores.Mode.View.Item Node="n" ToggledChanged="onReadModeToggledChanged" />
+				</ViewTemplate>
+			</Views.Chores.Item>
+		}
+	</div>
+
+	<div class="subtitle">
+		<div class="separator" />
+		<Controls.H Level="4" Text="@Resources.EditMode" />
+	</div>
+
+	<div class="chores">
+		<div class="description center">
+			<Controls.Text Value="@Resources.TutorialEditModeDescription" Size="@UI.Controls.Text.Size.SM" />
+		</div>
+
+		<div class="glossary">
+			<div class="glossaryItem">
+				<Controls.Tag Text="@Resources.ShortcutSection" />
+				<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+				<Controls.Text Value="@Resources.LblSection" Size="@UI.Controls.Text.Size.SM" />
+			</div>
+
+			<div class="glossaryItem">
+				<Controls.Tag Text="@Resources.ShortcutTimer" />
+				<Controls.Text Value="-" Size="@UI.Controls.Text.Size.SM" />
+				<Controls.Text Value="@Resources.LblTimer" Size="@UI.Controls.Text.Size.SM" />
+			</div>
+		</div>
+
+		@foreach (ChoreNode node in nodes)
+		{
+			<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="true" ToggledChores="toggledChoresEditMode">
+				<EditTemplate Context="n">
+					<Views.Chores.Mode.Edit.Item Node="n" @bind-SelectedChoreId="SelectedChoreId" ToggledChanged="onEditModeToggledChanged" />
+				</EditTemplate>
+			</Views.Chores.Item>
+		}
+	</div>
+
+	<div style="height: 200px;" />
 </div>
 
 @code {
+	IList<ChoreNode> nodes = new List<ChoreNode>();
+	IList<Guid> toggledChoresReadMode = new List<Guid>();
+	IList<Guid> toggledChoresEditMode = new List<Guid>();
 
+	Guid? SelectedChoreId = null;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		ChoreNode section1 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 1", Resources.LblSection), PercentProgress = 0.3, isLeaf = false };
+		ChoreNode task11 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 1", Resources.LblTimer), PercentProgress = 0.9, isLeaf = true };
+		ChoreNode task12 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 2", Resources.LblTimer), PercentProgress = -0.3, isLeaf = true };
+
+		ChoreNode section2 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 2", Resources.LblSection), PercentProgress = 0.05, isLeaf = false };
+		ChoreNode task21 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 1", Resources.LblTimer), PercentProgress = -0.65, isLeaf = true };
+		ChoreNode task22 = new ChoreNode() { Id = Guid.NewGuid(), Name = string.Format("{0} 2", Resources.LblTimer), PercentProgress = 0.75, isLeaf = true };
+
+		section1.Children.Add(task11);
+		section1.Children.Add(task12);
+
+		section2.Children.Add(task21);
+		section2.Children.Add(task22);
+
+		toggledChoresEditMode.Add(section2.Id);
+		SelectedChoreId = section2.Id;
+
+		nodes.Add(section1);
+		nodes.Add(section2);
+	}
+
+
+	private void onReadModeToggledChanged(Guid id)
+	{
+		if (toggledChoresReadMode.Contains(id)) toggledChoresReadMode.Remove(id);
+		else toggledChoresReadMode.Add(id);
+	}
+
+	private void onEditModeToggledChanged(Guid id)
+	{
+		if (toggledChoresEditMode.Contains(id)) toggledChoresEditMode.Remove(id);
+		else toggledChoresEditMode.Add(id);
+	}
 }

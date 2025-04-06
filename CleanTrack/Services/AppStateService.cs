@@ -15,6 +15,7 @@ namespace CleanTrack.Services
 		public event Action? StateChanged;
 
 		public bool IsOnRootPage => navigationManager?.Uri.EndsWith("/") == true;
+		public bool IsAboutPage => navigationManager?.Uri.EndsWith("/about") == true;
 		public bool IsEditMode => viewModel?.IsEditMode == true;
 		public bool IsChoreSelected => viewModel?.SelectedChoreId != Guid.Empty;
 		public bool IsModalOpened => modalService?.Current != null;

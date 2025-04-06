@@ -35,7 +35,11 @@
 			</ViewTemplate>
 
 			<EditTemplate Context="n">
-				<Views.Chores.Mode.Edit.Item Node="n" ToggledChanged="onToggledChanged" @bind-SelectedChoreId="ViewModel.SelectedChoreId" onDelete="openDeleteConfirmationModal" />
+				<Views.Chores.Mode.Edit.Item Node="n" ToggledChanged="onToggledChanged"
+											 @bind-SelectedChoreId="ViewModel.SelectedChoreId"
+											 onAdd="goToAddPage"
+											 onEdit="goToEditPage"
+											 onDelete="openDeleteConfirmationModal" />
 			</EditTemplate>
 		</Views.Chores.Item>
 	}
@@ -85,6 +89,21 @@
 		string queryParam = nodeType == NodeType.Node ? "Node" : "Leaf";
 		Navigation.NavigateTo($"chore?Type={queryParam}");
 	}
+
+	private void goToAddPage((bool, Guid) ctx)
+	{
+		bool isLeaf = ctx.Item1;
+		Guid parentId = ctx.Item2;
+
+		string queryParam = !isLeaf ? "Node" : "Leaf";
+		Navigation.NavigateTo($"chore?Type={queryParam}&ParentId={parentId}");
+	}
+
+	private void goToEditPage(ChoreNode node)
+	{
+		Navigation.NavigateTo($"chore?Id={node.Id}");
+	}
+
 
 	private void openDeleteConfirmationModal(ChoreNode node)
 	{

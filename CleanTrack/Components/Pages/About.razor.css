@@ -1,5 +1,6 @@
 .about {
     margin-top: var(--header-height);
+    padding: var(--gap-xxs);
     padding-top: var(--gap-sm);
     display: flex;
     flex-direction: column;
@@ -12,15 +13,44 @@
         margin: var(--gap-sm) 0 var(--gap-xxs) 0;
     }
 
-    .about .glossary {
+    .about .subtitle {
         display: flex;
         flex-direction: column;
-        gap: var(--gap-xxs);
-        margin-top: var(--gap-sm);
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap-xxxs);
+        margin-top: var(--gap-xs);
     }
 
-        .about .glossary .glossaryItem {
-            display: flex;
-            align-items: center;
-            gap: var(--gap-xxs);
+        .about .subtitle .separator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--text-primary-color);
         }
+
+    .about .description.center {
+        text-align: center;
+    }
+
+    .about .chores {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .about .chores.read {
+            gap: var(--gap-xs);
+        }
+
+        .about .chores .glossary {
+            display: flex;
+            justify-content: center;
+            margin: var(--gap-sm) 0;
+            gap: var(--gap-lg);
+        }
+
+            .about .chores .glossary .glossaryItem {
+                display: flex;
+                align-items: center;
+                gap: var(--gap-xxs);
+            }

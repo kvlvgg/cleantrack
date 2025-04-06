@@ -191,4 +191,16 @@ This will also remove all of its contents.</value>
   <data name="ShortcutTimer" xml:space="preserve">
     <value>T</value>
   </data>
+  <data name="TutorialReadModeDescription" xml:space="preserve">
+    <value>The timer fills to 100% when updated, then decreases to 0% over the set number of days. If overdue, it drops to –100%.</value>
+  </data>
+  <data name="ViewMode" xml:space="preserve">
+    <value>View Mode</value>
+  </data>
+  <data name="EditMode" xml:space="preserve">
+    <value>Edit Mode</value>
+  </data>
+  <data name="TutorialEditModeDescription" xml:space="preserve">
+    <value>Tap the name to show or hide actions</value>
+  </data>
 </root>
