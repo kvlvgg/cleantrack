@@ -14,7 +14,7 @@
 	[Parameter]
 	public string EmptyText { get; set; } = string.Empty;
 
-	private string text => !isNaN ? Math.Round(Value * 100).ToString() : EmptyText;
+	private string text => !isNaN ? $"{Math.Round(Value * 100).ToString()}%" : EmptyText;
 	private bool isNaN => double.IsNaN(Math.Round(Value * 100));
 	private string progressWidth => $"width: {Math.Round(Math.Abs(Value) * 100)}%";
 
