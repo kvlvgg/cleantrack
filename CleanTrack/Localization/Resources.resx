@@ -203,4 +203,17 @@ This will also remove all of its contents.</value>
   <data name="TutorialEditModeDescription" xml:space="preserve">
     <value>Tap the name to show or hide actions</value>
   </data>
+  <data name="DonationMessage" xml:space="preserve">
+    <value>If you like the app and want to support its development, you can leave a small donation</value>
+  </data>
+  <data name="DonationPaymentMethodsDescription" xml:space="preserve">
+    <value>🌍 International: Boosty (accepts cards) &lt;br /&gt;
+🇷🇺 Russia: Boosty / ЮMoney</value>
+  </data>
+  <data name="DonationGratitudeMessage" xml:space="preserve">
+    <value>Thank you for your support!</value>
+  </data>
+  <data name="DonationTitle" xml:space="preserve">
+    <value>Support CleanTrack</value>
+  </data>
 </root>

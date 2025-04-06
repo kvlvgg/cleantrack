@@ -1,10 +1,14 @@
 .about {
+    max-width: 500px;
+    margin: 0 auto;
     margin-top: var(--header-height);
     padding: var(--gap-xxs);
     padding-top: var(--gap-sm);
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-xs);
+    justify-content: space-between;
+    gap: 120px;
 }
 
     .about .title {
@@ -19,7 +23,8 @@
         justify-content: center;
         align-items: center;
         gap: var(--gap-xxxs);
-        margin-top: var(--gap-xs);
+        margin-top: var(--gap-lg);
+        margin-bottom: var(--gap-xxs);
     }
 
         .about .subtitle .separator {
@@ -54,3 +59,24 @@
                 align-items: center;
                 gap: var(--gap-xxs);
             }
+
+    .about .donation .description {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-xxs);
+    }
+
+    .about .donation .gratitude {
+        margin-top: var(--gap-md);
+    }
+
+    .about .donation .buttons {
+        display: flex;
+        justify-content: center;
+        gap: var(--gap-xs);
+        margin-top: var(--gap-xxs);
+    }
+
+.center {
+    text-align: center;
+}

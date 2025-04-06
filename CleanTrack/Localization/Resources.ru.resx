@@ -202,4 +202,17 @@
   <data name="TutorialEditModeDescription" xml:space="preserve">
     <value>Нажмите на название для открытия/закрытия действий</value>
   </data>
+  <data name="DonationMessage" xml:space="preserve">
+    <value>Если приложение оказалось для вас полезным, &lt;br /&gt; вы можете поддержать его развитие с помощью добровольного доната.</value>
+  </data>
+  <data name="DonationPaymentMethodsDescription" xml:space="preserve">
+    <value>🌍 Из-за рубежа: Boosty &lt;br /&gt;
+🇷🇺 Россия: Boosty / ЮMoney</value>
+  </data>
+  <data name="DonationGratitudeMessage" xml:space="preserve">
+    <value>Спасибо за вашу поддержку!</value>
+  </data>
+  <data name="DonationTitle" xml:space="preserve">
+    <value>Поддержка CleanTrack</value>
+  </data>
 </root>

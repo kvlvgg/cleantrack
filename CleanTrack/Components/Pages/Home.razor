@@ -12,7 +12,7 @@
 <div class="separator" />
 
 @* id="chores-panel" используется в onscroll.js *@
-<div id="chores-panel" class="choresPanel">
+<div id="summary-panel" class="choresPanel">
 	@if (!ViewModel.IsEditMode)
 	{
 		<Views.Home.SummaryPanel @bind-IsEditMode="ViewModel.IsEditMode" PercentProgressSummary="ViewModel.PercentProgressSummary" />

@@ -144,6 +144,43 @@ namespace CleanTrack.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thank you for your support!.
+        /// </summary>
+        internal static string DonationGratitudeMessage {
+            get {
+                return ResourceManager.GetString("DonationGratitudeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you like the app and want to support its development, you can leave a small donation.
+        /// </summary>
+        internal static string DonationMessage {
+            get {
+                return ResourceManager.GetString("DonationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 🌍 International: Boosty (accepts cards) &lt;br /&gt;
+        ///🇷🇺 Russia: Boosty / ЮMoney.
+        /// </summary>
+        internal static string DonationPaymentMethodsDescription {
+            get {
+                return ResourceManager.GetString("DonationPaymentMethodsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support CleanTrack.
+        /// </summary>
+        internal static string DonationTitle {
+            get {
+                return ResourceManager.GetString("DonationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string Edit {

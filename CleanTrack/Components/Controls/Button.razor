@@ -1,6 +1,6 @@
 ﻿@namespace Controls
 
-<button class="@buttonClasses" disabled="@Disabled" onclick="@OnClick">
+<button class="@buttonClasses @buttonPaymentServiceClass" disabled="@Disabled" onclick="@OnClick">
 	@if (Icon != null)
 	{
 		<Controls.Icon Text="@Icon" />
@@ -58,6 +58,9 @@
 	[Parameter]
 	public EventCallback OnClick { get; set; }
 
+	[Parameter]
+	public string PaymentService { get; set; } = string.Empty;
+
 	private bool isIconOnly => Text == string.Empty && ChildContent == null && Icon != string.Empty;
 
 	private string buttonClasses => string.Join(" ", new Dictionary<string, bool>()
@@ -70,4 +73,6 @@
 		{"w100", W100},
 		{"p-xxs", PaddingXXS},
 	}.Where((kv, index) => kv.Value == true).ToDictionary(x => x.Key, x => x.Value).Keys.ToArray<string>());
+
+	private string buttonPaymentServiceClass => PaymentService != string.Empty ? PaymentService : string.Empty;
 }

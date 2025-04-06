@@ -18,5 +18,11 @@
             public const string DANGER = "danger";
             public const string TRANSPARENT = "transparent";
         }
-    }
+
+		public static class PaymentService
+		{
+			public const string BOOSTY = "boosty";
+			public const string UMONEY = "umoney";
+		}
+	}
 }

@@ -7,9 +7,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-
     cursor: pointer;
-
     border: none;
     border-radius: var(--border-radius-md);
 }
@@ -112,10 +110,11 @@
 
     .button.transparent {
         background-color: transparent;
-        color: var(--button-text-primary-color);
+        color: var(--button-text-secondary-color);
     }
+
         .button.transparent ::deep .icon {
-/*            color: var(--button-text-primary-color);*/
+            color: var(--button-text-secondary-color);
         }
 
         .button.transparent:active {
@@ -148,4 +147,14 @@
 
     .button.outline {
         border: 2px solid var(--button-text-secondary-color);
+    }
+
+    .button.boosty {
+        background-color: #E55D00;
+        color: #ffffff;
+    }
+
+    .button.umoney {
+        background-color: #6F41D8;
+        color: #ffffff;
     }
