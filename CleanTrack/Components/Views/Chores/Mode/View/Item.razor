@@ -7,7 +7,8 @@
 	{
 		<Controls.Button Icon="@UI.Controls.Icon.Text.REFRESH"
 						 Variant="@UI.Controls.Button.Variant.PRIMARY"
-						 Size="@UI.Controls.Button.Size.XS" />
+						 Size="@UI.Controls.Button.Size.XS"
+						 OnClick="() => OnResetChore.InvokeAsync(Node)" />
 	}
 	else
 	{
@@ -29,6 +30,9 @@
 @code {
 	[Parameter]
 	public required ChoreNode Node { get; set; }
+
+	[Parameter]
+	public EventCallback<ChoreNode> OnResetChore { get; set; }
 
 	[Parameter]
 	public EventCallback<Guid> ToggledChanged { get; set; }

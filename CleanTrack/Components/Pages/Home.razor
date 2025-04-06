@@ -31,7 +31,7 @@
 	{
 		<Views.Chores.Item @key="node.Id" Node="node" IsEditMode="ViewModel.IsEditMode" ToggledChores="ViewModel.ToggledChores">
 			<ViewTemplate Context="n">
-				<Views.Chores.Mode.View.Item Node="n" ToggledChanged="onToggledChanged" />
+				<Views.Chores.Mode.View.Item Node="n" OnResetChore="ViewModel.ResetChore" ToggledChanged="onToggledChanged" />
 			</ViewTemplate>
 
 			<EditTemplate Context="n">

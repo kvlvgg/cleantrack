@@ -21,16 +21,17 @@ namespace CleanTrack.ViewModel
 
 	public interface IChoresViewModel
 	{
-		public IList<ChoreNode> tree { get; }
-		public bool IsEditMode { get; set; }
-		public Guid? SelectedChoreId { get; set; }
-		public IList<Guid> ToggledChores { get; set; }
-		public double PercentProgressSummary { get; }
-		public void Load();
-		public void Add(Chore chore);
-		public void Save();
-		public void Delete(Guid id);
-		public void ChangeOrder(Guid? id, int step);
+		IList<ChoreNode> tree { get; }
+		bool IsEditMode { get; set; }
+		Guid? SelectedChoreId { get; set; }
+		IList<Guid> ToggledChores { get; set; }
+		double PercentProgressSummary { get; }
+		void Load();
+		void Add(Chore chore);
+		void Save();
+		void Delete(Guid id);
+		void ChangeOrder(Guid? id, int step);
+		void ResetChore(ChoreNode node);
 	}
 
 	public class ChoresViewModel : IChoresViewModel
@@ -152,6 +153,16 @@ namespace CleanTrack.ViewModel
 			int tempOrder = entity.Order;
 			entity.Order = swappedEntity.Order;
 			swappedEntity.Order = tempOrder;
+
+			Save();
+		}
+
+		public void ResetChore(ChoreNode node)
+		{
+			Chore? chore = entities.FirstOrDefault(x => x.Id == node.Id);
+			if (chore == null) return;
+
+			chore.LastDateDone = DateTime.Now;
 
 			Save();
 		}
