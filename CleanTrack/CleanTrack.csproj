@@ -28,13 +28,42 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<PublishTrimmed>true</PublishTrimmed>
-		<TrimmerDumpDependencies>true</TrimmerDumpDependencies>
-		<TrimmerLogFile>trimmer-log.txt</TrimmerLogFile>
-		<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-		<PublishReadyToRun>false</PublishReadyToRun>
-		<TrimMode>link</TrimMode>
+	<!-- 
+		Не смог включить тримминг. Проработал два дня и решил, ну его нахер.
+		Проект падает с ошибкой при том, что сборки с и без триммига визуально одинаковые. dnSpy и dotPeek ничего существенного не показали.
+		Особенно странно выглядело ошибка парсинга App.xaml.
+		Пробовал различные комбинации следующих настроек. Триммер лог файл так и не появился ни в одной варианции, что еще больше осложнило отладку.
+		
+			<PropertyGroup>
+				<PublishTrimmed>true</PublishTrimmed>
+				<TrimmerDumpDependencies>true</TrimmerDumpDependencies>
+				<TrimmerLogFile>trimmer-log.txt</TrimmerLogFile>
+				<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+				<PublishReadyToRun>false</PublishReadyToRun>
+				<TrimMode>link</TrimMode>
+			</PropertyGroup>
+			
+			<ItemGroup>
+				<TrimmerRootDescriptor Include="linker-descriptor.xml" />
+			</ItemGroup>
+			
+			./linker-description.xml
+			
+			﻿<?xml version="1.0" encoding="utf-8" ?>
+			<linker>
+				<assembly fullname="Microsoft.EntityFrameworkCore">
+					<type fullname="Microsoft.EntityFrameworkCore.DbContext" preserve="all" />
+				</assembly>
+
+				<assembly fullname="CleanTrack">
+					<type fullname="CleanTrack.App" preserve="all"/>
+					<type fullname="CleanTrack.MainPage" preserve="all"/>
+				</assembly>
+			</linker>
+	-->
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<PublishTrimmed>false</PublishTrimmed>
+		<RunAOTCompilation>false</RunAOTCompilation>
 	</PropertyGroup>
 
 	<ItemGroup>
