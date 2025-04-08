@@ -28,7 +28,7 @@ namespace CleanTrack.Mock
 
 				string contents = reader.ReadToEnd();
 
-				var items = JsonSerializer.Deserialize<IEnumerable<MockChore>>(contents);
+				IEnumerable<MockChore> items = JsonSerializer.Deserialize<IEnumerable<MockChore>>(contents);
 
 				foreach (var item in items)
 				{
