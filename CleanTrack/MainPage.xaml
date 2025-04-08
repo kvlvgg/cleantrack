@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:CleanTrack"
+             xmlns:cmp="clr-namespace:CleanTrack.Components"
              xmlns:blazorweb="clr-namespace:Microsoft.AspNetCore.Components.Web;assembly=Microsoft.AspNetCore.Components.Web"
              x:Class="CleanTrack.MainPage">
 
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>
             <RootComponent Selector="head::after" ComponentType="{x:Type blazorweb:HeadOutlet}" />
-            <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
+            <RootComponent Selector="#app" ComponentType="{x:Type cmp:Routes}" />
         </BlazorWebView.RootComponents>
     </BlazorWebView>
 
