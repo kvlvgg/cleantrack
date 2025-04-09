@@ -14,8 +14,6 @@ using CleanTrack.Mock;
 
 namespace CleanTrack;
 
-public class AutoRegisterAttribute : Attribute { }
-
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()

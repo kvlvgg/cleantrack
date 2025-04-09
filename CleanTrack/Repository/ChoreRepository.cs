@@ -27,7 +27,7 @@ public class ChoreRepository : IRepository<Chore>
         return _context.Chores.ToList();
     }
 
-    public Chore GetById(Guid id)
+    public Chore? GetById(Guid id)
     {
         return _context.Chores.Find(id);
     }

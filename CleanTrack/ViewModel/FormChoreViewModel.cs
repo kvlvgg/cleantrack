@@ -90,7 +90,7 @@ namespace CleanTrack.ViewModel
 
         public void LoadFormById(Guid id)
         {
-            Chore entity = repo.GetById(id);
+            Chore? entity = repo.GetById(id);
             if (entity == null) return;
 
             Form = new Chore()
@@ -114,7 +114,7 @@ namespace CleanTrack.ViewModel
 
         public void Update()
         {
-            Chore entity = repo.GetById(Form.Id);
+            Chore? entity = repo.GetById(Form.Id);
             if (entity == null) return;
 
             entity.Name = Form.Name;

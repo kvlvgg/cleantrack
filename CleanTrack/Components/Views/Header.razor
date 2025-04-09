@@ -10,28 +10,11 @@
     </div>
 
     <div class="right">
-        @* <Controls.Button Icon="@themeIcon" Variant="@UI.Controls.Button.Variant.TERTIARY" Size="@UI.Controls.Button.Size.MD" OnClick="switchTheme" /> *@
         <Controls.Button Icon="@UI.Controls.Icon.Text.INFO" Variant="@UI.Controls.Button.Variant.TRANSPARENT" Size="@UI.Controls.Button.Size.LG" OnClick="goToAboutPage" />
     </div>
 </header>
 
 @code {
-    private string theme = "light";
-
-    private string themeIcon => theme switch
-    {
-        "light" => UI.Controls.Icon.Text.LIGHT_MODE,
-        "dark" => UI.Controls.Icon.Text.DARK_MODE,
-        _ => string.Empty
-    };
-
-    private async Task switchTheme()
-    {
-        string newTheme = theme == "light" ? "dark" : "light";
-
-        theme = await JSRuntime.InvokeAsync<string>("window.CT.utils.switchTheme", theme, newTheme, "ct-theme");
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

@@ -9,7 +9,7 @@ namespace CleanTrack.Mock
 	class MockChore
 	{
 		public Guid Id { get; set; }
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 		public int? DayInterval { get; set; }
 		public string? LastDateDone { get; set; }
 		public int Order { get; set; }
@@ -29,7 +29,7 @@ namespace CleanTrack.Mock
 
 				string contents = reader.ReadToEnd();
 
-				IEnumerable<MockChore> items = JsonSerializer.Deserialize<IEnumerable<MockChore>>(contents);
+				IEnumerable<MockChore> items = JsonSerializer.Deserialize<IEnumerable<MockChore>>(contents) ?? [];
 
 				foreach (var item in items)
 				{
@@ -44,7 +44,7 @@ namespace CleanTrack.Mock
 					});
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 
 			}

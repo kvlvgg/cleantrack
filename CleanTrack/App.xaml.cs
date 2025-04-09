@@ -13,7 +13,7 @@ namespace CleanTrack
 
 		protected override Window CreateWindow(IActivationState? activationState)
 		{
-			return new Window(new MainPage()) { Title = "CleanTrack", MaximumWidth = 480 };
+			return new Window(new MainPage()) { Title = "CleanTrack" };
 		}
 
 		protected override void OnResume()
