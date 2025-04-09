@@ -15,8 +15,9 @@
 
 		<ApplicationTitle>CleanTrack</ApplicationTitle>
 		<ApplicationId>dev.kvlvgg.cleantrack</ApplicationId>
-		<ApplicationDisplayVersion>1.0.0-beta</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+		<AssemblyInformationalVersion>1.0.0-beta</AssemblyInformationalVersion>
 
 		<WindowsPackageType>None</WindowsPackageType>
 
@@ -66,14 +67,6 @@
 		<RunAOTCompilation>false</RunAOTCompilation>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-		<AndroidKeyStore>True</AndroidKeyStore>
-		<AndroidSigningKeyAlias>$(ANDROID_SIGNING_KEY_ALIAS)</AndroidSigningKeyAlias>
-		<AndroidSigningKeyPass>$(ANDROID_SIGNING_KEY_PASS)</AndroidSigningKeyPass>
-		<AndroidSigningKeyStore>$(ANDROID_SIGNING_KEY_STORE)</AndroidSigningKeyStore>
-		<AndroidSigningStorePass>$(ANDROID_SIGNING_STORE_PASS)</AndroidSigningStorePass>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyAlias>$(ANDROID_SIGNING_KEY_ALIAS)</AndroidSigningKeyAlias>
@@ -104,7 +97,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Resources\raw\mock\" />
+		<MauiAsset Remove="Resources/raw/mock/**" Condition="'$(Configuration)' != 'Debug'" />
 	</ItemGroup>
 
 	<ItemGroup>

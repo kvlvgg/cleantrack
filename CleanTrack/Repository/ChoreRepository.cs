@@ -1,5 +1,4 @@
 ﻿using CleanTrack.Models;
-using CleanTrack.Mock;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanTrack.Repository;
@@ -10,14 +9,7 @@ public class ApplicationDBContext : DbContext
 
     public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
     {
-#if DEBUG
-        //if (Database.CanConnect()) Database.EnsureDeleted();
-#endif
         Database.EnsureCreated();
-
-#if DEBUG
-        Generator.Chores(this);
-#endif
     }
 }
 

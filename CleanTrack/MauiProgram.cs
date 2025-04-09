@@ -8,7 +8,13 @@ using CleanTrack.ViewModel;
 using CleanTrack.Models;
 using CleanTrack.Services;
 
+#if DEBUG
+using CleanTrack.Mock;
+#endif
+
 namespace CleanTrack;
+
+public class AutoRegisterAttribute : Attribute { }
 
 public static class MauiProgram
 {
@@ -20,7 +26,7 @@ public static class MauiProgram
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            });
+			});
 
 		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddSingleton<AppStateService>();
@@ -28,13 +34,23 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IChoresViewModel, ChoresViewModel>();
 		builder.Services.AddSingleton<IFormChoresViewModel, FormChoreViewModel>();
 		builder.Services.AddSingleton<IRepository<Chore>, ChoreRepository>();
+#if DEBUG
+		builder.Services.AddSingleton<IDataSeeder, MockSeeder>();
+#endif
 
-        string dataSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cleantrack.db");
-        builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlite($"Data Source={dataSource}"));
+		string dataSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cleantrack.db");
+		builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlite($"Data Source={dataSource}"));
 
 #if DEBUG
-        builder.Services.AddBlazorWebViewDeveloperTools();
+		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
+
+		using var scope = builder.Services.BuildServiceProvider().CreateScope();
+
+		var context = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+		var seeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+
+		seeder?.Seed(context);
 #endif
 
 		CultureInfo culture = CultureInfo.CurrentCulture;

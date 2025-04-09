@@ -1,25 +1,26 @@
-﻿using System.Text.Json;
+﻿#if DEBUG
+using System.Text.Json;
 
 using CleanTrack.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanTrack.Mock
 {
-    class MockChore
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int? DayInterval { get; set; }
-        public string? LastDateDone { get; set; }
+	class MockChore
+	{
+		public Guid Id { get; set; }
+		public string Name { get; set; }
+		public int? DayInterval { get; set; }
+		public string? LastDateDone { get; set; }
 		public int Order { get; set; }
-        public Guid? ParentId { get; set; }
-    }
+		public Guid? ParentId { get; set; }
+	}
 
-    public class Generator
-    {
-        public async static void Chores(ApplicationDBContext context)
-        {
-            context.Chores.ExecuteDelete();
+	class MockSeeder : IDataSeeder
+	{
+		public async void Seed(ApplicationDBContext context)
+		{
+			context.Chores.ExecuteDelete();
 
 			try
 			{
@@ -48,7 +49,8 @@ namespace CleanTrack.Mock
 
 			}
 
-            context.SaveChanges();
-        }
-    }
+			context.SaveChanges();
+		}
+	}
 }
+#endif
