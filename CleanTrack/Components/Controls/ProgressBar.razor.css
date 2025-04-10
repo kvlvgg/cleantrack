@@ -23,7 +23,6 @@
         background-color: var(--primary-color);
         background-image: linear-gradient( 45deg, #22d3ee 25%, #1baec4 25%, #1baec4 50%, #22d3ee 50%, #22d3ee 75%, #1baec4 75%, #1baec4 );
         background-size: 5px 5px;
-        animation: progress-stripes-left 4s linear infinite;
         transition: width 0.3s ease;
     }
 
@@ -31,7 +30,6 @@
         background-color: var(--danger-color);
         background-image: linear-gradient( -45deg, #f87171 25%, #d75b5b 25%, #d75b5b 50%, #f87171 50%, #f87171 75%, #d75b5b 75%, #d75b5b );
         background-size: 5px 5px;
-        animation: progress-stripes-right 4s linear infinite;
         transition: width 0.3s ease;
     }
 
@@ -44,25 +42,4 @@
     position: absolute;
     top: 0;
     left: 0;
-}
-
-@keyframes progress-stripes-right {
-    0% {
-        background-position: 0 0;
-    }
-
-    100% {
-        background-position: 24px 0;
-    }
-}
-
-
-@keyframes progress-stripes-left {
-    0% {
-        background-position: 24px 0;
-    }
-
-    100% {
-        background-position: 0 0;
-    }
 }
