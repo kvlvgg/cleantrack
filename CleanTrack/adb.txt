@@ -1,0 +1,1 @@
+adb -s {device_id} install -r bin\Release\net8.0-android\dev.kvlvgg.cleantrack-Signed.apk 
